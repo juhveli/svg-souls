@@ -9,15 +9,34 @@ import { ShardEntity } from '../ShardEntity';
 
 const BOT_SVG = `
     <g class="bot-body">
-        <!-- Rust Body -->
-        <rect x="-10" y="-15" width="20" height="30" fill="#632" rx="5" />
-        <!-- Head -->
-        <circle cx="0" cy="-20" r="8" fill="#444" />
-        <!-- Eye (Glows on beat) -->
-        <circle cx="0" cy="-20" r="3" fill="#f00" id="eye" />
-        <!-- Arms -->
-        <line x1="-15" y1="-10" x2="-10" y2="-5" stroke="#543" stroke-width="3" />
-        <line x1="15" y1="-10" x2="10" y2="-5" stroke="#543" stroke-width="3" />
+        <!-- Main Chassis (Rusty Block) -->
+        <rect x="-14" y="-16" width="28" height="24" fill="#5a3a2a" stroke="#2a1a1a" stroke-width="2" />
+
+        <!-- Industrial Vents -->
+        <rect x="-10" y="-10" width="20" height="2" fill="#1a0a0a" />
+        <rect x="-10" y="-6" width="20" height="2" fill="#1a0a0a" />
+        <rect x="-10" y="-2" width="20" height="2" fill="#1a0a0a" />
+
+        <!-- Head Unit (Turret-like) -->
+        <rect x="-8" y="-24" width="16" height="8" fill="#3a3a3a" stroke="#1a1a1a" stroke-width="2" />
+
+        <!-- Eye (The Soul) -->
+        <circle cx="0" cy="-20" r="3" fill="#ff2200" id="eye" stroke="#000" stroke-width="1"/>
+
+        <!-- Left Arm: Pincer -->
+        <rect x="-22" y="-8" width="8" height="4" fill="#4a4a4a" />
+        <rect x="-26" y="-14" width="4" height="16" fill="#7a5a4a" />
+        <rect x="-28" y="-16" width="2" height="6" fill="#9a9a9a" />
+        <rect x="-28" y="-2" width="2" height="6" fill="#9a9a9a" />
+
+        <!-- Right Arm: Serum Injector -->
+        <rect x="14" y="-8" width="8" height="4" fill="#4a4a4a" />
+        <rect x="22" y="-10" width="12" height="8" fill="#88aa88" opacity="0.8" />
+        <rect x="24" y="-8" width="8" height="4" fill="#aaffaa" opacity="0.5" />
+        <rect x="34" y="-6" width="6" height="2" fill="#cccccc" />
+
+        <!-- Exhaust Pipe -->
+        <rect x="6" y="8" width="4" height="6" fill="#333" />
     </g>
 `;
 
