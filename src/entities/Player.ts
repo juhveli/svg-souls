@@ -56,7 +56,7 @@ const PLAYER_SVG = `
   <!-- UPPER BODY (Rotates with Mouse) -->
   <g id="aim-group">
 
-      <!-- WEAPON: Tuning Fork Greatsword -->
+      <!-- WEAPON: Tuning Fork Spear -->
       <!-- Positioned slightly offset to the right, facing Forward (-Y) -->
       <g id="weapon-group" transform="translate(12, -10)">
           <!-- Handle -->
