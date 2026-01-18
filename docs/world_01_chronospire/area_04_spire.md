@@ -30,22 +30,18 @@ The highest point of the world. The machinery has stopped, and the glass is grou
 *   **Behavior:** A disembodied giant hand that tries to "mute" the player.
 *   **Attack:** Grabs the player and debuffs their "Resonance" to 0.
 
-## 4. The Boss: The Grand Architect (The False King)
-**Lore:** The man who broke time. He sits at the console, believing he is holding the universe together by sheer will. He is not evil; he is a victim.
+## 4. The Boss: The High-Conductor (Proxy of the Architect)
+**Lore:** The faithful apprentice of the Grand Architect. He was left behind to "Conduct the Spire" while his master ascended to The Source (World 5). He believes he is maintaining the loop, but he is merely a placeholder.
 *   **Arena:** The Bell Tower.
 *   **Mechanics:**
     *   *Phase 1:* He attacks with "Bar Lines" (Lasers).
     *   *Phase 2:* He activates the Bell.
-    *   *The Choice:* You can kill him (Bad Ending) or use the *Crystallized Tear* to "Parry his Grief" (True Path).
+    *   *The Twist:* When defeated, he does not die. He shatters, revealing a map to **World 2: The Echoing Ocean**.
 
-## 5. The True Final Boss: Vespers, The Void Mother
-*   **Trigger:** If you save the Architect, the shadow behind him tears open. **Vespers** emerges.
-*   **Lore:** She is the Silence that the Architect feared. She has been feeding on his despair for centuries.
-*   **Mechanics:**
-    *   *Audio:* The game goes completely silent. No music. Only sound effects.
-    *   *Visuals:* The screen tears. You fight on "Negative Space."
-    *   *Attack:* She erases parts of the UI. You lose your Health Bar (visual only) and must feel your damage.
-*   **Ending (True):** The Architect plays the "First Chord," and the Echo Walker becomes the hammer that strikes the bell. The Silence is broken.
+## 5. The Secret Boss: The Faceless Bell-Ringer
+*   **Trigger:** You must ring the bells in Area 1, 2, and 3 in a specific order (The Forbidden Chord).
+*   **Lore (Cthulhu Mythos):** A creature from the Void that tried to answer the Carillon's call. It is a mass of tentacles and eyes, hiding inside the Great Bell.
+*   **Reward:** *Fragment of the First Song (1/5)*.
 
 ## 6. Narrative Conclusion
-*   **The Message:** Perfection is stagnation. Dissonance is necessary for movement (Life).
+*   **The Message:** The Spire was just the antenna. The broadcast comes from elsewhere.
