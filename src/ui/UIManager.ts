@@ -5,6 +5,9 @@ export class UIManager {
     private overheatBar: HTMLElement;
     private overheatContainer: HTMLElement;
     private statusContainer: HTMLElement; // New: Level/Vibration
+    private bossContainer: HTMLElement;
+    private bossName: HTMLElement;
+    private bossBar: HTMLElement;
     private gameContainer: HTMLElement;
 
     constructor() {
@@ -52,6 +55,20 @@ export class UIManager {
             <div class="stat-item"><span class="label">VIBRATION</span> <span id="val-vib">0</span></div>
         `;
         this.gameContainer.appendChild(this.statusContainer);
+
+        // Create Boss Health Meter
+        this.bossContainer = document.createElement('div');
+        this.bossContainer.id = 'boss-meter';
+        this.bossContainer.style.display = 'none';
+        this.bossContainer.innerHTML = `
+            <div class="boss-name">BOSS</div>
+            <div class="boss-bar-bg">
+                <div class="boss-bar-fill"></div>
+            </div>
+        `;
+        this.gameContainer.appendChild(this.bossContainer);
+        this.bossName = this.bossContainer.querySelector('.boss-name')!;
+        this.bossBar = this.bossContainer.querySelector('.boss-bar-fill')!;
     }
 
     static getInstance(): UIManager {
@@ -108,6 +125,22 @@ export class UIManager {
         const vibEl = document.getElementById('val-vib');
         if (lvlEl) lvlEl.innerText = level.toString();
         if (vibEl) vibEl.innerText = vibration.toString();
+    }
+
+    updateBossHealth(name: string, current: number, max: number) {
+        if (!this.bossContainer || !this.bossBar) return;
+
+        this.bossContainer.style.display = 'block';
+        this.bossName.innerText = name;
+
+        const pct = Math.max(0, (current / max) * 100);
+        this.bossBar.style.width = `${pct}%`;
+    }
+
+    hideBossHealth() {
+        if (this.bossContainer) {
+            this.bossContainer.style.display = 'none';
+        }
     }
 
     showLootGain(x: number, y: number, amount: number) {
