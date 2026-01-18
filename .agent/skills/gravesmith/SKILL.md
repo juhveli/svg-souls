@@ -5,8 +5,14 @@ description: A specialized routine for generating 16-bit SVG assets with a "Dark
 
 # GraveSmith Skill Instructions
 
+## Lore Context: The Chronocrystal Empire
+All assets must reflect a world where **Time is Sound** and **Matter is Crystal**. 
+- **The Fractured (Enemies)**: Jagged glass, clockwork gears, and rusted springs. They represent the "Age of Resonance" gone wrong.
+- **The Soft One (Player)**: Cloth, leather, and blood. Non-reflective, sound-absorbing materials.
+- **Environment**: Refractive glass shards, floating debris, and heavy, ticking mechanisms.
+
 ## When to use
-Use this skill when the user requests a game asset (enemy, NPC, or item) that needs to fit the "Grimdark 16-bit" aesthetic. Do NOT use this for clean, vibrant, or high-fantasy assets.
+Use this skill when the user requests a game asset (enemy, NPC, or item) that needs to fit the "Grimdark 16-bit" aesthetic of the Shardscape. Do NOT use this for clean, vibrant, or high-fantasy assets.
 
 ## Core Logic: The "Blighted Trinity"
 1. **Skeleton Selection**: Fetch a base SVG rig based on the entity's size and perspective.
