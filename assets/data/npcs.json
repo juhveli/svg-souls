@@ -17,5 +17,15 @@
             "DO NOT... STEP ON THE... GRASS. IT IS... SHARP.",
             "I CANNOT... FIX... THE SKY. IT IS... TOO BROKEN."
         ]
+    },
+    "prime_conductor": {
+        "name": "The Prime Conductor",
+        "svg": "<g class=\"npc\"><path d=\"M0,-20 L-10,0 L10,0 Z\" fill=\"#fff\" opacity=\"0.8\" /><circle cx=\"0\" cy=\"-25\" r=\"8\" fill=\"#fff\" opacity=\"0.9\" /><path d=\"M-15,10 Q0,25 15,10\" stroke=\"#fff\" stroke-width=\"2\" fill=\"none\" opacity=\"0.5\" /></g>",
+        "dialogue": [
+            "Ah... a little Dampener. Awake at last. The world is out of tune, my child.",
+            "The Dissonance Kings have stolen the sheet music. They hoard the resonance in their frozen domains.",
+            "Begin with Golgotha. He gorges himself on the past, refusing to let the measure end.",
+            "Bring me their resonance. Only then can I restart the Grand Carillon and save us all."
+        ]
     }
 }

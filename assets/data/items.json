@@ -67,5 +67,53 @@
         "category": "narrative",
         "effect": null,
         "icon": "book"
+    },
+    "oxidized_whistle": {
+        "name": "Oxidized Whistle",
+        "description": "A copper whistle coated in verdigris. It produces a sound so high-pitched it vibrates rust off of metal.",
+        "category": "key",
+        "effect": {
+            "type": "trigger_event",
+            "event": "summon_rust_dragon"
+        },
+        "icon": "whistle"
+    },
+    "scale_of_decay": {
+        "name": "Scale of Decay",
+        "description": "A flake of metal from a beast that should not exist. It feels warm, like a fever.",
+        "category": "key",
+        "effect": null,
+        "icon": "scale"
+    },
+    "perfect_prism": {
+        "name": "Perfect Prism",
+        "description": "A geometric impossibility. Light enters it but never leaves, bouncing internally forever.",
+        "category": "key",
+        "effect": {
+            "type": "trigger_event",
+            "event": "summon_mirror_knight"
+        },
+        "icon": "prism"
+    },
+    "shard_of_narcissus": {
+        "name": "Shard of Narcissus",
+        "description": "A piece of a mirror that reflects your true self... or perhaps the self you wish you were.",
+        "category": "key",
+        "effect": null,
+        "icon": "shard"
+    },
+    "generals_log": {
+        "name": "General's Log: Entry 404",
+        "description": "'We locked the door not to keep them out, but to keep Him in. The Conductor's song... it doesn't end. It just gets louder.'",
+        "category": "narrative",
+        "effect": null,
+        "icon": "scroll"
+    },
+    "sheet_music_fragment": {
+        "name": "Sheet Music Fragment",
+        "description": "A torn page of the score. The notes are written in blood and oil. It ends abruptly at the 13th measure.",
+        "category": "narrative",
+        "effect": null,
+        "icon": "paper"
     }
 }
