@@ -43,9 +43,9 @@
         },
         "icon": "breath"
     },
-    "tuning_fork_greatsword": {
-        "name": "Tuning Fork Greatsword",
-        "description": "A massive, two-pronged blade made of heavy iron. Vibrates violently upon impact. Standard issue for the Silence Guard.",
+    "tuning_fork_spear": {
+        "name": "Tuning Fork Spear",
+        "description": "A massive, two-pronged spear made of heavy iron. It hums with a low, headache-inducing frequency. Standard issue for the Silence Guard, used to skewer dissonance.",
         "category": "weapon",
         "effect": {
             "type": "equip",

@@ -17,9 +17,9 @@ This document explicitly defines *how* the player learns the history of the worl
 > *Restores health by rewinding the body's timeline slightly.*
 > *"The rich drank time like wine, believing it would keep their glass skins from growing dull. They did not know that hoarding time leaves none for the rest of the world."*
 
-### 2. Weapon: *Tuning Fork Greatsword*
-> *A massive, two-pronged blade made of heavy iron. Vibrates violently upon impact.*
-> *"Standard issue for the Silence Guard. While the glass nobility sought perfect pitch, the guards were tasked with 'dampening' dissonance—usually by crushing the source."*
+### 2. Weapon: *Tuning Fork Spear*
+> *A massive, two-pronged spear made of heavy iron. Vibrates violently upon impact.*
+> *"Standard issue for the Silence Guard. While the glass nobility sought perfect pitch, the guards were tasked with 'dampening' dissonance—usually by skewering the source to stop its vibration."*
 
 ### 3. Key Item: *The Stopped Watch*
 > *A pocket watch with hands fused to the face. It feels impossibly heavy.*
