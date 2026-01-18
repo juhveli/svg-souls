@@ -182,6 +182,23 @@ export class Game {
         return div;
     }
 
+    spawnScrapyardNarrative() {
+        const mirrorSVG = `
+            <rect x="-20" y="-30" width="40" height="60" fill="#4ff" opacity="0.3" filter="url(#glass-shine)" stroke="#fff" />
+            <path d="M-20,-30 L20,30 M-20,30 L20,-30" stroke="#fff" stroke-width="0.5" opacity="0.2" />
+        `;
+        const mirror = new NarrativeItem(300, 450, mirrorSVG, "A Cracked Mirror", "The glass reflects the smog and the steel, but your face is absent. Only a hollow ache remains where your image should be.", this.player);
+        this.entityManager.add(mirror);
+
+        const ledgerSVG = `
+            <rect x="-15" y="-10" width="30" height="20" fill="#dcb" stroke="#544" />
+            <line x1="-10" y1="-5" x2="10" y2="-5" stroke="#544" stroke-width="1" />
+            <line x1="-10" y1="0" x2="10" y2="0" stroke="#544" stroke-width="1" />
+        `;
+        const ledger = new NarrativeItem(600, 520, ledgerSVG, "Foreman's Ledger", "A log of 'Soft Units' marked for the furnace. The final entry is stamped 12:00:00, repeated until the ink ran dry. The moment the clock died.", this.player);
+        this.entityManager.add(ledger);
+    }
+
     startGame() {
         this.state = 'PLAY';
         this.screens.start.classList.add('hidden');
@@ -196,20 +213,7 @@ export class Game {
         this.entityManager.add(this.player);
 
         // Spawn Narrative Items (Scrapyard)
-        const mirrorSVG = `
-            <rect x="-20" y="-30" width="40" height="60" fill="#4ff" opacity="0.3" filter="url(#glass-shine)" stroke="#fff" />
-            <path d="M-20,-30 L20,30 M-20,30 L20,-30" stroke="#fff" stroke-width="0.5" opacity="0.2" />
-        `;
-        const mirror = new NarrativeItem(300, 450, mirrorSVG, "A Cracked Mirror", "You see the world, but not yourself. Dissonance.", this.player);
-        this.entityManager.add(mirror);
-
-        const ledgerSVG = `
-            <rect x="-15" y="-10" width="30" height="20" fill="#dcb" stroke="#544" />
-            <line x1="-10" y1="-5" x2="10" y2="-5" stroke="#544" stroke-width="1" />
-            <line x1="-10" y1="0" x2="10" y2="0" stroke="#544" stroke-width="1" />
-        `;
-        const ledger = new NarrativeItem(600, 520, ledgerSVG, "Foreman's Ledger", "Entries for 'Soft Units' scheduled for disposal. 12:00:00. 12:00:00. Time stopped here.", this.player);
-        this.entityManager.add(ledger);
+        this.spawnScrapyardNarrative();
 
         // Spawn First Enemy
         const bot = new SerumBot(650, 300, this.player);
@@ -246,10 +250,8 @@ export class Game {
             this.map = new ScrapyardMap();
             this.initBackgrounds(); // Restore scrapyard BG art
 
-            // Re-spawn Narrative Items in Scrapyard if returning
-            // (Simplified for prototype: just spawn them again)
-            const mirrorSVG = `<rect x="-20" y="-30" width="40" height="60" fill="#4ff" opacity="0.3" filter="url(#glass-shine)" stroke="#fff" />`;
-            this.entityManager.add(new NarrativeItem(300, 450, mirrorSVG, "Mirror", "No reflection.", this.player));
+            // Re-spawn Narrative Items in Scrapyard
+            this.spawnScrapyardNarrative();
         }
 
         // Update Camera Bounds
