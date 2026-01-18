@@ -3,8 +3,8 @@
 **Theme:** Discarded Time, Broken Prototypes, Rust & Glass
 
 ## 1. Zone Overview
-A vertical ascent up a mountain of broken clockwork and shattered glass limbs. It is dark, illuminated only by the faint bioluminescent glow of leaking "Liquid Time."
-*   **Atmosphere:** Lonely, metallic, dripping. Audio is dominated by the sound of ticking that is *out of sync*.
+The bottom of the world. A graveyard of rejected moments. Here, the "Time is Sound" law manifests as decay: the rust on the gears is actually "oxidized time," a physical manifestation of seconds that were never allowed to pass.
+*   **Atmosphere:** Lonely, metallic, dripping. The air is thick with the dust of ground-down seconds. Audio is dominated by the sound of ticking that is *out of sync*—a heartbeat that is struggling to keep rhythm.
 
 ## 2. Progression & Tutorialization
 
@@ -28,7 +28,15 @@ At the midpoint, you climb out of the pit and see the sky for the first time.
 *   **The Vista:** You see the **Grand Carillon** in the distance. It is frozen mid-ring. A giant crack runs down the center of the world.
 *   **The Detail:** The sky isn't blue; it's a shattered dome with the void behind it.
 
-## 4. The Boss: The Keeper of the Waste
+## 4. NPC Interaction
+*   **Character:** **Old Cog, the Retired Smith**
+*   **Location:** Huddled near a dying furnace, trying to warm a piece of cold iron.
+*   **Role:** The Tragic Mentor.
+*   **Interaction:** He gives you *Old Cog's Oil* and some advice on surviving the rust.
+*   **Fate:** When you return after defeating Golgotha, he is gone. Only a pile of rust remains.
+*   **Future Shadow:** *Scribe Note:* The player will encounter a twisted, rusted "Shadow of Old Cog" in Area 4 (The Silent Spire), forced to fight the memory of their only friend.
+
+## 5. The Boss: The Keeper of the Waste
 **Lore:** The automaton tasked with crushing defective prototypes. It has gone rogue and is "hoarding" the soft parts to try and build itself a soul.
 *   **Name:** **Scrap-Titan Golgotha**
 *   **Appearance:** A massive ball of junk, gears, and glass arms. It has a "face" made of a stolen porcelain mask.
@@ -37,5 +45,5 @@ At the midpoint, you climb out of the pit and see the sky for the first time.
     *   *Phase 2:* He screams (Audio Shockwave). You must hide behind debris to avoid specific resonance damage.
 *   **Reward:** *The Rusty Key-Hand*. Allows you to open "Maintenance Doors" (Shortcuts).
 
-## 5. Exit to Hub
+## 6. Exit to Hub
 Beating Golgotha opens the elevator to **The Tuning Fork** (The Hub Area).

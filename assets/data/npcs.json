@@ -13,9 +13,19 @@
         "name": "Defunct Maintenance Unit",
         "svg": "<g class=\"npc\"><rect x=\"-10\" y=\"-10\" width=\"20\" height=\"20\" fill=\"#555\" stroke=\"#333\" stroke-width=\"2\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f00\" opacity=\"0.5\" /></g>",
         "dialogue": [
-            "ER...ROR... UN...AUTHOR...IZED...",
-            "MAIN...TEN...ANCE... SCHED...ULED...",
-            "PLEASE... STAND... BY..."
+            "The spring... it tires... I cannot... keep the beat...",
+            "Don't... let the rust... catch you...",
+            "The song... it used to be so... clear..."
+        ]
+    },
+    "old_cog": {
+        "name": "Old Cog, the Retired Smith",
+        "svg": "<g class=\"npc\"><rect x=\"-12\" y=\"-12\" width=\"24\" height=\"24\" fill=\"#642\" stroke=\"#321\" stroke-width=\"2\" /><circle cx=\"-5\" cy=\"-5\" r=\"2\" fill=\"#fd0\" /><path d=\"M-10,10 L10,10\" stroke=\"#888\" stroke-width=\"4\" /><path d=\"M0,-20 L0,-12\" stroke=\"#444\" stroke-width=\"2\" /></g>",
+        "dialogue": [
+            "Ah... a soft one? Haven't seen one of you since the Great Reject.",
+            "Take this oil. Keep your joints slick. The rust... it waits for us all. It's waiting for me right now.",
+            "They say the Silence Guard is just trying to help... by killing the noise. But isn't life just noise? *Coughs heavily*",
+            "I'm tired... little soft one. So tired. Let me just... listen to the quiet for a moment..."
         ]
     }
 }

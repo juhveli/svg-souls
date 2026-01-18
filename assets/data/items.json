@@ -53,5 +53,29 @@
             "resonance_gain": 5
         },
         "icon": "sword"
+    },
+    "foremans_ledger": {
+        "name": "The Foreman's Ledger",
+        "description": "\"Batch 404. Soft. Absorbent. Discard immediately.\" A record of the failures thrown into the pit. Your designation is the last entry.",
+        "category": "key",
+        "effect": null,
+        "icon": "book"
+    },
+    "shattered_monocle": {
+        "name": "Shattered Monocle",
+        "description": "A lens cracked down the middle. Through it, you can see faint outlines of things that aren't there. Or perhaps, things that shouldn't be.",
+        "category": "material",
+        "effect": null,
+        "icon": "monocle"
+    },
+    "old_cogs_oil": {
+        "name": "Old Cog's Oil",
+        "description": "A flask of black, viscous oil given by a dying smith. \"Keep your joints slick, little one. The rust... it waits for us all.\"",
+        "category": "consumable",
+        "effect": {
+            "type": "heal",
+            "value": 20
+        },
+        "icon": "oil"
     }
 }
