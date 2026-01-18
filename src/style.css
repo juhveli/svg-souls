@@ -1,0 +1,243 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: #fff;
+  background-color: #000;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+  /* Prevent scrolling */
+}
+
+#app {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#game-container {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  border: 2px solid #333;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+#ui-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Let clicks pass through to SVG */
+  z-index: 10;
+}
+
+#game-view {
+  width: 100%;
+  height: 100%;
+  background: #111;
+  cursor: crosshair;
+}
+
+#debug-info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: #666;
+  font-size: 12px;
+}
+
+/* --- UI COMPONENTS --- */
+#resonance-meter {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 200px;
+}
+
+#resonance-meter .label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  color: #888;
+}
+
+#resonance-meter .bar-bg {
+  width: 100%;
+  height: 10px;
+  background: #222;
+  border: 1px solid #444;
+  transform: skewX(-20deg);
+  /* Stylistic choice */
+}
+
+#resonance-meter .bar-fill {
+  width: 100%;
+  height: 100%;
+  background: #44ffff;
+  transition: width 0.1s;
+}
+
+.bark-bubble {
+  position: absolute;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #000;
+  pointer-events: none;
+  transition: transform 1s ease-out, opacity 1s ease-in;
+  white-space: nowrap;
+  z-index: 20;
+
+  /* Comic book style */
+  background: rgba(0, 0, 0, 0.7);
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid #888;
+}
+
+#start-screen,
+#game-over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 100;
+  color: #fff;
+  pointer-events: auto;
+}
+
+#start-screen h1 {
+  font-size: 48px;
+  letter-spacing: 10px;
+  color: #44ffff;
+  text-shadow: 0 0 20px #44ffff;
+}
+
+#game-over {
+  display: none;
+  /* Hidden by default */
+  background: black;
+}
+
+#game-over h1 {
+  font-size: 64px;
+  color: #444;
+  /* Dark gray for "Silence" */
+  letter-spacing: 5px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* --- SVG VISUAL MASTERY ANIMATIONS --- */
+
+/* Idle Breathing Animation for Player Cloak */
+@keyframes breathe {
+
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(1.03);
+  }
+}
+
+/* Crystal Flora Sway */
+@keyframes crystal-sway {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(2deg);
+  }
+
+  75% {
+    transform: rotate(-2deg);
+  }
+}
+
+/* Eye Glow Pulse */
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+    filter: url(#glow) brightness(1.3);
+  }
+}
+
+/* World Beat Pulse (for environment breathing) */
+@keyframes world-beat {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.005);
+  }
+}
+
+/* Gear Rotation */
+@keyframes gear-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loot Popup */
+.loot-popup {
+  position: absolute;
+  color: #4ff;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 0 0 5px #4ff;
+  pointer-events: none;
+  animation: loot-float 1s ease-out forwards;
+}
+
+@keyframes loot-float {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}

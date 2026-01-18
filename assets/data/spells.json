@@ -1,0 +1,37 @@
+{
+    "shatter_song": {
+        "name": "Shatter-Song",
+        "description": "A high frequency scream that breaks shields and stuns glass enemies.",
+        "cost": 30,
+        "cooldown": 3.0,
+        "effect": {
+            "type": "aoe_damage",
+            "damage": 50,
+            "radius": 80,
+            "stun_duration": 0.5
+        }
+    },
+    "stasis_hum": {
+        "name": "Stasis-Hum",
+        "description": "A low frequency hum that slows local time around you.",
+        "cost": 20,
+        "cooldown": 5.0,
+        "effect": {
+            "type": "aoe_slow",
+            "radius": 120,
+            "slow_factor": 0.3,
+            "duration": 3.0
+        }
+    },
+    "refract": {
+        "name": "Refract",
+        "description": "Turn into light briefly to dash through attacks and enemies.",
+        "cost": 15,
+        "cooldown": 2.0,
+        "effect": {
+            "type": "invincible_dash",
+            "distance": 150,
+            "duration": 0.3
+        }
+    }
+}

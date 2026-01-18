@@ -1,0 +1,21 @@
+{
+    "tick_tock": {
+        "name": "Tick-Tock, the Broken Bard",
+        "svg": "<g class=\"npc\"><circle cx=\"0\" cy=\"0\" r=\"15\" fill=\"#8af\" stroke=\"#fff\" stroke-width=\"2\" /><circle cx=\"-4\" cy=\"-3\" r=\"2\" fill=\"#000\" /><circle cx=\"4\" cy=\"-3\" r=\"2\" fill=\"#000\" /><path d=\"M-5,5 Q0,10 5,5\" stroke=\"#000\" stroke-width=\"1\" fill=\"none\" /><line x1=\"0\" y1=\"15\" x2=\"0\" y2=\"30\" stroke=\"#8af\" stroke-width=\"3\" /></g>",
+        "dialogue": [
+            "One, two. One, two. You're off beat, little soft one. Squishy. Quiet. Disgusting.",
+            "They say the Carillon will ring again. But I like the quiet between the ticks. That's where the music lives... in the rests.",
+            "Do you know why the dancers broke? They couldn't hear the silence. Only their own rhythm.",
+            "You don't reflect. How curious. Are you even real? Or just a pause in the song?"
+        ]
+    },
+    "maintenance_automaton": {
+        "name": "Defunct Maintenance Unit",
+        "svg": "<g class=\"npc\"><rect x=\"-10\" y=\"-10\" width=\"20\" height=\"20\" fill=\"#555\" stroke=\"#333\" stroke-width=\"2\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f00\" opacity=\"0.5\" /></g>",
+        "dialogue": [
+            "ER...ROR... UN...AUTHOR...IZED...",
+            "MAIN...TEN...ANCE... SCHED...ULED...",
+            "PLEASE... STAND... BY..."
+        ]
+    }
+}

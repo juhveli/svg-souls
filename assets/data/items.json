@@ -1,0 +1,57 @@
+{
+    "glass_shard": {
+        "name": "Glass Shard",
+        "description": "A fragment of crystallized time. Cuts that which moves out of rhythm.",
+        "category": "material",
+        "effect": null,
+        "icon": "polygon"
+    },
+    "vial_liquid_seconds": {
+        "name": "Vial of Liquid Seconds",
+        "description": "A golden, twitching fluid. The rich drank time like wine, believing it would keep their glass skins from growing dull.",
+        "category": "consumable",
+        "effect": {
+            "type": "heal",
+            "value": 50
+        },
+        "icon": "vial"
+    },
+    "stopped_watch": {
+        "name": "The Stopped Watch",
+        "description": "A pocket watch with hands fused to the face. It feels impossibly heavy. A keepsake of the Architect.",
+        "category": "key",
+        "effect": null,
+        "icon": "watch"
+    },
+    "rusty_key_hand": {
+        "name": "The Rusty Key-Hand",
+        "description": "A mechanical hand clutching a key. Opens Maintenance Doors throughout the Shardscape.",
+        "category": "key",
+        "effect": {
+            "type": "unlock",
+            "target": "maintenance_doors"
+        },
+        "icon": "key"
+    },
+    "breath_of_creator": {
+        "name": "Breath of the Creator",
+        "description": "He gave his breath to make them beautiful, but he had no breath left to tell them they were fragile.",
+        "category": "boss_soul",
+        "effect": {
+            "type": "unlock_spell",
+            "spell": "glass_form"
+        },
+        "icon": "breath"
+    },
+    "tuning_fork_greatsword": {
+        "name": "Tuning Fork Greatsword",
+        "description": "A massive, two-pronged blade made of heavy iron. Vibrates violently upon impact. Standard issue for the Silence Guard.",
+        "category": "weapon",
+        "effect": {
+            "type": "equip",
+            "damage": 40,
+            "resonance_gain": 5
+        },
+        "icon": "sword"
+    }
+}

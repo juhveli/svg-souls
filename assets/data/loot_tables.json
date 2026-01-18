@@ -1,0 +1,62 @@
+{
+    "serum_bot": {
+        "vibration": {
+            "min": 5,
+            "max": 15,
+            "chance": 1.0
+        },
+        "items": [
+            {
+                "id": "glass_shard",
+                "chance": 0.1
+            }
+        ]
+    },
+    "porcelain_dancer": {
+        "vibration": {
+            "min": 10,
+            "max": 25,
+            "chance": 1.0
+        },
+        "items": [
+            {
+                "id": "glass_shard",
+                "chance": 0.15
+            },
+            {
+                "id": "vial_liquid_seconds",
+                "chance": 0.05
+            }
+        ]
+    },
+    "golgotha": {
+        "vibration": {
+            "min": 200,
+            "max": 500,
+            "chance": 1.0
+        },
+        "items": [
+            {
+                "id": "stopped_watch",
+                "chance": 1.0
+            },
+            {
+                "id": "rusty_key_hand",
+                "chance": 1.0
+            }
+        ]
+    },
+    "boss_glass_blower": {
+        "vibration": {
+            "min": 500,
+            "max": 1000,
+            "chance": 1.0
+        },
+        "items": [
+            {
+                "id": "breath_of_creator",
+                "chance": 1.0
+            }
+        ]
+    }
+}
