@@ -22,7 +22,7 @@ export class ZoneSystem {
             description: "A rust-choked graveyard of failed prototypes.",
             trigger: (x, _y) => {
                 const game = (window as any).Game?.getInstance();
-                if (x > 780) {
+                if (x > 1580) { // Updated for 1600px width
                     if (game && game.bossesDefeated.has('golgotha') && game.narrativesRead.size >= 2) {
                         return true;
                     } else {

@@ -4,5 +4,7 @@
  */
 export abstract class GameMap {
     abstract el: SVGGElement;
+    abstract width: number;
+    abstract height: number;
     abstract destroy(): void;
 }

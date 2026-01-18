@@ -6,6 +6,8 @@ import { NPCEntity } from '../entities/NPCEntity';
 
 export class GlassGardensMap extends GameMap {
     el: SVGGElement;
+    width: number = 800;
+    height: number = 600;
 
     constructor() {
         super();

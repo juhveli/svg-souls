@@ -5,6 +5,8 @@ import { SVGAssets } from './SVGAssets';
 
 export class ClockworkArteriesMap extends GameMap {
     el: SVGGElement;
+    width: number = 800;
+    height: number = 600;
 
     constructor() {
         super();

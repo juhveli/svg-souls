@@ -3,6 +3,8 @@ import { GameMap } from './GameMap';
 
 export class ScrapyardMap extends GameMap {
     el: SVGGElement;
+    width: number = 1600;
+    height: number = 600;
 
     constructor() {
         super();
@@ -21,8 +23,8 @@ export class ScrapyardMap extends GameMap {
 
     private generateGeometry() {
         // 1. Base Floor (The Junk Pile)
-        // We create a jagged skyline of trash instead of a flat rect
-        const junkPath = SVGAssets.junkPile(0, 500, 800, 100, 123);
+        // Expanded to 1600 width
+        const junkPath = SVGAssets.junkPile(0, 500, 1600, 100, 123);
         const floor = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         floor.setAttribute('d', junkPath);
         floor.setAttribute('fill', '#1a1111');
@@ -45,8 +47,8 @@ export class ScrapyardMap extends GameMap {
         `;
 
         // 4. Glass Shards (The Shatter)
-        for (let i = 0; i < 15; i++) {
-            const x = Math.random() * 800;
+        for (let i = 0; i < 30; i++) { // Doubled shards
+            const x = Math.random() * 1600;
             const y = 450 + Math.random() * 150; // Only on floor
             const rot = Math.random() * 360;
             const size = 5 + Math.random() * 10;
@@ -61,7 +63,7 @@ export class ScrapyardMap extends GameMap {
 
         // Walls (Invisible Collision boundaries, visualized as darker shadows)
         this.addRect(0, 0, 20, 600, '#00000088');
-        this.addRect(780, 0, 20, 600, '#00000088');
+        this.addRect(1580, 0, 20, 600, '#00000088');
     }
 
     private addRect(x: number, y: number, w: number, h: number, color: string) {

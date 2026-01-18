@@ -21,6 +21,7 @@ import { ClockworkArteriesMap } from '../world/ClockworkArteriesMap';
 import { ReflectionSystem } from '../systems/ReflectionSystem';
 import { ItemDatabase } from '../systems/ItemDatabase';
 import { PersistenceManager } from './PersistenceManager';
+import { Camera } from './Camera';
 
 export class Game {
     lastTime: number = 0;
@@ -34,6 +35,7 @@ export class Game {
     // Event System
     events!: EventManager;
     loreFX!: LoreFXSystem;
+    camera!: Camera;
 
     static instance: Game;
 
@@ -66,6 +68,7 @@ export class Game {
             this.audio = AudioController.getInstance();
             this.events = EventManager.getInstance();
             this.loreFX = new LoreFXSystem();
+            this.camera = new Camera(800, 600);
 
             // Initialize Systems
             const barkSystem = BarkSystem.getInstance();
@@ -210,6 +213,12 @@ export class Game {
         // Spawn First Enemy
         const bot = new SerumBot(650, 300, this.player);
         this.entityManager.add(bot);
+
+        // Camera Follow
+        this.camera.follow(this.player);
+        if (this.map) {
+            this.camera.setBounds(this.map.width, this.map.height);
+        }
     }
 
     handleZoneChange(name: string, _index: number) {
@@ -242,11 +251,14 @@ export class Game {
             this.entityManager.add(new NarrativeItem(300, 450, mirrorSVG, "Mirror", "No reflection.", this.player));
         }
 
+        // Update Camera Bounds
+        this.camera.setBounds(this.map.width, this.map.height);
+
         // 4. Teleport Player
         if (this.player.x > 400) {
             this.player.x = 50; // Entered from left
         } else {
-            this.player.x = 750; // Entered from right
+            this.player.x = this.map.width - 50; // Entered from right
         }
 
         // 5. Update Background Art (Cheap Hack)
@@ -291,13 +303,23 @@ export class Game {
 
         // --- GRAPHICS UPDATE ---
 
-        // 1. Parallax (Based on Player offset from center)
-        if (this.player && this.bgFar && this.bgMid) {
-            const ox = (this.player.x - 400) * -0.05; // Far moves 5% opposite
-            const oy = (this.player.y - 300) * -0.05;
+        // 0. Update Camera
+        this.camera.update();
 
-            const mx = (this.player.x - 400) * -0.15; // Mid moves 15% opposite
-            const my = (this.player.y - 300) * -0.15;
+        // 1. World Scroll
+        if (this.map && this.map.el) {
+            this.map.el.setAttribute('transform', this.camera.getTransform());
+        }
+
+        // 2. Parallax (Based on Camera position)
+        if (this.bgFar && this.bgMid) {
+            // Far moves very slowly (10% of world speed)
+            const ox = -this.camera.x * 0.1;
+            const oy = -this.camera.y * 0.1;
+
+            // Mid moves slowly (50% of world speed)
+            const mx = -this.camera.x * 0.5;
+            const my = -this.camera.y * 0.5;
 
             this.bgFar.setAttribute('transform', `translate(${ox}, ${oy})`);
             this.bgMid.setAttribute('transform', `translate(${mx}, ${my})`);
