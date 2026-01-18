@@ -1,0 +1,9 @@
+{
+    "test_cases": [
+        {
+            "input": "Knight_South",
+            "expected_constraint": "Must contain at least 20 <rect> tags with #1a1a1a",
+            "failure_action": "Increase decay_level by 0.2 and re-run texture synthesizer."
+        }
+    ]
+}
