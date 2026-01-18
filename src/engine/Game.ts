@@ -52,6 +52,7 @@ export class Game {
     // Graphics State
     lastResonance: number = 100;
     shatterTimer: number = 0;
+    lastMonoMatrixValue: string = "";
 
     // Progression Gating
     bossesDefeated: Set<string> = new Set();
@@ -329,7 +330,11 @@ export class Game {
         if (this.player && this.monoMatrix) {
             const healthPct = Math.max(0, this.player.currentResonance / this.player.maxResonance);
             // Saturation logic: 1.0 (Full) -> 0.0 (Grey)
-            this.monoMatrix.setAttribute('values', healthPct.toFixed(2));
+            const newValue = healthPct.toFixed(2);
+            if (newValue !== this.lastMonoMatrixValue) {
+                this.monoMatrix.setAttribute('values', newValue);
+                this.lastMonoMatrixValue = newValue;
+            }
         }
 
         // 3. Shatter Glitch (Trigger on Damage)
