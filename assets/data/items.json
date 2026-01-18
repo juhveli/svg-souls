@@ -18,14 +18,14 @@
     },
     "stopped_watch": {
         "name": "The Stopped Watch",
-        "description": "A pocket watch with hands fused to the face. It feels impossibly heavy. A keepsake of the Architect.",
+        "description": "A pocket watch with hands fused to the face. It pulses with a phantom weight, heavier than lead. The Architect did not lose it; they left it behind when time became a burden.",
         "category": "key",
         "effect": null,
         "icon": "watch"
     },
     "rusty_key_hand": {
         "name": "The Rusty Key-Hand",
-        "description": "A mechanical hand clutching a key. Opens Maintenance Doors throughout the Shardscape.",
+        "description": "A severed automaton hand, rigor-locked around an iron key. It refuses to let go, even in rust. Opens Maintenance Doors that were sealed to keep the silence out.",
         "category": "key",
         "effect": {
             "type": "unlock",
@@ -53,5 +53,19 @@
             "resonance_gain": 5
         },
         "icon": "sword"
+    },
+    "cracked_mirror": {
+        "name": "A Cracked Mirror",
+        "description": "The glass reflects the smog and the steel, but your face is absent. Only a hollow ache remains where your image should be. Proof that you are a ghost in this machine.",
+        "category": "narrative",
+        "effect": null,
+        "icon": "mirror"
+    },
+    "foremans_ledger": {
+        "name": "Foreman's Ledger",
+        "description": "A log of 'Soft Units' marked for the furnace. The final entry is stamped 12:00:00, repeated until the ink ran dry. The exact second the world decided to stop breathing.",
+        "category": "narrative",
+        "effect": null,
+        "icon": "book"
     }
 }

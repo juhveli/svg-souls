@@ -13,9 +13,9 @@
         "name": "Defunct Maintenance Unit",
         "svg": "<g class=\"npc\"><rect x=\"-10\" y=\"-10\" width=\"20\" height=\"20\" fill=\"#555\" stroke=\"#333\" stroke-width=\"2\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f00\" opacity=\"0.5\" /></g>",
         "dialogue": [
-            "ER...ROR... UN...AUTHOR...IZED...",
-            "MAIN...TEN...ANCE... SCHED...ULED...",
-            "PLEASE... STAND... BY..."
+            "ER...ROR... SCHEDULED MAINTENANCE OVERDUE BY... [DATA CORRUPTED]... CENTURIES.",
+            "DO NOT... STEP ON THE... GRASS. IT IS... SHARP.",
+            "I CANNOT... FIX... THE SKY. IT IS... TOO BROKEN."
         ]
     }
 }
