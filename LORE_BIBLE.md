@@ -25,6 +25,18 @@
     *   **Porcelain Dancers:** Automata that once danced to the Carillon. Now broken.
     *   **Tick-Tock:** The Broken Bard. Obsessed with the rhythm of silence.
 
-## Items & Artifacts
-*   **Cracked Mirror:** Shows the world but not the "Soft Ones". Implies the player has no reflection in this metallic reality, or they are a "ghost" in the machine.
-*   **Foreman's Ledger:** Documents the disposal of organics. The timestamp "12:00:00" marks the end of history.
+## Canonical Items
+*   **Glass Shard:** Fragment of crystallized time.
+*   **Vial of Liquid Seconds:** Consumable time used by the rich.
+*   **The Stopped Watch:** A heavy keepsake of the Architect, left behind when time became a burden.
+*   **The Rusty Key-Hand:** A severed automaton hand that refuses to let go of its key.
+*   **Breath of the Creator:** The remaining life-force of a god who gave everything to create beauty.
+*   **Tuning Fork Greatsword:** Weapon of the Silence Guard.
+
+## Canonical Narrative Objects
+*   **A Cracked Mirror:** Reflects the world but not the player, suggesting they are a ghost in the machine.
+*   **Foreman's Ledger:** Documents the end of history at 12:00:00, when the world stopped breathing.
+
+## Canonical NPCs
+*   **Tick-Tock, the Broken Bard:** Observes the "rests" in the music of existence.
+*   **Defunct Maintenance Unit:** An automaton lamenting the broken sky and overdue schedules.

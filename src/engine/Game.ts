@@ -183,20 +183,30 @@ export class Game {
     }
 
     spawnScrapyardNarrative() {
+        const db = ItemDatabase.getInstance();
+
+        // Mirror
+        const mirrorItem = db.get('cracked_mirror');
+        const mirrorDesc = mirrorItem ? mirrorItem.description : "The glass reflects the smog... [DATA MISSING]";
+        const mirrorName = mirrorItem ? mirrorItem.name : "Cracked Mirror";
+
         const mirrorSVG = `
             <rect x="-20" y="-30" width="40" height="60" fill="#4ff" opacity="0.3" filter="url(#glass-shine)" stroke="#fff" />
             <path d="M-20,-30 L20,30 M-20,30 L20,-30" stroke="#fff" stroke-width="0.5" opacity="0.2" />
         `;
-        const mirror = new NarrativeItem(300, 450, mirrorSVG, "A Cracked Mirror", "The glass reflects the smog and the steel, but your face is absent. Only a hollow ache remains where your image should be.", this.player);
-        this.entityManager.add(mirror);
+        this.entityManager.add(new NarrativeItem(300, 450, mirrorSVG, mirrorName, mirrorDesc, this.player));
+
+        // Ledger
+        const ledgerItem = db.get('foremans_ledger');
+        const ledgerDesc = ledgerItem ? ledgerItem.description : "Entries for 'Soft Units'... [DATA MISSING]";
+        const ledgerName = ledgerItem ? ledgerItem.name : "Foreman's Ledger";
 
         const ledgerSVG = `
             <rect x="-15" y="-10" width="30" height="20" fill="#dcb" stroke="#544" />
             <line x1="-10" y1="-5" x2="10" y2="-5" stroke="#544" stroke-width="1" />
             <line x1="-10" y1="0" x2="10" y2="0" stroke="#544" stroke-width="1" />
         `;
-        const ledger = new NarrativeItem(600, 520, ledgerSVG, "Foreman's Ledger", "A log of 'Soft Units' marked for the furnace. The final entry is stamped 12:00:00, repeated until the ink ran dry. The moment the clock died.", this.player);
-        this.entityManager.add(ledger);
+        this.entityManager.add(new NarrativeItem(600, 520, ledgerSVG, ledgerName, ledgerDesc, this.player));
     }
 
     startGame() {

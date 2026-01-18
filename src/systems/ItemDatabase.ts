@@ -12,7 +12,7 @@ interface ItemEffect {
 interface ItemDefinition {
     name: string;
     description: string;
-    category: 'material' | 'consumable' | 'key' | 'boss_soul' | 'weapon';
+    category: 'material' | 'consumable' | 'key' | 'boss_soul' | 'weapon' | 'narrative';
     effect: ItemEffect | null;
     icon: string;
 }
