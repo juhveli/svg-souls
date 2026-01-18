@@ -8,6 +8,11 @@ After the rusty darkness of The Scrapyard, this area is blindingly bright. It is
 *   **Visual Style:** Rainbows everywhere. White marble and clear glass.
 *   **Audio:** High-pitched, crystalline wind chimes. The sound of glass cracking underfoot.
 
+### 1.1 Lore Connectivity (The Parasite)
+The beauty here is stolen.
+*   **From Below (Area 3):** Massive heat-pipes run up the sides of the spires. The Gardens drain 90% of the world's power to keep the "Artificial Sun" shining.
+*   **From Below (Area 1):** The "Soil" in the gardens is composted scrap from Area 1. The Glazewrights believe that "Trash must be refined into Art," literally growing flowers out of the rusted corpses of their failures.
+
 ## 2. Core Mechanics
 
 ### 2.1 The Reflection Truth (Active Storytelling)

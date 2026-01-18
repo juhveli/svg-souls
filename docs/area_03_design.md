@@ -8,6 +8,11 @@ We descend from the beautiful Glass Gardens into the sweating, ticking heart of 
 *   **Visual Style:** Brass, steam, lava-like "Liquid Time" flowing in pipes. Darker, grittier, and claustrophobic.
 *   **Audio:** The "Heartbeat" of the world is loud here. 4/4 industrial techno woven into the ambient noise of pistons.
 
+### 1.1 Lore Connectivity (The Dying Host)
+This area is suffering to keep the Gardens alive.
+*   **The Overheat:** The "Red Zones" are not natural; they are areas where the coolant was diverted to the Upper City.
+*   **The Sabotage:** You will find "Golden Wire" jammed into gears. The **Silence Guard** (from Area 4) has been sneaking down here to stop the machine, while the Gardens drain it dry. The Gear-Keepers are fighting a war on two fronts.
+
 ## 2. Core Mechanics
 
 ### 2.1 The Beat of the Machine (Active Storytelling)

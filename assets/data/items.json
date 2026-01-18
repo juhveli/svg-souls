@@ -77,5 +77,29 @@
             "value": 20
         },
         "icon": "oil"
+    },
+    "mask_of_silencer": {
+        "name": "Mask of the Silencer",
+        "description": "A mask woven from gold wire that covers the mouth. It whispers things that make you want to stop breathing. \"Silence is not empty; it is full of teeth.\"",
+        "category": "key",
+        "effect": null,
+        "icon": "mask"
+    },
+    "architects_blueprints": {
+        "name": "Architect's Blueprints",
+        "description": "Schematics for the Grand Carillon. A frantic hand has scrawled \"SHE IS LISTENING\" over the dampener mechanism.",
+        "category": "key",
+        "effect": null,
+        "icon": "scroll"
+    },
+    "crystallized_tear": {
+        "name": "Crystallized Tear",
+        "description": "A tear shed by a god, frozen in perfect stasis. It vibrates with a sadness profound enough to tune a bell.",
+        "category": "key",
+        "effect": {
+            "type": "unlock_ending",
+            "target": "true_path"
+        },
+        "icon": "tear"
     }
 }

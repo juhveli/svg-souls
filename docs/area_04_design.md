@@ -30,14 +30,22 @@ The highest point of the world. The machinery has stopped, and the glass is grou
 *   **Behavior:** A disembodied giant hand that tries to "mute" the player.
 *   **Attack:** Grabs the player and debuffs their "Resonance" to 0.
 
-## 4. The Final Boss: The Grand Architect (The Conductor)
-**Lore:** The man who broke time. He is sitting at the console of the Carillon, weeping into his hands. He isn't evil; he is paralyzed by the fear of making a mistake.
+## 4. The Boss: The Grand Architect (The False King)
+**Lore:** The man who broke time. He sits at the console, believing he is holding the universe together by sheer will. He is not evil; he is a victim.
 *   **Arena:** The Bell Tower.
 *   **Mechanics:**
-    *   *Phase 1 (The conductor):* He wields a baton. Every swing creates a "Bar Line" that cuts across the screen (Physical hazard).
-    *   *Phase 2 await (The Crescendo):* He starts the Carillon. The "Global Bell" tolls every 3 seconds. The screen shakes violently.
-    *   *The Twist:* You don't kill him. To win, you must *Parry his Tears*. You catch his grief (Resonance) and use it to "Tune" the Bell.
-*   **Ending:** The bell rings a *True C-Major*. The world doesn't shatter; it flows. Time resumes. The Soft One dissolves into the music, finally becoming part of the song.
+    *   *Phase 1:* He attacks with "Bar Lines" (Lasers).
+    *   *Phase 2:* He activates the Bell.
+    *   *The Choice:* You can kill him (Bad Ending) or use the *Crystallized Tear* to "Parry his Grief" (True Path).
 
-## 5. Narrative Conclusion
+## 5. The True Final Boss: Vespers, The Void Mother
+*   **Trigger:** If you save the Architect, the shadow behind him tears open. **Vespers** emerges.
+*   **Lore:** She is the Silence that the Architect feared. She has been feeding on his despair for centuries.
+*   **Mechanics:**
+    *   *Audio:* The game goes completely silent. No music. Only sound effects.
+    *   *Visuals:* The screen tears. You fight on "Negative Space."
+    *   *Attack:* She erases parts of the UI. You lose your Health Bar (visual only) and must feel your damage.
+*   **Ending (True):** The Architect plays the "First Chord," and the Echo Walker becomes the hammer that strikes the bell. The Silence is broken.
+
+## 6. Narrative Conclusion
 *   **The Message:** Perfection is stagnation. Dissonance is necessary for movement (Life).
