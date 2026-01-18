@@ -6,13 +6,12 @@ interface Particle {
     life: number;
     maxLife: number;
     color: string;
-    el?: SVGCircleElement;
 }
 
 export class ParticleSystem {
     el: SVGGElement;
     particles: Particle[] = [];
-    private pool: SVGCircleElement[] = [];
+    private pathEls: Map<string, SVGPathElement> = new Map();
 
     constructor() {
         this.el = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -27,28 +26,19 @@ export class ParticleSystem {
             const angle = Math.random() * Math.PI * 2;
             const speed = 50 + Math.random() * 100;
 
-            // Get from pool or create
-            let circle = this.pool.pop();
-            if (!circle) {
-                circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                this.el.appendChild(circle);
-            }
-            circle.setAttribute('style', 'display: block');
-            circle.setAttribute('fill', color);
-
             this.particles.push({
                 x, y,
                 vx: Math.cos(angle) * speed,
                 vy: Math.sin(angle) * speed,
                 life: 0.5 + Math.random() * 0.5,
                 maxLife: 1.0,
-                color,
-                el: circle
+                color
             });
         }
     }
 
     update(dt: number) {
+        // 1. Update Physics & Filter Dead
         for (let i = this.particles.length - 1; i >= 0; i--) {
             const p = this.particles[i];
             p.life -= dt;
@@ -56,19 +46,43 @@ export class ParticleSystem {
             p.y += p.vy * dt;
 
             if (p.life <= 0) {
-                if (p.el) {
-                    p.el.setAttribute('style', 'display: none');
-                    this.pool.push(p.el);
-                }
                 this.particles.splice(i, 1);
-                continue;
-            }
-
-            if (p.el) {
-                p.el.setAttribute('cx', p.x.toString());
-                p.el.setAttribute('cy', p.y.toString());
-                p.el.setAttribute('r', (p.life * 5).toString());
             }
         }
+
+        // 2. Build Paths
+        const pathData = new Map<string, string>();
+
+        for (const p of this.particles) {
+            const r = p.life * 5;
+            if (r <= 0) continue;
+
+            // Circle Path: M cx, cy m -r, 0 a r,r 0 1,0 (r*2),0 a r,r 0 1,0 -(r*2),0
+            const d = `M${p.x},${p.y}m${-r},0a${r},${r} 0 1,0 ${r*2},0a${r},${r} 0 1,0 ${-r*2},0`;
+
+            const current = pathData.get(p.color) || '';
+            pathData.set(p.color, current + d);
+        }
+
+        // 3. Render
+        // Clear old paths for colors not present this frame
+        for (const [color, pathEl] of this.pathEls) {
+            if (!pathData.has(color)) {
+                pathEl.setAttribute('d', '');
+            }
+        }
+
+        // Update active paths
+        for (const [color, d] of pathData) {
+            let pathEl = this.pathEls.get(color);
+            if (!pathEl) {
+                pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                pathEl.setAttribute('fill', color);
+                this.el.appendChild(pathEl);
+                this.pathEls.set(color, pathEl);
+            }
+            pathEl.setAttribute('d', d);
+        }
+
     }
 }
