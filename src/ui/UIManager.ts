@@ -7,14 +7,7 @@ export class UIManager {
     private statusContainer: HTMLElement; // New: Level/Vibration
     private gameContainer: HTMLElement;
 
-    constructor() {
-        if (UIManager.instance) {
-            // In singleton pattern usually we'd throw or return the existing, 
-            // but here I need to initialize properties on the *new* instance if I am using it,
-            // or just act as the singleton. 
-            // Simple hack: Assign static instance to this if null.
-        }
-        UIManager.instance = this;
+    private constructor() {
 
         this.gameContainer = document.getElementById('ui-layer')!;
 
@@ -55,6 +48,9 @@ export class UIManager {
     }
 
     static getInstance(): UIManager {
+        if (!UIManager.instance) {
+            UIManager.instance = new UIManager();
+        }
         return UIManager.instance;
     }
 

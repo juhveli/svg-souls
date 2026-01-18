@@ -64,7 +64,7 @@ export class Game {
             this.entityManager = new EntityManager();
             this.particles = new ParticleSystem();
             this.input = InputSystem.getInstance();
-            this.ui = new UIManager();
+            this.ui = UIManager.getInstance();
             this.audio = AudioController.getInstance();
             this.events = EventManager.getInstance();
             this.loreFX = new LoreFXSystem();
