@@ -47,15 +47,29 @@ export class ZoneSystem {
         {
             name: "Glass Gardens",
             description: "Fragile flora blooming from the silica sands.",
-            trigger: (x, _y) => x > 780, // Walk right to Area 3
+            trigger: (x, _y) => x > 1580,
             onData: { background: '#1a2a2a' },
             getTimeDilation: (_x, _y) => 1.0
         },
         {
             name: "The Clockwork Arteries",
             description: "A mechanical labyrinth of steam and rhythm.",
-            trigger: (x, _y) => x < 20, // Walk left to return
+            trigger: (x, _y) => x > 1580,
             onData: { background: '#151515' },
+            getTimeDilation: (_x, _y) => 1.0
+        },
+        {
+            name: "The Hushed Halls",
+            description: "A sanctuary of velvet and silence.",
+            trigger: (x, _y) => x > 1580,
+            onData: { background: '#100510' }, // Dark purple
+            getTimeDilation: (_x, _y) => 1.0
+        },
+        {
+            name: "The Crystal Belfry",
+            description: "The apex where the song is sung.",
+            trigger: (x, _y) => x > 1580,
+            onData: { background: '#f0f0f0' }, // White/Grey
             getTimeDilation: (_x, _y) => 1.0
         }
     ];
