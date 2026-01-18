@@ -393,10 +393,12 @@ export class Game {
             }
         }
 
-        // Boss Health Bar Logic (Example hook)
-        if (zoneIndex === 1) {
-            this.entityManager.entities.find(e => e instanceof Golgotha) as Golgotha;
-            // TODO: Update Boss UI if we had one
+        // Boss Health Bar Logic
+        const bossInstance = this.entityManager.entities.find(e => e instanceof Golgotha) as Golgotha;
+        if (bossInstance) {
+            this.ui.updateBossHealth("GOLGOTHA", bossInstance.hp, bossInstance.maxHp);
+        } else {
+            this.ui.hideBossHealth();
         }
 
         // Update UI

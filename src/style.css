@@ -144,6 +144,41 @@ body {
   display: none !important;
 }
 
+/* --- BOSS UI --- */
+#boss-meter {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    z-index: 20;
+    text-align: center;
+}
+
+#boss-meter .boss-name {
+    font-size: 16px;
+    letter-spacing: 4px;
+    margin-bottom: 4px;
+    color: #ff4444;
+    text-shadow: 0 0 5px #000;
+    font-weight: bold;
+}
+
+#boss-meter .boss-bar-bg {
+    width: 100%;
+    height: 12px;
+    background: #221111;
+    border: 2px solid #552222;
+}
+
+#boss-meter .boss-bar-fill {
+    width: 100%;
+    height: 100%;
+    background: #ff2222;
+    transition: width 0.2s;
+    box-shadow: 0 0 10px #ff0000;
+}
+
 /* --- SVG VISUAL MASTERY ANIMATIONS --- */
 
 /* Idle Breathing Animation for Player Cloak */
