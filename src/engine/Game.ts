@@ -183,6 +183,8 @@ export class Game {
         if (this.map) this.map.destroy();
 
         this.entityManager.entities = this.entityManager.entities.filter(e => e === this.player);
+        this.entityManager.enemies = [];
+        this.entityManager.narrativeItems = [];
 
         if (name === "Glass Gardens") {
             this.map = new GlassGardensMap();
@@ -236,8 +238,8 @@ export class Game {
         const zoneIndex = ZoneSystem.getInstance().currentZoneIndex;
 
         if (zoneIndex === 0) {
-            const enemies = this.entityManager.entities.filter(e => e instanceof SerumBot);
-            const boss = this.entityManager.entities.find(e => e instanceof Golgotha);
+            const enemies = this.entityManager.enemies.filter(e => e instanceof SerumBot);
+            const boss = this.entityManager.enemies.find(e => e instanceof Golgotha);
 
             if (enemies.length === 0 && !boss) {
                 const ex = 100 + Math.random() * 600;
@@ -254,7 +256,7 @@ export class Game {
             }
         }
 
-        const bossInstance = this.entityManager.entities.find(e => e instanceof Golgotha) as Golgotha;
+        const bossInstance = this.entityManager.enemies.find(e => e instanceof Golgotha) as Golgotha;
         if (bossInstance) {
             this.ui.updateBossHealth("GOLGOTHA", bossInstance.hp, bossInstance.maxHp);
         } else {

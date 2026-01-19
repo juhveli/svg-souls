@@ -1,4 +1,4 @@
-import { Entity } from '../Entity';
+import { Enemy } from './Enemy';
 import { Player } from '../Player';
 import { AudioController } from '../../engine/AudioController';
 import { EventManager } from '../../engine/EventManager';
@@ -15,7 +15,7 @@ const DANCER_SVG = `
     </g>
 `;
 
-export class PorcelainDancer extends Entity {
+export class PorcelainDancer extends Enemy {
     target: Player;
     speed: number = 60;
     hp: number = 20;
