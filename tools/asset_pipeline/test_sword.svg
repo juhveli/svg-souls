@@ -1,0 +1,22 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background (Transparent) -->
+
+        <!-- Hilt/Handle -->
+        <rect x="246" y="350" width="20" height="80" fill="#402010" />
+
+        <!-- Pommel -->
+        <circle cx="256" cy="440" r="20" fill="#606060" />
+
+        <!-- Guard -->
+        <rect x="196" y="340" width="120" height="20" rx="5" fill="#505050" />
+
+        <!-- Blade (Left Edge) -->
+        <path d="M256,50 L236.0,350 L256,350 Z" fill="#808080" />
+
+        <!-- Blade (Right Edge) -->
+        <path d="M256,50 L276.0,350 L256,350 Z" fill="#A0A0A0" />
+
+        <!-- Blood Groove / Fuller (Optional) -->
+        <rect x="251" y="100" width="10" height="230" fill="#404040" />
+
+    </svg>
