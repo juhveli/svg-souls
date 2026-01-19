@@ -1,4 +1,4 @@
-import { Entity } from '../Entity';
+import { Enemy } from './Enemy';
 import { Player } from '../Player';
 import { AudioController } from '../../engine/AudioController';
 import { Game } from '../../engine/Game';
@@ -6,7 +6,7 @@ import { EventManager } from '../../engine/EventManager';
 import { UIManager } from '../../ui/UIManager';
 import { ShardEntity } from '../ShardEntity';
 
-export class Golgotha extends Entity {
+export class Golgotha extends Enemy {
     target: Player;
     hp: number = 200;
     maxHp: number = 200;

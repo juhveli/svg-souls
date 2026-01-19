@@ -1,4 +1,4 @@
-import { Entity } from '../Entity';
+import { Enemy } from './Enemy';
 import { Player } from '../Player';
 import { AudioController } from '../../engine/AudioController';
 import { Game } from '../../engine/Game';
@@ -7,7 +7,7 @@ import { StateMachine } from '../../engine/StateMachine';
 import { SerumBotIdleState, SerumBotChaseState, SerumBotAttackState } from './SerumBotStates';
 import { ShardEntity } from '../ShardEntity';
 
-export class SerumBot extends Entity {
+export class SerumBot extends Enemy {
     target: Player;
     speed: number = 80;
     hp: number = 30;
