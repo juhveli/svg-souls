@@ -3,22 +3,16 @@ import { Entity } from '../entities/Entity';
 export class EntityManager {
     entities: Entity[] = [];
 
-    add(e: Entity) {
-        this.entities.push(e);
+    add(entity: Entity) {
+        this.entities.push(entity);
     }
 
     update(dt: number) {
-        // Update all
-        for (const e of this.entities) {
-            e.update(dt);
-        }
+        this.entities = this.entities.filter(e => !e.markedForDeletion);
+        this.entities.sort((a, b) => a.y - b.y);
 
-        // Cleanup dead
-        for (const e of this.entities) {
-            if (e.isDead) {
-                e.destroy();
-            }
+        for (const entity of this.entities) {
+            entity.update(dt);
         }
-        this.entities = this.entities.filter(e => !e.isDead);
     }
 }
