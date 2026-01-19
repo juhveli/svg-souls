@@ -25,7 +25,7 @@
     },
     "rusty_key_hand": {
         "name": "The Rusty Key-Hand",
-        "description": "A severed automaton hand, rigor-locked around an iron key. It refuses to let go, even in rust. Opens Maintenance Doors that were sealed to keep the silence out.",
+        "description": "The severed hand of a disposal unit, joints fused by oxidation. Even in death, it clutches its charge with mechanical devotion. It opens the Maintenance Doors, which were sealed to keep the grinding noise of the undercity from reaching the glass gardens above.",
         "category": "key",
         "effect": {
             "type": "unlock",
@@ -70,7 +70,7 @@
     },
     "oxidized_whistle": {
         "name": "Oxidized Whistle",
-        "description": "A copper whistle coated in verdigris. It produces a sound so high-pitched it vibrates rust off of metal.",
+        "description": "A copper instrument choked with verdigris. Scavengers crafted it to mimic the Conductor's pitch, hoping to be heard by the world above. But the frequency was wrong. It did not call a savior; it woke the rot that sleeps beneath the rust.",
         "category": "key",
         "effect": {
             "type": "trigger_event",
@@ -80,7 +80,7 @@
     },
     "scale_of_decay": {
         "name": "Scale of Decay",
-        "description": "A flake of metal from a beast that should not exist. It feels warm, like a fever.",
+        "description": "A flake of iron shedding endlessly from a creature that rejects the stasis of this world. It is warm, feverish, and heavy with the impossible concept of 'aging'. Proof that even the eternal must eventually turn to dust.",
         "category": "key",
         "effect": null,
         "icon": "scale"
