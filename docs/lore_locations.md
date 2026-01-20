@@ -32,7 +32,7 @@ The residential district of the nobility. A city of high spires, greenhouses, an
 2.  **The Shattered Greenhouse**
     *Lore: "The Fertilizer".*
     Once a sanctuary for the world's flora, this dome has shattered. The plants here are fed not by water, but by "Ground-Up Time"—a glowing, golden dust made by crushing the seconds of the lower classes. The flora has mutated, becoming razor-sharp and aggressive, hungering for the time remaining in the player's blood.
-    *   *Sub-Boss:* **The Glass-Blower Deity**. He floats above the wilted canopy, exhaling bubbles of molten glass that trap intruders.
+    *   *Sub-Boss:* **The Glass-Blower Deity**. He floats above the wilted canopy, exhaling bubbles of molten glass that trap the player.
 
 3.  **The Reflection Pools**
     Lakes of liquid mercury that do not show the present. Instead, they reflect the "Golden Age"—a time before the Shatter. In the reflection, the ruins are pristine ballrooms filled with dancing nobles; in reality, the player walks among corpses. Beware the *Vanity Wraiths* that hide in the mirror image.
@@ -76,7 +76,7 @@ The industrial underbelly that powers the Grand Carillon. Here, the heat is oppr
 
 ## World 4: The Hushed Halls (The Library)
 *Theme: Velvet Purple/Black, Silence, Libraries*
-A sanctuary built to absorb sound. Every surface is covered in heavy curtains, thick carpets, and sound-proofing foam. It is the only place in the world where the Carillon cannot be heard.
+A sanctuary built to absorb sound. Every surface is covered in heavy curtains, thick carpets, and black "Void-Stone" that absorbs light and noise. It is the only place in the world where the Carillon cannot be heard.
 
 ### Areas
 1.  **The Muted Gallery**
@@ -107,7 +107,7 @@ The summit of existence. The reality here is thin, dissolving into static and wh
 
 ### Areas
 1.  **The Spiral Stair**
-    Floating steps made of solidified light that spiral up into the void. There are no railings, and the "sky" is a wall of television static. Occasionally, the static clears to show *our* world (modern day Earth), implying the game world is just a simulation or a dream.
+    Floating steps made of solidified light that spiral up into the void. There are no railings, and the "sky" is a wall of television static. Occasionally, the static clears to show *other worlds*, implying this reality is but one channel of many.
     *   *Visual Detail:* The steps chime like piano keys when stepped on.
     *   *Sub-Boss:* **The Gatekeeper**. A being of pure lens flare that guards the ascent. Looking directly at him blinds the player.
 
@@ -116,15 +116,15 @@ The summit of existence. The reality here is thin, dissolving into static and wh
     *   *Lore Hook:* "The Bell of Regret." A massive, cracked bell that, when struck, plays a note that makes the player weep (camera shake + blur).
 
 3.  **The Singularity Point**
-    The very tip of the tower, where all timelines converge. Here, the player can see "Echoes" of other players (or themselves from previous runs) wandering in the distance. The laws of physics (gravity, time) flicker on and off like a bad connection.
-    *   *Environment:* Objects from previous worlds (a gear, a glass flower) float here in zero gravity, stripped of their texture (whitebox models), revealing the underlying code of the world.
+    The very tip of the tower, where all timelines converge. Here, the player can see "Echoes" of other players (or themselves from previous runs) wandering in the distance. The laws of physics (gravity, time) flicker on and off.
+    *   *Environment:* Objects from previous worlds (a gear, a glass flower) float here in zero gravity, stripped of their texture, appearing as "Wireframes of Reality"—the underlying math of the world exposed.
 
 4.  **The Carillon Deck (Boss Arena)**
     The massive musical instrument that regulates the flow of time. The keyboard is the size of a building. **The Prime Conductor** waits at the organ, his back to the player, playing the song that keeps the world trapped in its loop.
-    *   *The Secret Path:* If the player possesses the four "Keys to the Paradox" (Scale, Shard, Spring, Throat), a hidden door opens behind the organ leading to **The Developer's Room** (The Paradox Boss Fight).
+    *   *The Secret Path:* If the player possesses the four "Keys to the Paradox" (Scale, Shard, Spring, Throat), a hidden door opens behind the organ leading to **The Zero Point** (The Paradox Boss Fight).
 
 ### Lore Fragments & Echoes
 *   **Corrupted Log File:**
-    > "Simulation #403 failed. The subjects are becoming self-aware. Resetting variables. Note: The 'Dampener' unit is exhibiting unexpected resistance to the rewrite."
+    > "Iteration #403 unstable. The subject is resisting the rewrite. The song cannot resolve. We must... eject..."
 *   **Echo (The Static):**
-    > "I can see the code... it's all just math... We are just... numbers..."
+    > "I can see the math... it's all just numbers... We are just... music..."
