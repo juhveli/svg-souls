@@ -46,7 +46,27 @@ This document contains the text for readable items found throughout the world (D
 
 ---
 
-## III. Miscellaneous Flavortext
+## III. Echoes of the Hidden (Secret Boss Backstories)
+*These texts are found only near the summoning locations of the Secret Bosses.*
+
+### 1. Fossilized Scrawl (Found near the Smog Vent)
+> "The beast isn't eating the metal to survive. It's eating the *age* of the metal. It consumes the rust, the wear, the history. It wants the world to be shiny and new again. I fear what happens when it runs out of old things to eat. Will it start eating tomorrow?"
+
+### 2. A Shattered Mirror Inscription (Found near the Reflection Pools)
+> "I looked until my eyes bled. The face in the water was perfect. But it wasn't mine. It was the face of the man I *wanted* to be. So I broke the water. I had to know if he was hiding underneath. He wasn't. There was only mud."
+
+### 3. A Shift Report from 100 Years Ago (Found in the Gear-Train)
+> "Unit 404 is acting strange. It keeps trying to repair a gear that isn't broken yet. It says it's 'pre-fixing' the error. The General says it's efficient. I say it's haunted. It's living in a second that hasn't ticked."
+
+### 4. Torn Sheet Music (Found in the Muted Gallery)
+> "She had the most beautiful voice in the choir. When she hit the High C, the glass cracked. She said the Conductor told her to sing higher. To sing a note that would break the world. She refused. She cut her own throat rather than sing the end of days. Now she hums it in her sleep."
+
+### 5. `//TODO: COMMENT_BLOCK` (Found in The Zero Point)
+> `// DEVS: Do not delete this asset. It's a load-bearing glitch. If we remove the Paradox entity, the whole physics engine collapses. Just hide it behind the firewall and hope no player finds the keys.`
+
+---
+
+## IV. Miscellaneous Flavortext
 
 ### The "Glitch" Graffiti (Scattered in World 5)
 *   "The sky is flat."

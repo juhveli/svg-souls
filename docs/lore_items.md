@@ -132,3 +132,21 @@
 *   **Description:**
     > *A handful of white powder that flickers in and out of existence.*
     > *"Matter that cannot decide if it is real. Snorting it grants a brief vision of a world without crystal, where the sky is blue instead of white static. The user usually wakes up screaming."*
+
+### Metronome Oil
+*   **Source:** Clockwork Arteries (Gear-Keeper Drop).
+*   **Description:**
+    > *A flask of thick, black lubricant that smells of burnt coffee.*
+    > *"The Gear-Keepers drink this to stay awake. It keeps their internal pendulums swinging without friction. Warning: Highly addictive to anyone with a heartbeat."*
+
+### Velvet Ear-Plugs
+*   **Source:** Hushed Halls (Silent Monk Drop).
+*   **Description:**
+    > *Two small cones of dense, purple foam.*
+    > *"Standard issue for the initiates. Before they are ready to sew their mouths shut, they must first learn to stop listening to the world's lies. It blocks out everything but the sound of your own blood."*
+
+### Opaque Mirror
+*   **Source:** Glass Gardens (Hidden Chest).
+*   **Description:**
+    > *A hand mirror that has been painted over with matte black paint.*
+    > *"A scandalous contraband item. To own a mirror that does not reflect is to deny one's existence. It was likely used by a Glazewright who wanted, just for a moment, to be unseen."*

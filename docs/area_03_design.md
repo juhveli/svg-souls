@@ -45,4 +45,4 @@ The level itself is an instrument.
 ## 5. Narrative Progression
 *   **Entrance:** You fall through a ventilation shaft from the Glass Gardens (showing the literal "Trash/Treasure" relationship).
 *   **Mid-Point:** The massive "Ticking Heart" of the world. It is skipping beats.
-*   **Exit:** You realize the Heart isn't broken; it's being *strangled* by silence coming from above. You must ascend the central shaft to **Area 4: The Silent Spire**.
+*   **Exit:** You realize the Heart isn't broken; it's being *strangled* by silence coming from above. You must ascend the central shaft to **Area 4: The Hushed Halls**.

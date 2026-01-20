@@ -76,7 +76,80 @@ See `active_storytelling.md` for technical implementation. This document contain
 
 ---
 
-## IV. Rare Barks (The Glitch)
+## IV. Sub-Boss Dialogue (The Lieutenants)
+
+### World 1: The Trash-Compactor
+*Concept: A mindless machine trying to process everything.*
+*   **[Idle]** "Compacting... compacting... standard density required."
+*   **[Aggro]** "Irregular shape detected! Flatten! Flatten!"
+*   **[Hit]** "Jam detected! Clearing obstruction!"
+*   **[Death]** "Pressure... failure... system... offline..."
+
+### World 2: The Glass-Blower Deity
+*Concept: A desperate artist trying to fix a broken world.*
+*   **[Idle]** "Don't break... please don't break... just one more breath..."
+*   **[Aggro]** "You move too much! You will shatter them!"
+*   **[Hit]** "My lungs! I have no breath left!"
+*   **[Death]** "They are all... just... shards..."
+
+### World 3: The Steam-Marshal
+*Concept: Obsessed with pressure and containment.*
+*   **[Idle]** "Pressure steady. Valves holding. Do not let the steam escape."
+*   **[Aggro]** "Leak detected! Sealing the breach!"
+*   **[Hit]** "Pressure rising! Critical levels!"
+*   **[Death]** "The pipe... bursts..."
+
+### World 4: The Librarian
+*Concept: A strict guardian of silence.*
+*   **[Idle]** "Shhh... the ink is sleeping."
+*   **[Aggro]** "Quiet! No running in the archives!"
+*   **[Hit]** "Too loud! You are too loud!"
+*   **[Death]** "Silence... returns..."
+
+### World 5: The Gatekeeper
+*Concept: A being of pure light that blinds to protect.*
+*   **[Idle]** "I am the lens. I focus the Master's vision."
+*   **[Aggro]** "Do not look! The truth will blind you!"
+*   **[Hit]** "The focus... slips!"
+*   **[Death]** "Darkness... so... soothing..."
+
+---
+
+## V. Secret Boss Dialogue (The Forgotten)
+
+### World 1: The Rust-Dragon
+*Concept: Ancient, primal decay.*
+*   **[Intro]** "You smell of new iron. I shall age you."
+*   **[Attack]** "Return to the earth!"
+*   **[Death]** "Finally... the rust... takes... me..."
+
+### World 2: Narcissus
+*Concept: Self-loathing vanity.*
+*   **[Intro]** "Don't look at me! I am hideous! I am perfect!"
+*   **[Attack]** "Shatter the mirror! Break the image!"
+*   **[Death]** "The reflection... is gone... I am... free..."
+
+### World 3: The Chrono-Wraith
+*Concept: A lost moment in time.*
+*   **[Intro]** "I am the second you wasted. I am back to reclaim myself."
+*   **[Attack]** "Tick! Tock! Too late!"
+*   **[Death]** "My time... is up..."
+
+### World 4: The Banshee
+*Concept: A singer who refuses to sing.*
+*   **[Intro]** *[A low, mournful hum that vibrates the screen]*
+*   **[Attack]** "Hear my silence!"
+*   **[Death]** "The song... is broken..."
+
+### World 5: The Paradox
+*Concept: Meta-aware glitch.*
+*   **[Intro]** "Ah, the player character. Let's see if your hitbox is accurate."
+*   **[Attack]** "Deleting asset!"
+*   **[Death]** "System... crash... 404... life not found..."
+
+---
+
+## VI. Rare Barks (The Glitch)
 *Low probability lines (1%) where the enemy momentarily breaks character and realizes the loop.*
 
 *   **Scavenger Crab:** "Why... am I... repeating...?"
@@ -86,7 +159,7 @@ See `active_storytelling.md` for technical implementation. This document contain
 
 ---
 
-## V. The Conductor's Whispers (Zone Triggers)
+## VII. The Conductor's Whispers (Zone Triggers)
 *Voice lines from the Guide that play upon entering specific areas, reinforcing his manipulation.*
 
 *   **World 1 (The Scrapyard):** "Look at this mess. They couldn't even recycle properly. Do me a favor, little one: clean it up."
