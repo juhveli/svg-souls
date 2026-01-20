@@ -268,6 +268,7 @@ export class WebGPURenderer {
             const name = e.constructor.name;
             if (name === 'Player') typeID = 1;
             else if (name === 'SerumBot') typeID = 2;
+            else if (name === 'ScavengerCrab') typeID = 3;
 
             // Params
             let p1 = 0, p2 = 0, p3 = 0, p4 = 0;

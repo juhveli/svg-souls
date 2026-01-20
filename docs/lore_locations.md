@@ -6,7 +6,7 @@ The lowest point of the world. A massive landfill where "bad ideas" and "broken 
 
 ### Areas
 1.  **The Rust Dunes:** Hills of oxidized iron dust.
-    *   *TODO: Add enemy types: Scavenger Crabs, Rust-Mites.*
+    *   *Enemy Types:* Scavenger Crabs (Tanky, wandering), Rust-Mites (Small, swarming).
 2.  **The Mannequin Graves:** Piles of discarded glass bodies that didn't make the cut.
     *   *TODO: Lore entry about "The First Draft of Humanity".*
 3.  **The Smog Vent:** A narrow canyon where toxic gas (liquid time waste) flows.
