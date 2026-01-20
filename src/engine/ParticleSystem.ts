@@ -39,16 +39,21 @@ export class ParticleSystem {
 
     update(dt: number) {
         // 1. Update Physics & Filter Dead
-        for (let i = this.particles.length - 1; i >= 0; i--) {
+        let writeIdx = 0;
+        for (let i = 0; i < this.particles.length; i++) {
             const p = this.particles[i];
             p.life -= dt;
             p.x += p.vx * dt;
             p.y += p.vy * dt;
 
-            if (p.life <= 0) {
-                this.particles.splice(i, 1);
+            if (p.life > 0) {
+                if (i !== writeIdx) {
+                    this.particles[writeIdx] = p;
+                }
+                writeIdx++;
             }
         }
+        this.particles.length = writeIdx;
 
         // 2. Build Paths
         const pathData = new Map<string, string>();
