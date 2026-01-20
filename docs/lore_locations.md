@@ -75,17 +75,21 @@ A sanctuary built to absorb sound. Every surface is covered in heavy curtains, t
 
 ## World 5: The Crystal Belfry (The Source)
 *Theme: White/Prismatic, Blinding Light, Abstract*
-The summit of existence. The reality here is thin, dissolving into static and white noise. Geometry becomes non-Euclidean, with stairs leading nowhere and light behaving like a solid.
+The summit of existence. The reality here is thin, dissolving into static and white noise. Geometry becomes non-Euclidean, with stairs leading nowhere and light behaving like a solid. The air smells of ozone and "new car smell"—the scent of a reality that hasn't been unwrapped yet.
 
 ### Areas
 1.  **The Spiral Stair**
-    Floating steps made of solidified light that spiral up into the void. There are no railings, and the "sky" is a wall of television static. Falling here means falling out of existence entirely.
+    Floating steps made of solidified light that spiral up into the void. There are no railings, and the "sky" is a wall of television static. Occasionally, the static clears to show *our* world (modern day Earth), implying the game world is just a simulation or a dream.
+    *   *Visual Detail:* The steps chime like piano keys when stepped on.
 
 2.  **The Bell-Foundry**
     The celestial workshop where the Bells of Creation were cast. The molds are still hot, smelling of ozone and petrichor. Broken, rejected bells litter the floor—universes that rang false and were discarded before they began.
+    *   *Lore Hook:* "The Bell of Regret." A massive, cracked bell that, when struck, plays a note that makes the player weep (camera shake + blur).
 
 3.  **The Singularity Point**
     The very tip of the tower, where all timelines converge. Here, the player can see "Echoes" of other players (or themselves from previous runs) wandering in the distance. The laws of physics (gravity, time) flicker on and off like a bad connection.
+    *   *Environment:* Objects from previous worlds (a gear, a glass flower) float here in zero gravity, stripped of their texture (whitebox models), revealing the underlying code of the world.
 
 4.  **The Carillon Deck (Boss Arena)**
     The massive musical instrument that regulates the flow of time. The keyboard is the size of a building. **The Prime Conductor** waits at the organ, his back to the player, playing the song that keeps the world trapped in its loop.
+    *   *The Secret Path:* If the player possesses the four "Keys to the Paradox" (Scale, Shard, Spring, Throat), a hidden door opens behind the organ leading to **The Developer's Room** (The Paradox Boss Fight).
