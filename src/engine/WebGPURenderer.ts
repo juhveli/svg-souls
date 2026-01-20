@@ -225,34 +225,9 @@ export class WebGPURenderer {
         });
     }
 
-    private getChunkID(x: number, y: number): string {
-        const cx = Math.floor(x / this.CHUNK_SIZE);
-        const cy = Math.floor(y / this.CHUNK_SIZE);
-        return `${cx},${cy}`;
-    }
-
-    private getOrCreateChunk(id: string): ChunkData {
-        let chunk = this.chunks.get(id);
-        if (!chunk) {
-            const capacity = this.INITIAL_CHUNK_CAPACITY;
-            const buffer = this.device.createBuffer({
-                size: capacity * this.INSTANCE_SIZE,
-                usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
-            });
-            const cpuData = new Float32Array(capacity * 9); // 9 floats per instance
-            chunk = {
-                buffer,
-                capacity,
-                instanceCount: 0,
-                cpuData
-            };
-            this.chunks.set(id, chunk);
-        }
-        return chunk;
-    }
-
-    render(entities: any[], camera: any) {
-        // Phase 4 - Chunking System Implemented
+    render(entities: any[], camera: any, playerRef?: any) {
+        // TODO: Phase 4 - Chunking System
+        // Instead of a single instanceBuffer for all entities, use per-chunk buffers.
         // Culling: Only upload/render chunks visible to camera.
 
         // TODO: Phase 5 - Retro Crunch
@@ -279,7 +254,7 @@ export class WebGPURenderer {
         // Layout: Screen(2), Camera(2), LightPos(2), Padding(2), LightColor(3+1), Ambient(3+1)
 
         let playerX = 0, playerY = 0;
-        const player = entities.find(e => e.constructor.name === 'Player');
+        const player = playerRef || entities.find(e => e.constructor.name === 'Player');
         if (player) {
             playerX = player.x;
             playerY = player.y;

@@ -39,29 +39,41 @@ export class ParticleSystem {
 
     update(dt: number) {
         // 1. Update Physics & Filter Dead
-        for (let i = this.particles.length - 1; i >= 0; i--) {
+        let writeIdx = 0;
+        for (let i = 0; i < this.particles.length; i++) {
             const p = this.particles[i];
             p.life -= dt;
             p.x += p.vx * dt;
             p.y += p.vy * dt;
 
-            if (p.life <= 0) {
-                this.particles.splice(i, 1);
+            if (p.life > 0) {
+                if (i !== writeIdx) {
+                    this.particles[writeIdx] = p;
+                }
+                writeIdx++;
             }
         }
+        this.particles.length = writeIdx;
 
         // 2. Build Paths
-        const pathData = new Map<string, string>();
+        const pathData = new Map<string, string[]>();
 
         for (const p of this.particles) {
-            const r = p.life * 5;
+            const r = (p.life * 5) | 0;
             if (r <= 0) continue;
 
-            // Circle Path: M cx, cy m -r, 0 a r,r 0 1,0 (r*2),0 a r,r 0 1,0 -(r*2),0
-            const d = `M${p.x},${p.y}m${-r},0a${r},${r} 0 1,0 ${r*2},0a${r},${r} 0 1,0 ${-r*2},0`;
+            const px = p.x | 0;
+            const py = p.y | 0;
 
-            const current = pathData.get(p.color) || '';
-            pathData.set(p.color, current + d);
+            // Circle Path: M cx, cy m -r, 0 a r,r 0 1,0 (r*2),0 a r,r 0 1,0 -(r*2),0
+            const d = `M${px},${py}m${-r},0a${r},${r} 0 1,0 ${r*2},0a${r},${r} 0 1,0 ${-r*2},0`;
+
+            let current = pathData.get(p.color);
+            if (!current) {
+                current = [];
+                pathData.set(p.color, current);
+            }
+            current.push(d);
         }
 
         // 3. Render
@@ -73,7 +85,7 @@ export class ParticleSystem {
         }
 
         // Update active paths
-        for (const [color, d] of pathData) {
+        for (const [color, paths] of pathData) {
             let pathEl = this.pathEls.get(color);
             if (!pathEl) {
                 pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -81,7 +93,7 @@ export class ParticleSystem {
                 this.el.appendChild(pathEl);
                 this.pathEls.set(color, pathEl);
             }
-            pathEl.setAttribute('d', d);
+            pathEl.setAttribute('d', paths.join(''));
         }
 
     }

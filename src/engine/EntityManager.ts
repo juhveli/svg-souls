@@ -21,11 +21,25 @@ export class EntityManager {
         }
     }
 
+    private cleanArray(array: Entity[]) {
+        let writeIndex = 0;
+        for (let i = 0; i < array.length; i++) {
+            const entity = array[i];
+            if (!entity.markedForDeletion) {
+                if (writeIndex !== i) {
+                    array[writeIndex] = entity;
+                }
+                writeIndex++;
+            }
+        }
+        array.length = writeIndex;
+    }
+
     update(dt: number) {
-        this.entities = this.entities.filter(e => !e.markedForDeletion);
-        this.players = this.players.filter(e => !e.markedForDeletion);
-        this.enemies = this.enemies.filter(e => !e.markedForDeletion);
-        this.narrativeItems = this.narrativeItems.filter(e => !e.markedForDeletion);
+        this.cleanArray(this.entities);
+        this.cleanArray(this.players);
+        this.cleanArray(this.enemies);
+        this.cleanArray(this.narrativeItems);
 
         this.entities.sort((a, b) => a.y - b.y);
 
