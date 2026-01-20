@@ -3,16 +3,19 @@
 ## World 1: The Scrapyard
 *   **Sub-Boss:** **The Trash-Compactor**. A mindless machine that tries to crush you.
 *   **End Boss:** **Golgotha, The Accumulation**. A massive blob of molten scrap and glass.
+    *   *Title:* "Keeper of the Waste"
     *   *Lore:* "It gathered the pieces we threw away and made a god of garbage."
 *   **Secret Boss:** **The Rust-Dragon**.
     *   *Trigger Gimmick:* Find the **Oxidized Whistle** in Area 2. Blow it (Use Item) while standing in the "Smog Vent" (Area 3) for 10 seconds without moving.
     *   *Reward:* **Scale of Decay** (Key Item).
 
 ## World 2: Glass Gardens
-*   **Sub-Boss:** **The Pruner**. An automaton with scissor-hands ensuring "uniformity".
+*   **Sub-Boss:** **The Glass-Blower Deity**.
+    *   *Lore:* "He gave his breath to make them beautiful, but he had no breath left to tell them they were fragile."
+    *   *Mechanic:* Exhales bubbles of molten glass that trap the player.
 *   **End Boss:** **Vitria, The Glass Matriarch**. She controls the razor-grass.
     *   *Lore:* "She loved her garden so much she watered it with her own molten blood."
-*   **Secret Boss:** **The Mirror Knight**.
+*   **Secret Boss:** **Narcissus, The Shattered Idol**.
     *   *Trigger Gimmick:* Find the **Perfect Prism** in Area 1. Take it to the "Reflection Pools" (Area 3). Drop it (interact) to shatter the water's surface. The reflection jumps out.
     *   *Reward:* **Shard of Narcissus** (Key Item).
 
