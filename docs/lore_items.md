@@ -97,3 +97,38 @@
 *   **Description:**
     > *A massive, two-pronged spear made of heavy, dull iron. It vibrates violently upon impact.*
     > *"Standard issue for the Silence Guard. While the glass nobility sought perfect pitch, the guards were tasked with 'dampening' dissonance—usually by skewering the source to stop its vibration. It does not cut; it shakes the target apart."*
+
+---
+
+## V. Flavor Items (Trinkets & Junk)
+*Useless to the practical, priceless to the historian.*
+
+### Calcified Tuning Peg
+*   **Source:** Scrapyard (Random Loot).
+*   **Description:**
+    > *A rusted iron peg, fused to a lump of bone.*
+    > *"Before the Carillon, there were smaller instruments. They were discarded not because they were broken, but because they could not play the Conductor's new scale. This one still hums in the key of G-Minor."*
+
+### Glass Handkerchief
+*   **Source:** Glass Gardens (Glazewright Corpses).
+*   **Description:**
+    > *A square of spun glass, impossibly thin and flexible.*
+    > *"The nobility used these to wipe away tears. However, glass does not absorb moisture; it only smears it across the face. A cruel design for a people who were forbidden to be unhappy."*
+
+### Punch-Card of the Late
+*   **Source:** Clockwork Arteries (Piston Drone Drop).
+*   **Description:**
+    > *A brass card with a single error punched into the timeline.*
+    > *"Worker Unit 734 missed a beat by 0.04 seconds. The error was logged, the unit was melted down, and the metal was reused to make this card. Efficiency is a circle."*
+
+### Jar of Stifled Laughter
+*   **Source:** Hushed Halls (Library Shelves).
+*   **Description:**
+    > *A small, vacuum-sealed jar. It vibrates slightly.*
+    > *"The Silent Choir believes that joy is the loudest noise of all. They captured this sound from a child before sewing his mouth shut. If you shake it, it sounds like weeping."*
+
+### Glitch-Dust
+*   **Source:** Crystal Belfry (Environmental).
+*   **Description:**
+    > *A handful of white powder that flickers in and out of existence.*
+    > *"Matter that cannot decide if it is real. Snorting it grants a brief vision of a world without crystal, where the sky is blue instead of white static. The user usually wakes up screaming."*
