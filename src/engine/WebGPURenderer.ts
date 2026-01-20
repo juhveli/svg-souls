@@ -1,5 +1,12 @@
 import { vertexShaderWGSL, fragmentShaderGBufferWGSL, fragmentShaderLightingWGSL } from '../shaders/shaders';
 
+interface ChunkData {
+    buffer: GPUBuffer;
+    capacity: number; // in instances
+    instanceCount: number;
+    cpuData: Float32Array;
+}
+
 export class WebGPURenderer {
     canvas: HTMLCanvasElement;
     adapter!: GPUAdapter;
@@ -13,7 +20,7 @@ export class WebGPURenderer {
 
     // Buffers
     uniformBuffer!: GPUBuffer;
-    instanceBuffer!: GPUBuffer;
+    // instanceBuffer removed in Phase 4
     lightingUniformBuffer!: GPUBuffer;
 
     // Textures (G-Buffer)
@@ -26,12 +33,17 @@ export class WebGPURenderer {
     lightingBindGroup!: GPUBindGroup;
 
     // Constants
-    MAX_INSTANCES = 1000;
+    MAX_INSTANCES = 1000; // Legacy constant, kept just in case
     // 9 floats * 4 bytes = 36 bytes.
     INSTANCE_SIZE = 9 * 4;
 
+    // Chunking System
+    private chunks: Map<string, ChunkData> = new Map();
+    private readonly CHUNK_SIZE = 512;
+    private readonly INITIAL_CHUNK_CAPACITY = 64;
+
     // CPU-side Buffers (Optimization: Reuse to avoid GC)
-    private instanceData!: Float32Array;
+    // instanceData removed in Phase 4
     private uniformDataA!: Float32Array;
     private uniformDataB!: Float32Array;
     private lightingData!: Float32Array;
@@ -45,7 +57,7 @@ export class WebGPURenderer {
         }
 
         // Initialize CPU-side buffers
-        this.instanceData = new Float32Array(this.MAX_INSTANCES * 9);
+        // this.instanceData removed
         this.uniformDataA = new Float32Array(4); // Screen(2) + Camera(2)
         this.uniformDataB = new Float32Array(1); // Time(1)
         this.lightingData = new Float32Array(16); // Lighting Block
@@ -131,11 +143,7 @@ export class WebGPURenderer {
             usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
         });
 
-        // 4. Instance Buffer
-        this.instanceBuffer = this.device.createBuffer({
-            size: this.MAX_INSTANCES * this.INSTANCE_SIZE,
-            usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
-        });
+        // 4. Instance Buffer removed (Chunking System uses per-chunk buffers)
     }
 
     createPipelines() {
@@ -217,9 +225,34 @@ export class WebGPURenderer {
         });
     }
 
+    private getChunkID(x: number, y: number): string {
+        const cx = Math.floor(x / this.CHUNK_SIZE);
+        const cy = Math.floor(y / this.CHUNK_SIZE);
+        return `${cx},${cy}`;
+    }
+
+    private getOrCreateChunk(id: string): ChunkData {
+        let chunk = this.chunks.get(id);
+        if (!chunk) {
+            const capacity = this.INITIAL_CHUNK_CAPACITY;
+            const buffer = this.device.createBuffer({
+                size: capacity * this.INSTANCE_SIZE,
+                usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
+            });
+            const cpuData = new Float32Array(capacity * 9); // 9 floats per instance
+            chunk = {
+                buffer,
+                capacity,
+                instanceCount: 0,
+                cpuData
+            };
+            this.chunks.set(id, chunk);
+        }
+        return chunk;
+    }
+
     render(entities: any[], camera: any) {
-        // TODO: Phase 4 - Chunking System
-        // Instead of a single instanceBuffer for all entities, use per-chunk buffers.
+        // Phase 4 - Chunking System Implemented
         // Culling: Only upload/render chunks visible to camera.
 
         // TODO: Phase 5 - Retro Crunch
@@ -270,19 +303,61 @@ export class WebGPURenderer {
         this.lightingData[15] = 0.0;
         this.device.queue.writeBuffer(this.lightingUniformBuffer, 0, this.lightingData);
 
-        // 3. Update Instance Buffer
-        // Optimization: Use pre-allocated buffer
-        const instanceData = this.instanceData;
-        let instanceCount = 0;
+        // 3. Chunking & Culling
+        const visibleChunks = new Set<ChunkData>();
+
+        // Culling Bounds (Camera + Padding)
+        const pad = 100;
+        const camLeft = camera.x - pad;
+        const camTop = camera.y - pad;
+        const camRight = camera.x + camera.width + pad;
+        const camBottom = camera.y + camera.height + pad;
 
         for (const e of entities) {
-            if (instanceCount >= this.MAX_INSTANCES) break;
-
-            // Extract Render Data (Fallback to existing props)
             const x = e.x || 0;
             const y = e.y || 0;
             const w = e.width || 64;
             const h = e.height || 64;
+
+            // Check if entity is within camera bounds + padding
+            // We use chunk-based culling, but first let's bucket.
+
+            const chunkID = this.getChunkID(x, y);
+            const cx = Math.floor(x / this.CHUNK_SIZE);
+            const cy = Math.floor(y / this.CHUNK_SIZE);
+
+            const chunkLeft = cx * this.CHUNK_SIZE;
+            const chunkTop = cy * this.CHUNK_SIZE;
+            const chunkRight = chunkLeft + this.CHUNK_SIZE;
+            const chunkBottom = chunkTop + this.CHUNK_SIZE;
+
+            // AABB Test for Chunk
+            if (chunkRight < camLeft || chunkLeft > camRight || chunkBottom < camTop || chunkTop > camBottom) {
+                 continue; // Chunk not visible
+            }
+
+            const chunk = this.getOrCreateChunk(chunkID);
+
+            if (!visibleChunks.has(chunk)) {
+                chunk.instanceCount = 0;
+                visibleChunks.add(chunk);
+            }
+
+            // Resize if needed
+            if (chunk.instanceCount >= chunk.capacity) {
+                const newCapacity = chunk.capacity * 2;
+                const newCpuData = new Float32Array(newCapacity * 9);
+                newCpuData.set(chunk.cpuData);
+                chunk.cpuData = newCpuData;
+                chunk.capacity = newCapacity;
+
+                // Recreate GPU buffer
+                chunk.buffer.destroy();
+                chunk.buffer = this.device.createBuffer({
+                    size: newCapacity * this.INSTANCE_SIZE,
+                    usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
+                });
+            }
 
             // Type Mapping
             let typeID = 0; // Default Box
@@ -295,24 +370,21 @@ export class WebGPURenderer {
             let p1 = 0, p2 = 0, p3 = 0, p4 = 0;
             if (typeID === 1) {
                 // p1 can be used for tentacle phase offset or direction
-                // For now, leave 0
             }
 
-            const offset = instanceCount * 9;
-            instanceData[offset + 0] = x;
-            instanceData[offset + 1] = y;
-            instanceData[offset + 2] = w;
-            instanceData[offset + 3] = h;
-            instanceData[offset + 4] = typeID;
-            instanceData[offset + 5] = p1;
-            instanceData[offset + 6] = p2;
-            instanceData[offset + 7] = p3;
-            instanceData[offset + 8] = p4;
+            const offset = chunk.instanceCount * 9;
+            chunk.cpuData[offset + 0] = x;
+            chunk.cpuData[offset + 1] = y;
+            chunk.cpuData[offset + 2] = w;
+            chunk.cpuData[offset + 3] = h;
+            chunk.cpuData[offset + 4] = typeID;
+            chunk.cpuData[offset + 5] = p1;
+            chunk.cpuData[offset + 6] = p2;
+            chunk.cpuData[offset + 7] = p3;
+            chunk.cpuData[offset + 8] = p4;
 
-            instanceCount++;
+            chunk.instanceCount++;
         }
-
-        this.device.queue.writeBuffer(this.instanceBuffer, 0, instanceData);
 
         // 4. Render Passes
         const commandEncoder = this.device.createCommandEncoder();
@@ -334,7 +406,7 @@ export class WebGPURenderer {
                 },
                 {
                     view: this.depthTexture.createView(),
-                    clearValue: { r: 0.0, g: 0, b: 0, a: 1.0 }, // Depth init (0?)
+                    clearValue: { r: 0.0, g: 0, b: 0, a: 1.0 }, // Depth init
                     loadOp: 'clear',
                     storeOp: 'store'
                 }
@@ -343,8 +415,18 @@ export class WebGPURenderer {
 
         passEncoder.setPipeline(this.gBufferPipeline);
         passEncoder.setBindGroup(0, this.gBufferBindGroup);
-        passEncoder.setVertexBuffer(0, this.instanceBuffer);
-        passEncoder.draw(6, instanceCount, 0, 0);
+
+        for (const chunk of visibleChunks) {
+            if (chunk.instanceCount > 0) {
+                 // Write Buffer
+                 this.device.queue.writeBuffer(chunk.buffer, 0, chunk.cpuData, 0, chunk.instanceCount * 9);
+
+                 // Draw
+                 passEncoder.setVertexBuffer(0, chunk.buffer);
+                 passEncoder.draw(6, chunk.instanceCount, 0, 0);
+            }
+        }
+
         passEncoder.end();
 
         // Pass 2: Lighting
