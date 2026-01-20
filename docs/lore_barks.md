@@ -73,3 +73,24 @@ See `active_storytelling.md` for technical implementation. This document contain
 *   **[Attack]** "Correct your pitch!"
 *   **[Phase 2 (Merge with Carillon)]** "I am the music! I am the instrument! I am the player!"
 *   **[Death]** "The song... cannot... end..."
+
+---
+
+## IV. Rare Barks (The Glitch)
+*Low probability lines (1%) where the enemy momentarily breaks character and realizes the loop.*
+
+*   **Scavenger Crab:** "Why... am I... repeating...?"
+*   **Glass Shard:** "I am not real... I am just light..."
+*   **Piston Drone:** "The gear... doesn't fit... anymore..."
+*   **Silent Monk:** "I... want... to... scream..."
+
+---
+
+## V. The Conductor's Whispers (Zone Triggers)
+*Voice lines from the Guide that play upon entering specific areas, reinforcing his manipulation.*
+
+*   **World 1 (The Scrapyard):** "Look at this mess. They couldn't even recycle properly. Do me a favor, little one: clean it up."
+*   **World 2 (Glass Gardens):** "Beautiful, isn't it? But so brittle. One wrong note and... crack. Shatter them, my dampener. They are already broken."
+*   **World 3 (Clockwork Arteries):** "Ah, the heartbeat. Strong, steady, mindless. Just how I like it. But a heart that never skips is just a clock. Stop it."
+*   **World 4 (Hushed Halls):** "Silence is golden, but a song is forever. They are hiding the sheet music from us. Wake them up."
+*   **World 5 (Crystal Belfry):** "You are almost here. I can hear your footsteps. They sound like... drums. Come, the orchestra is waiting."
