@@ -175,6 +175,37 @@ fn main(
     // Color: Porcelain White with Cyan Glow
     color = vec3<f32>(0.9, 0.95, 1.0);
 
+  } else if (abs(typeID - 6.0) < 0.1) {
+    // RUST MITE (High Fidelity)
+    // Small, jittery, multi-legged.
+
+    // 1. Body: Segmented, slightly wobbling
+    let wobble = sin(global.time * 20.0) * 0.02;
+    let bodyMain = sdCircle(uv - vec2<f32>(0.5, 0.5), 0.15);
+    let bodyBack = sdCircle(uv - vec2<f32>(0.5 + wobble, 0.4), 0.12);
+    let bodyHead = sdCircle(uv - vec2<f32>(0.5 - wobble, 0.6), 0.1);
+
+    // 2. Legs: Fast movement
+    let legWiggle = sin(global.time * 30.0 + uv.x * 20.0) * 0.05;
+    let legsL = sdBox(uv - vec2<f32>(0.3 + legWiggle, 0.5), vec2<f32>(0.1, 0.15));
+    let legsR = sdBox(uv - vec2<f32>(0.7 + legWiggle, 0.5), vec2<f32>(0.1, 0.15));
+
+    dist = min(bodyMain, bodyBack);
+    dist = min(dist, bodyHead);
+    dist = min(dist, legsL);
+    dist = min(dist, legsR);
+
+    // Color: Rust + Blood Dry
+    color = vec3<f32>(0.31, 0.20, 0.16); // Rust
+
+  } else if (typeID > 6.5) {
+     // TODO: Implement High Fidelity SDF for IDs 7-20
+     // RustDragon (7), VanityWraith (8), RazorVine (9), Vitria (10), Narcissus (11)
+     // GearKeeper (12), MetronomeGeneral (13), ChronoWraith (14)
+     // SilenceGuard (15), Cantor (16), Banshee (17)
+     // PrimeConductor (18), Paradox (19)
+     discard;
+
   } else {
     // DEFAULT CUBE
     dist = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.4, 0.4));

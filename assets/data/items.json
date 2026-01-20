@@ -16,6 +16,27 @@
         },
         "icon": "vial"
     },
+    "shard_of_panic": {
+        "name": "Shard of Panic",
+        "description": "Adrenaline crystallized into a solid state. Use it to borrow speed from your future self. Just remember that the debt must eventually be paid.",
+        "category": "consumable",
+        "effect": {
+            "type": "speed_boost",
+            "duration": 10,
+            "value": 1.5
+        },
+        "icon": "shard_red"
+    },
+    "bottled_silence": {
+        "name": "Bottled Silence",
+        "description": "Harvested from the deepest vaults of the Hushed Halls. For a moment, you do not exist, for existence is a vibration, and you have ceased to hum.",
+        "category": "consumable",
+        "effect": {
+            "type": "stealth",
+            "duration": 15
+        },
+        "icon": "jar_dark"
+    },
     "stopped_watch": {
         "name": "The Stopped Watch",
         "description": "A pocket watch with hands fused to the face. It pulses with a phantom weight, heavier than lead. The Architect did not lose it; they left it behind when time became a burden.",
@@ -108,6 +129,27 @@
         "category": "key",
         "effect": null,
         "icon": "shard"
+    },
+    "spring_of_eternity": {
+        "name": "Spring of Eternity",
+        "description": "A mainspring that never unwinds. It holds infinite tension. The machine wanted to run forever. It didn't understand that a song that never ends is just noise. This spring represents the courage to stop.",
+        "category": "key",
+        "effect": null,
+        "icon": "spring"
+    },
+    "velvet_throat": {
+        "name": "Velvet Throat",
+        "description": "A fleshy, preserved vocal cord wrapped in silk. It hums a low, sad note. The voice of the void. It does not scream; it whispers the truth that the Conductor tried to hide: The song was always meant to end.",
+        "category": "key",
+        "effect": null,
+        "icon": "flesh"
+    },
+    "gag_of_the_saint": {
+        "name": "The Gag of the Saint",
+        "description": "A strip of cloth woven from pure void. It absorbs all light around it. Used to silence the First Prophet who tried to warn the world about the Conductor. The monks sew their own mouths shut in imitation, terrified that speaking the truth will summon the Static.",
+        "category": "narrative",
+        "effect": null,
+        "icon": "cloth"
     },
     "generals_log": {
         "name": "General's Log: Entry 404",
