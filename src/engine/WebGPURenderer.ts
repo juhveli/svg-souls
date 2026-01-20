@@ -1,4 +1,4 @@
-import { vertexShaderWGSL, fragmentShaderGBufferWGSL, fragmentShaderLightingWGSL } from '../shaders/shaders';
+import { vertexShaderWGSL, fragmentShaderGBufferWGSL, fragmentShaderLightingWGSL, fragmentShaderPostProcessWGSL, vertexShaderFullscreenWGSL } from '../shaders/shaders';
 
 interface ChunkData {
     buffer: GPUBuffer;
@@ -27,12 +27,21 @@ export class WebGPURenderer {
     albedoTexture!: GPUTexture;
     normalTexture!: GPUTexture;
     depthTexture!: GPUTexture;
+    lightingTexture!: GPUTexture; // Output of Lighting Pass (Low Res)
+
+    // Pipelines
+    postProcessPipeline!: GPURenderPipeline;
 
     // Bind Groups
     gBufferBindGroup!: GPUBindGroup;
     lightingBindGroup!: GPUBindGroup;
+    postProcessBindGroup!: GPUBindGroup;
+
+    // Samplers
+    nearestSampler!: GPUSampler;
 
     // Constants
+    RETRO_SCALE = 4.0;
     MAX_INSTANCES = 1000; // Legacy constant, kept just in case
     // 9 floats * 4 bytes = 36 bytes.
     INSTANCE_SIZE = 9 * 4;
@@ -106,23 +115,40 @@ export class WebGPURenderer {
         const width = Math.max(1, this.canvas.width);
         const height = Math.max(1, this.canvas.height);
 
-        // 1. G-Buffer Textures
+        // Retro Crunch: Low Resolution Dimensions
+        const lowResWidth = Math.max(1, Math.ceil(width / this.RETRO_SCALE));
+        const lowResHeight = Math.max(1, Math.ceil(height / this.RETRO_SCALE));
+
+        // 1. G-Buffer Textures (Low Res)
         this.albedoTexture = this.device.createTexture({
-            size: [width, height],
+            size: [lowResWidth, lowResHeight],
             format: 'bgra8unorm',
             usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING
         });
 
         this.normalTexture = this.device.createTexture({
-            size: [width, height],
+            size: [lowResWidth, lowResHeight],
             format: 'rgba8unorm',
             usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING
         });
 
         this.depthTexture = this.device.createTexture({
-            size: [width, height],
+            size: [lowResWidth, lowResHeight],
             format: 'r32float',
             usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING
+        });
+
+        // Lighting Result Texture (Low Res)
+        this.lightingTexture = this.device.createTexture({
+            size: [lowResWidth, lowResHeight],
+            format: 'bgra8unorm',
+            usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING
+        });
+
+        // Sampler
+        this.nearestSampler = this.device.createSampler({
+            magFilter: 'nearest',
+            minFilter: 'nearest',
         });
 
         // 2. Uniform Buffer
@@ -220,7 +246,33 @@ export class WebGPURenderer {
                 { binding: 1, resource: this.albedoTexture.createView() },
                 { binding: 2, resource: this.normalTexture.createView() },
                 { binding: 3, resource: this.depthTexture.createView() },
-                { binding: 4, resource: this.device.createSampler() }
+                { binding: 4, resource: this.nearestSampler }
+            ]
+        });
+
+        // --- POST PROCESS PIPELINE ---
+        const postProcessModule = this.device.createShaderModule({ code: fragmentShaderPostProcessWGSL });
+        const fsVertexModule = this.device.createShaderModule({ code: vertexShaderFullscreenWGSL });
+
+        this.postProcessPipeline = this.device.createRenderPipeline({
+            layout: 'auto',
+            vertex: {
+                module: fsVertexModule,
+                entryPoint: 'main'
+            },
+            fragment: {
+                module: postProcessModule,
+                entryPoint: 'main',
+                targets: [{ format: this.format }] // Output to Screen
+            },
+            primitive: { topology: 'triangle-list' }
+        });
+
+        this.postProcessBindGroup = this.device.createBindGroup({
+            layout: this.postProcessPipeline.getBindGroupLayout(0),
+            entries: [
+                { binding: 0, resource: this.lightingTexture.createView() },
+                { binding: 1, resource: this.nearestSampler }
             ]
         });
     }
@@ -407,7 +459,7 @@ export class WebGPURenderer {
         // Pass 2: Lighting
         const lightingPass = commandEncoder.beginRenderPass({
             colorAttachments: [{
-                view: this.context.getCurrentTexture().createView(),
+                view: this.lightingTexture.createView(),
                 clearValue: { r: 0, g: 0, b: 0, a: 1 },
                 loadOp: 'clear',
                 storeOp: 'store'
@@ -419,6 +471,43 @@ export class WebGPURenderer {
         lightingPass.draw(6, 1, 0, 0); // Fullscreen
         lightingPass.end();
 
+        // Pass 3: Post-Process (Upscale + Retro Crunch)
+        const postProcessPass = commandEncoder.beginRenderPass({
+             colorAttachments: [{
+                view: this.context.getCurrentTexture().createView(),
+                clearValue: { r: 0, g: 0, b: 0, a: 1 },
+                loadOp: 'clear',
+                storeOp: 'store'
+            }]
+        });
+
+        postProcessPass.setPipeline(this.postProcessPipeline);
+        postProcessPass.setBindGroup(0, this.postProcessBindGroup);
+        postProcessPass.draw(6, 1, 0, 0);
+        postProcessPass.end();
+
         this.device.queue.submit([commandEncoder.finish()]);
+    }
+
+    private getChunkID(x: number, y: number): string {
+        const cx = Math.floor(x / this.CHUNK_SIZE);
+        const cy = Math.floor(y / this.CHUNK_SIZE);
+        return `${cx},${cy}`;
+    }
+
+    private getOrCreateChunk(id: string): ChunkData {
+        if (!this.chunks.has(id)) {
+            const buffer = this.device.createBuffer({
+                size: this.INITIAL_CHUNK_CAPACITY * this.INSTANCE_SIZE,
+                usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
+            });
+            this.chunks.set(id, {
+                buffer,
+                capacity: this.INITIAL_CHUNK_CAPACITY,
+                instanceCount: 0,
+                cpuData: new Float32Array(this.INITIAL_CHUNK_CAPACITY * 9)
+            });
+        }
+        return this.chunks.get(id)!;
     }
 }
