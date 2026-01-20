@@ -198,12 +198,182 @@ fn main(
     // Color: Rust + Blood Dry
     color = vec3<f32>(0.31, 0.20, 0.16); // Rust
 
+  } else if (abs(typeID - 7.0) < 0.1) {
+    // RUST DRAGON (W1 Secret)
+    let t = global.time * 2.0;
+
+    // Head
+    let head = sdCircle(uv - vec2<f32>(0.5 + sin(t)*0.1, 0.2), 0.12);
+    let jaw = sdBox(uv - vec2<f32>(0.5 + sin(t)*0.1, 0.28), vec2<f32>(0.08, 0.08));
+
+    // Body Segments
+    let body1 = sdCircle(uv - vec2<f32>(0.5 + sin(t - 0.5)*0.1, 0.4), 0.1);
+    let body2 = sdCircle(uv - vec2<f32>(0.5 + sin(t - 1.0)*0.1, 0.6), 0.09);
+    let body3 = sdCircle(uv - vec2<f32>(0.5 + sin(t - 1.5)*0.1, 0.8), 0.08);
+
+    dist = min(head, jaw);
+    dist = min(dist, body1);
+    dist = min(dist, body2);
+    dist = min(dist, body3);
+
+    color = vec3<f32>(0.4, 0.2, 0.15); // Dark Iron
+
+  } else if (abs(typeID - 8.0) < 0.1) {
+    // TODO: Implement VanityWraith
+    discard;
+  } else if (abs(typeID - 9.0) < 0.1) {
+    // TODO: Implement RazorVine
+    discard;
+
+  } else if (abs(typeID - 10.0) < 0.1) {
+    // VITRIA (W2 Boss)
+    let t = global.time;
+
+    // Central Diamond (Overlapping Boxes)
+    let center = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.1, 0.2));
+    let cross = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.2, 0.1));
+
+    // Floating Shards
+    let shard1 = sdBox(uv - vec2<f32>(0.5 + sin(t)*0.3, 0.2), vec2<f32>(0.05, 0.1));
+    let shard2 = sdBox(uv - vec2<f32>(0.5 + cos(t)*0.3, 0.8), vec2<f32>(0.05, 0.1));
+    let shard3 = sdBox(uv - vec2<f32>(0.2, 0.5 + sin(t)*0.3), vec2<f32>(0.1, 0.05));
+    let shard4 = sdBox(uv - vec2<f32>(0.8, 0.5 + cos(t)*0.3), vec2<f32>(0.1, 0.05));
+
+    dist = min(center, cross);
+    dist = min(dist, shard1);
+    dist = min(dist, shard2);
+    dist = min(dist, shard3);
+    dist = min(dist, shard4);
+
+    color = vec3<f32>(0.8, 0.9, 1.0); // Pale Glass
+
+  } else if (abs(typeID - 11.0) < 0.1) {
+    // NARCISSUS (W2 Secret)
+    // Frame
+    let frameOut = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.25, 0.35));
+    let frameIn = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.20, 0.30));
+    let frame = max(frameOut, -frameIn);
+
+    // Crack (subtractive)
+    let crack = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.3, 0.02));
+
+    // Face silhouette
+    let face = sdCircle(uv - vec2<f32>(0.5, 0.45), 0.12);
+
+    let inner = max(face, -crack);
+    dist = min(frame, inner);
+
+    color = vec3<f32>(0.6, 0.6, 0.7); // Silver Mirror
+
+  } else if (abs(typeID - 12.0) < 0.1) {
+    // TODO: Implement GearKeeper
+    discard;
+
+  } else if (abs(typeID - 13.0) < 0.1) {
+    // METRONOME GENERAL (W3 Boss)
+    let t = global.time * 4.0;
+    let angle = sin(t) * 0.5;
+    let p = uv - vec2<f32>(0.5, 0.7);
+    let rotX = p.x * cos(angle) - p.y * sin(angle);
+    let rotY = p.x * sin(angle) + p.y * cos(angle);
+
+    let base = sdBox(uv - vec2<f32>(0.5, 0.7), vec2<f32>(0.2, 0.1));
+    let rod = sdBox(vec2<f32>(rotX, rotY) - vec2<f32>(0.0, -0.25), vec2<f32>(0.02, 0.25));
+    let weight = sdBox(vec2<f32>(rotX, rotY) - vec2<f32>(0.0, -0.4), vec2<f32>(0.05, 0.04));
+
+    dist = min(base, rod);
+    dist = min(dist, weight);
+    color = vec3<f32>(0.7, 0.5, 0.2); // Brass
+
+  } else if (abs(typeID - 14.0) < 0.1) {
+    // CHRONO WRAITH (W3 Secret)
+    let t = global.time;
+    let body = sdCircle(uv - vec2<f32>(0.5, 0.4), 0.15);
+    let echo1 = sdCircle(uv - vec2<f32>(0.5 + sin(t*10.0)*0.05, 0.4), 0.12);
+    let echo2 = sdCircle(uv - vec2<f32>(0.5 - sin(t*10.0)*0.05, 0.4), 0.12);
+    let shred = sdBox(uv - vec2<f32>(0.5, 0.6), vec2<f32>(0.1, 0.2));
+
+    dist = min(body, echo1);
+    dist = min(dist, echo2);
+    dist = max(dist, -shred);
+    color = vec3<f32>(0.2, 0.8, 0.8); // Cyan Time
+
+  } else if (abs(typeID - 15.0) < 0.1) {
+    // TODO: Implement SilenceGuard
+    discard;
+
+  } else if (abs(typeID - 16.0) < 0.1) {
+    // CANTOR (W4 Boss)
+    let t = global.time * 3.0;
+    let core = sdCircle(uv - vec2<f32>(0.5, 0.4), 0.1);
+
+    let r1 = length(uv - vec2<f32>(0.5, 0.4)) - (0.2 + sin(t)*0.02);
+    let ring1 = abs(r1) - 0.02;
+
+    let r2 = length(uv - vec2<f32>(0.5, 0.4)) - (0.3 + sin(t + 1.0)*0.02);
+    let ring2 = abs(r2) - 0.02;
+
+    let robe = sdBox(uv - vec2<f32>(0.5, 0.7), vec2<f32>(0.15, 0.2));
+
+    dist = min(core, robe);
+    dist = min(dist, ring1);
+    dist = min(dist, ring2);
+    color = vec3<f32>(0.1, 0.1, 0.15); // Dark Void
+
+  } else if (abs(typeID - 17.0) < 0.1) {
+    // BANSHEE (W4 Secret)
+    let t = global.time * 2.0;
+    let head = sdCircle(uv - vec2<f32>(0.5, 0.3), 0.1);
+    let mouth = sdCircle(uv - vec2<f32>(0.5, 0.35), 0.04 + sin(t*10.0)*0.01);
+    let veilL = sdBox(uv - vec2<f32>(0.35, 0.5), vec2<f32>(0.05, 0.3));
+    let veilR = sdBox(uv - vec2<f32>(0.65, 0.5), vec2<f32>(0.05, 0.3));
+
+    dist = max(head, -mouth);
+    dist = min(dist, veilL);
+    dist = min(dist, veilR);
+    color = vec3<f32>(0.9, 0.8, 0.9); // Pale Pink/White
+
+  } else if (abs(typeID - 18.0) < 0.1) {
+    // PRIME CONDUCTOR (W5 Boss)
+    let t = global.time;
+
+    let head = sdCircle(uv - vec2<f32>(0.5, 0.3), 0.1);
+    let halo = abs(length(uv - vec2<f32>(0.5, 0.3)) - 0.15) - 0.02;
+
+    let robeTop = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.1, 0.1));
+    let robeBot = sdBox(uv - vec2<f32>(0.5, 0.7), vec2<f32>(0.15, 0.15));
+
+    let batonP = uv - vec2<f32>(0.7, 0.4 + sin(t*5.0)*0.1);
+    let baton = sdBox(batonP, vec2<f32>(0.01, 0.15));
+
+    dist = min(head, halo);
+    dist = min(dist, robeTop);
+    dist = min(dist, robeBot);
+    dist = min(dist, baton);
+    color = vec3<f32>(1.0, 0.8, 0.2); // Gold
+
+  } else if (abs(typeID - 19.0) < 0.1) {
+    // PARADOX (W5 Secret)
+    let t = global.time;
+
+    // Distorted UVs
+    let uvShift = vec2<f32>(uv.x + sin(uv.y * 10.0 + t)*0.05, uv.y);
+
+    let cube = sdBox(uvShift - vec2<f32>(0.5, 0.5), vec2<f32>(0.2, 0.2));
+    let sphere = sdCircle(uv - vec2<f32>(0.5 + cos(t)*0.2, 0.5 + sin(t)*0.2), 0.15);
+
+    dist = max(cube, -sphere);
+
+    let smallCube = sdBox(uv - vec2<f32>(0.5 + sin(t*2.0)*0.3, 0.5 + cos(t*3.0)*0.3), vec2<f32>(0.05, 0.05));
+    dist = min(dist, smallCube);
+
+    color = vec3<f32>(0.5, 0.0, 0.5); // Magic Dark
+    if (sin(t * 10.0) > 0.0) {
+        color = vec3<f32>(0.0, 1.0, 1.0); // Cyan flash
+    }
+
   } else if (typeID > 6.5) {
-     // TODO: Implement High Fidelity SDF for IDs 7-20
-     // RustDragon (7), VanityWraith (8), RazorVine (9), Vitria (10), Narcissus (11)
-     // GearKeeper (12), MetronomeGeneral (13), ChronoWraith (14)
-     // SilenceGuard (15), Cantor (16), Banshee (17)
-     // PrimeConductor (18), Paradox (19)
+     // Reserved for future expansion (IDs 20+)
      discard;
 
   } else {
