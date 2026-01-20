@@ -12,6 +12,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
     <!-- WEBGPU CANVAS -->
     <canvas id="webgpu-canvas" width="800" height="600"></canvas>
+    <svg id="world-layer" xmlns="http://www.w3.org/2000/svg"></svg>
   </div>
 `
 
