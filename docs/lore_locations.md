@@ -8,7 +8,7 @@ The lowest point of the world. A massive landfill where "bad ideas" and "broken 
 1.  **The Rust Dunes:** Hills of oxidized iron dust.
     *   *Enemy Types:* Scavenger Crabs (Tanky, wandering), Rust-Mites (Small, swarming).
 2.  **The Mannequin Graves:** Piles of discarded glass bodies that didn't make the cut.
-    *   *TODO: Lore entry about "The First Draft of Humanity".*
+    *   *Lore Hook:* "The First Draft of Humanity." It is here you find the **Mannequin's Glass Eye**, weeping in the dark.
 3.  **The Smog Vent:** A narrow canyon where toxic gas (liquid time waste) flows.
 4.  **Golgotha's Pit (Boss Arena):** A depression formed by the weight of the accumulation.
 
