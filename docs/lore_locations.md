@@ -5,18 +5,12 @@
 The lowest point of the world, a massive landfill where "bad ideas" and "broken timelines" were thrown by the Architects. The air tastes of oxidized copper, and the only light comes from the faint bioluminescent glow of leaking "Liquid Time."
 
 ### Areas
-1.  **The Rust Dunes**
-    Rolling hills composed entirely of oxidized iron dust and gears ground down to sand. The wind here carries a metallic screech, like a rusty hinge. Scavenger Crabs roam the dunes, sifting through the debris for intact springs to consume.
-
-2.  **The Mannequin Graves**
-    *Lore: "The First Draft of Humanity".*
-    A harrowing valley piled high with thousands of smooth, featureless glass dolls. These were the "Batch 404" prototypes—bodies created by the Glazewrights that lacked the capacity to hold resonance (a soul). They were discarded here, unbroken but empty, their hollow eyes staring up at the world that rejected them.
-
-3.  **The Smog Vent**
-    A narrow, toxic canyon where the byproduct of the world's machinery flows. This "Smog" is actually vaporized time-waste—seconds that were deemed too impure for the main timeline. Breathing it causes one to age rapidly, their skin rusting in real-time.
-
-4.  **Golgotha's Pit (Boss Arena)**
-    A massive depression in the center of the scrap heap, formed by the sheer weight of the accumulation. The walls are lined with compressed trash, and the floor is a shifting sea of jagged metal where **Golgotha** has made his nest, hoarding the "soft parts" of the mannequins in a desperate attempt to build himself a soul.
+1.  **The Rust Dunes:** Hills of oxidized iron dust.
+    *   *Enemy Types:* Scavenger Crabs (Tanky, wandering), Rust-Mites (Small, swarming).
+2.  **The Mannequin Graves:** Piles of discarded glass bodies that didn't make the cut.
+    *   *Lore Hook:* "The First Draft of Humanity." It is here you find the **Mannequin's Glass Eye**, weeping in the dark.
+3.  **The Smog Vent:** A narrow canyon where toxic gas (liquid time waste) flows.
+4.  **Golgotha's Pit (Boss Arena):** A depression formed by the weight of the accumulation.
 
 ---
 
