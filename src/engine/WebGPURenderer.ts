@@ -394,6 +394,20 @@ export class WebGPURenderer {
             else if (name === 'ScavengerCrab') typeID = 3;
             else if (name === 'Golgotha') typeID = 4;
             else if (name === 'PorcelainDancer') typeID = 5;
+            else if (name === 'RustMite') typeID = 6;
+            else if (name === 'RustDragon') typeID = 7;
+            else if (name === 'VanityWraith') typeID = 8;
+            else if (name === 'RazorVine') typeID = 9;
+            else if (name === 'Vitria') typeID = 10;
+            else if (name === 'Narcissus') typeID = 11;
+            else if (name === 'GearKeeper') typeID = 12;
+            else if (name === 'MetronomeGeneral') typeID = 13;
+            else if (name === 'ChronoWraith') typeID = 14;
+            else if (name === 'SilenceGuard') typeID = 15;
+            else if (name === 'Cantor') typeID = 16;
+            else if (name === 'Banshee') typeID = 17;
+            else if (name === 'PrimeConductor') typeID = 18;
+            else if (name === 'Paradox') typeID = 19;
 
             // Params
             let p1 = 0, p2 = 0, p3 = 0, p4 = 0;
