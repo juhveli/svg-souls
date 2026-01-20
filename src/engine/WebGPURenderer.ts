@@ -392,9 +392,14 @@ export class WebGPURenderer {
             if (name === 'Player') typeID = 1;
             else if (name === 'SerumBot') typeID = 2;
             else if (name === 'ScavengerCrab') typeID = 3;
+            else if (name === 'Golgotha') typeID = 4;
+            else if (name === 'PorcelainDancer') typeID = 5;
 
             // Params
             let p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+            if (typeID === 5) {
+                p1 = (e as any).isVisible ? 1.0 : 0.0;
+            }
             if (typeID === 1) {
                 // p1 can be used for tentacle phase offset or direction
             }

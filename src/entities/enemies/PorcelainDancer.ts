@@ -3,38 +3,25 @@ import { Player } from '../Player';
 import { AudioController } from '../../engine/AudioController';
 import { EventManager } from '../../engine/EventManager';
 
-const DANCER_SVG = `
-    <g class="dancer-body">
-        <!-- Porcelain Figure -->
-        <ellipse cx="0" cy="0" rx="6" ry="18" fill="#fdf" stroke="#ccc" />
-        <!-- Head -->
-        <circle cx="0" cy="-22" r="6" fill="#fdf" stroke="#ccc" />
-        <!-- Joints (Cyan glow) -->
-        <circle cx="0" cy="-10" r="2" fill="#0ff" class="glow" />
-        <circle cx="0" cy="10" r="2" fill="#0ff" class="glow" />
-    </g>
-`;
-
 export class PorcelainDancer extends Enemy {
     target: Player;
     speed: number = 60;
     hp: number = 20;
-    isVisible: boolean = false; // Hidden by default in Area 2
+    isVisible: boolean = false; // Hidden by default in Area 2. WebGPURenderer reads this.
     state: 'IDLE' | 'WALTZ' | 'STRIKE' = 'IDLE';
 
     private attackListener: EventListener;
     private beatListener: () => void;
 
     constructor(x: number, y: number, target: Player) {
-        super(x, y, DANCER_SVG);
+        super(x, y); // No SVG, handled by WebGPU TypeID 5
         this.target = target;
-        this.el.setAttribute('opacity', '0'); // Start invisible
 
         this.beatListener = () => this.onBeat();
         AudioController.getInstance().subscribeToBeat(this.beatListener);
 
         this.attackListener = ((e: CustomEvent) => {
-            if (this.isDead || !this.isVisible) return;
+            if (this.markedForDeletion || !this.isVisible) return; // Logic check for visibility
             const atk = e.detail;
             const dx = this.x - atk.x;
             const dy = this.y - atk.y;
@@ -59,10 +46,7 @@ export class PorcelainDancer extends Enemy {
 
     reveal() {
         this.isVisible = true;
-        this.el.setAttribute('opacity', '1');
-        this.el.style.filter = 'drop-shadow(0 0 5px #0ff)';
-        // Reset visibility after 5 seconds if not in combat?
-        // For now, keep it simple.
+        // Visuals handled by WebGPU shader params
     }
 
     takeDamage(amount: number) {
@@ -108,13 +92,7 @@ export class PorcelainDancer extends Enemy {
         } else {
             this.state = 'IDLE';
         }
-
-        // Visual pulse on beat
-        const glows = this.el.querySelectorAll('.glow');
-        glows.forEach(g => {
-            g.setAttribute('r', '4');
-            setTimeout(() => g.setAttribute('r', '2'), 100);
-        });
+        // Visual pulse handled by shader
     }
 
     update(dt: number) {
@@ -132,7 +110,6 @@ export class PorcelainDancer extends Enemy {
         }
 
         super.update(dt);
-        this.render();
     }
 
     destroy() {
