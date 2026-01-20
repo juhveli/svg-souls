@@ -8,7 +8,7 @@
     },
     "vial_liquid_seconds": {
         "name": "Vial of Liquid Seconds",
-        "description": "A golden, twitching fluid. The rich drank time like wine, believing it would keep their glass skins from growing dull.",
+        "description": "A small glass vial containing a golden, viscous fluid that twitches on its own. \"The rich drank time like wine, believing it would keep their glass skins from growing dull. They did not know that hoarding time leaves none for the rest of the world. It tastes of copper and regret.\"",
         "category": "consumable",
         "effect": {
             "type": "heal",
@@ -18,7 +18,7 @@
     },
     "shard_of_panic": {
         "name": "Shard of Panic",
-        "description": "Adrenaline crystallized into a solid state. Use it to borrow speed from your future self. Just remember that the debt must eventually be paid.",
+        "description": "A jagged splinter of red crystal that vibrates violently in the hand. \"Adrenaline crystallized into a solid state. Use it to borrow speed from your future self. Just remember that the debt must eventually be paid.\"",
         "category": "consumable",
         "effect": {
             "type": "speed_boost",
@@ -29,7 +29,7 @@
     },
     "bottled_silence": {
         "name": "Bottled Silence",
-        "description": "Harvested from the deepest vaults of the Hushed Halls. For a moment, you do not exist, for existence is a vibration, and you have ceased to hum.",
+        "description": "A heavy lead jar that seems to weigh nothing at all. Opening it releases a total absence of sound. \"Harvested from the deepest vaults of the Hushed Halls. For a moment, you do not exist, for existence is a vibration, and you have ceased to hum.\"",
         "category": "consumable",
         "effect": {
             "type": "stealth",
@@ -39,7 +39,7 @@
     },
     "stopped_watch": {
         "name": "The Stopped Watch",
-        "description": "A pocket watch with hands fused to the face. It pulses with a phantom weight, heavier than lead. The Architect did not lose it; they left it behind when time became a burden.",
+        "description": "A heavy brass pocket watch with hands fused to the face at 11:59. \"A keepsake of the Chief Engineer. It is said he stared at this watch for so long he forgot to wind the heavy heart of the world. Or perhaps, he chose not to.\"",
         "category": "key",
         "effect": null,
         "icon": "watch"
@@ -66,7 +66,7 @@
     },
     "tuning_fork_spear": {
         "name": "Tuning Fork Spear",
-        "description": "A massive, two-pronged spear made of heavy iron. It hums with a low, headache-inducing frequency. Standard issue for the Silence Guard, used to skewer dissonance.",
+        "description": "A massive, two-pronged spear made of heavy, dull iron. It vibrates violently upon impact. \"Standard issue for the Silence Guard. While the glass nobility sought perfect pitch, the guards were tasked with 'dampening' dissonance—usually by skewering the source to stop its vibration. It does not cut; it shakes the target apart.\"",
         "category": "weapon",
         "effect": {
             "type": "equip",
@@ -91,7 +91,7 @@
     },
     "oxidized_whistle": {
         "name": "Oxidized Whistle",
-        "description": "A crude copper flute, choked with verdigris. The discarded prototypes of the Scrapyard blew into it until their glass lungs shattered, praying for the Prime Conductor to reclaim them. They sought a shepherd, but their dissonance summoned a wolf. The frequency resonates with nothing but decay.",
+        "description": "A dog whistle made of rusted iron. It makes no sound when blown, but the rust on nearby metal begins to flake off. \"The scavengers used these to call the beast, feeding it scrap to keep it from eating them. It answers only to the song of decay.\"",
         "category": "key",
         "effect": {
             "type": "trigger_event",
@@ -101,21 +101,21 @@
     },
     "scale_of_decay": {
         "name": "Scale of Decay",
-        "description": "A flake of iron, warm and feverish to the touch. It sheds endlessly from a beast that rejects the stasis of the glass world. In a land of eternal preservation, 'aging' is a heresy—and this scale is its scripture. Proof that even the crystal must eventually turn to dust.",
+        "description": "A massive, flaking scale that smells of wet iron. It is warm to the touch. \"Entropy is not a mistake; it is the universe breathing out. This scale proves that even the end can be beautiful.\"",
         "category": "key",
         "effect": null,
         "icon": "scale"
     },
     "mannequin_eye": {
         "name": "Mannequin's Glass Eye",
-        "description": "An imperfect sphere of cloudy glass. It was plucked from a prototype body that was deemed 'too human' for the gardens above. It has seen the bottom of the world, and in the darkness, it learned to weep.",
+        "description": "A perfectly spherical glass eye, weeping a constant stream of oil. \"The prototypes were discarded because they could not stop crying. The Architects deemed 'sorrow' a flaw in the manufacturing process, rather than a reasonable reaction to existence.\"",
         "category": "narrative",
         "effect": null,
         "icon": "eye"
     },
     "perfect_prism": {
         "name": "Perfect Prism",
-        "description": "A geometric impossibility. Light enters it but never leaves, bouncing internally forever.",
+        "description": "A geometric impossibility. A prism that reflects light that isn't there. \"Vitria demanded perfection. When this prism was cut, it was so flawless that it became jealous of its own reflection. It yearns to be broken.\"",
         "category": "key",
         "effect": {
             "type": "trigger_event",
@@ -125,28 +125,28 @@
     },
     "shard_of_narcissus": {
         "name": "Shard of Narcissus",
-        "description": "A piece of a mirror that reflects your true self... or perhaps the self you wish you were.",
+        "description": "A mirror shard that shows the viewer's face, but older and wiser. \"Vanity freezes time. To love oneself is to refuse to change. To hold this shard is to accept that you are not who you were yesterday.\"",
         "category": "key",
         "effect": null,
         "icon": "shard"
     },
     "spring_of_eternity": {
         "name": "Spring of Eternity",
-        "description": "A mainspring that never unwinds. It holds infinite tension. The machine wanted to run forever. It didn't understand that a song that never ends is just noise. This spring represents the courage to stop.",
+        "description": "A mainspring that never unwinds. It holds infinite tension. \"The machine wanted to run forever. It didn't understand that a song that never ends is just noise. This spring represents the courage to stop.\"",
         "category": "key",
         "effect": null,
         "icon": "spring"
     },
     "velvet_throat": {
         "name": "Velvet Throat",
-        "description": "A fleshy, preserved vocal cord wrapped in silk. It hums a low, sad note. The voice of the void. It does not scream; it whispers the truth that the Conductor tried to hide: The song was always meant to end.",
+        "description": "A fleshy, preserved vocal cord wrapped in silk. It hums a low, sad note. \"The voice of the void. It does not scream; it whispers the truth that the Conductor tried to hide: The song was always meant to end.\"",
         "category": "key",
         "effect": null,
         "icon": "flesh"
     },
     "gag_of_the_saint": {
         "name": "The Gag of the Saint",
-        "description": "A strip of cloth woven from pure void. It absorbs all light around it. Used to silence the First Prophet who tried to warn the world about the Conductor. The monks sew their own mouths shut in imitation, terrified that speaking the truth will summon the Static.",
+        "description": "A strip of cloth woven from pure void. It absorbs all light around it. \"Used to silence the First Prophet who tried to warn the world about the Conductor. The monks sew their own mouths shut in imitation, terrified that speaking the truth will summon the Static.\"",
         "category": "narrative",
         "effect": null,
         "icon": "cloth"
@@ -164,5 +164,40 @@
         "category": "narrative",
         "effect": null,
         "icon": "paper"
+    },
+    "calcified_tuning_peg": {
+        "name": "Calcified Tuning Peg",
+        "description": "A rusted iron peg, fused to a lump of bone. \"Before the Carillon, there were smaller instruments. They were discarded not because they were broken, but because they could not play the Conductor's new scale. This one still hums in the key of G-Minor.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "peg"
+    },
+    "glass_handkerchief": {
+        "name": "Glass Handkerchief",
+        "description": "A square of spun glass, impossibly thin and flexible. \"The nobility used these to wipe away tears. However, glass does not absorb moisture; it only smears it across the face. A cruel design for a people who were forbidden to be unhappy.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "cloth"
+    },
+    "punch_card_of_the_late": {
+        "name": "Punch-Card of the Late",
+        "description": "A brass card with a single error punched into the timeline. \"Worker Unit 734 missed a beat by 0.04 seconds. The error was logged, the unit was melted down, and the metal was reused to make this card. Efficiency is a circle.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "card"
+    },
+    "jar_of_stifled_laughter": {
+        "name": "Jar of Stifled Laughter",
+        "description": "A small, vacuum-sealed jar. It vibrates slightly. \"The Silent Choir believes that joy is the loudest noise of all. They captured this sound from a child before sewing his mouth shut. If you shake it, it sounds like weeping.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "jar_light"
+    },
+    "glitch_dust": {
+        "name": "Glitch-Dust",
+        "description": "A handful of white powder that flickers in and out of existence. \"Matter that cannot decide if it is real. Snorting it grants a brief vision of a world without crystal, where the sky is blue instead of white static. The user usually wakes up screaming.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "powder"
     }
 }
