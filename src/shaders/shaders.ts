@@ -117,6 +117,64 @@ fn main(
     dist = min(dist, clawR);
     color = vec3<f32>(0.7, 0.35, 0.1);
 
+  } else if (abs(typeID - 4.0) < 0.1) {
+    // GOLGOTHA (The Accumulation)
+    // A large, wobbling mass.
+
+    // Main Body (Throbbing Blob)
+    let wobble = sin(global.time * 2.0 + uv.y * 10.0) * 0.05;
+    let body = sdCircle(uv - vec2<f32>(0.5 + wobble * 0.5, 0.5), 0.3 + wobble);
+
+    // Scrap Pieces (Sticking out)
+    let scrap1 = sdBox(uv - vec2<f32>(0.3, 0.7), vec2<f32>(0.1, 0.05)); // Plate
+    let scrap2 = sdBox(uv - vec2<f32>(0.7, 0.3), vec2<f32>(0.05, 0.15)); // Pipe
+    let scrap3 = sdCircle(uv - vec2<f32>(0.5, 0.5), 0.1); // Core
+
+    // Combine (Union)
+    dist = min(body, scrap1);
+    dist = min(dist, scrap2);
+
+    // Subtractive "Mouth" or Void
+    let mouth = sdCircle(uv - vec2<f32>(0.5, 0.4), 0.1 + sin(global.time * 5.0) * 0.02);
+    dist = max(dist, -mouth);
+
+    // Color: Molten Orange/Brown/Rust
+    // Pulse color based on time
+    let pulse = sin(global.time * 3.0) * 0.2 + 0.8;
+    color = vec3<f32>(0.6 * pulse, 0.3, 0.1);
+
+  } else if (abs(typeID - 5.0) < 0.1) {
+    // PORCELAIN DANCER
+
+    // Visibility Check (p1 passed from Renderer)
+    // p1 = 1.0 (Visible), 0.0 (Invisible)
+    if (params.x < 0.5) {
+        discard;
+    }
+
+    // Body (Ellipse-like Box)
+    let torso = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.05, 0.15));
+
+    // Head
+    let head = sdCircle(uv - vec2<f32>(0.5, 0.25), 0.06);
+
+    // Arms (Pose)
+    let armL = sdBox(uv - vec2<f32>(0.35, 0.4), vec2<f32>(0.1, 0.02));
+    let armR = sdBox(uv - vec2<f32>(0.65, 0.4), vec2<f32>(0.1, 0.02));
+
+    // Legs (Dress/Cone approximation or legs)
+    let dress = sdBox(uv - vec2<f32>(0.5, 0.7), vec2<f32>(0.1, 0.15));
+
+    // Joints (Glowing) - handled by color
+
+    dist = min(torso, head);
+    dist = min(dist, armL);
+    dist = min(dist, armR);
+    dist = min(dist, dress);
+
+    // Color: Porcelain White with Cyan Glow
+    color = vec3<f32>(0.9, 0.95, 1.0);
+
   } else {
     // DEFAULT CUBE
     dist = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.4, 0.4));
