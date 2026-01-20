@@ -232,7 +232,7 @@ export class Game {
         // --- GRAPHICS UPDATE ---
         this.camera.update();
 
-        WebGPURenderer.getInstance().render(this.entityManager.entities, this.camera);
+        WebGPURenderer.getInstance().render(this.entityManager.entities, this.camera, this.player);
 
         // WAVE LOGIC
         const zoneIndex = ZoneSystem.getInstance().currentZoneIndex;

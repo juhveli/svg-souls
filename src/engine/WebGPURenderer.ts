@@ -217,7 +217,7 @@ export class WebGPURenderer {
         });
     }
 
-    render(entities: any[], camera: any) {
+    render(entities: any[], camera: any, playerRef?: any) {
         // TODO: Phase 4 - Chunking System
         // Instead of a single instanceBuffer for all entities, use per-chunk buffers.
         // Culling: Only upload/render chunks visible to camera.
@@ -246,7 +246,7 @@ export class WebGPURenderer {
         // Layout: Screen(2), Camera(2), LightPos(2), Padding(2), LightColor(3+1), Ambient(3+1)
 
         let playerX = 0, playerY = 0;
-        const player = entities.find(e => e.constructor.name === 'Player');
+        const player = playerRef || entities.find(e => e.constructor.name === 'Player');
         if (player) {
             playerX = player.x;
             playerY = player.y;
