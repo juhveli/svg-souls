@@ -30,6 +30,12 @@ export class WebGPURenderer {
     // 9 floats * 4 bytes = 36 bytes.
     INSTANCE_SIZE = 9 * 4;
 
+    // CPU-side Buffers (Optimization: Reuse to avoid GC)
+    private instanceData!: Float32Array;
+    private uniformDataA!: Float32Array;
+    private uniformDataB!: Float32Array;
+    private lightingData!: Float32Array;
+
     private static instance: WebGPURenderer;
 
     constructor() {
@@ -37,6 +43,12 @@ export class WebGPURenderer {
         if (!this.canvas) {
             // It might not exist yet if called too early, but usually init calls it.
         }
+
+        // Initialize CPU-side buffers
+        this.instanceData = new Float32Array(this.MAX_INSTANCES * 9);
+        this.uniformDataA = new Float32Array(4); // Screen(2) + Camera(2)
+        this.uniformDataB = new Float32Array(1); // Time(1)
+        this.lightingData = new Float32Array(16); // Lighting Block
     }
 
     static getInstance(): WebGPURenderer {
@@ -220,15 +232,15 @@ export class WebGPURenderer {
 
         // 1. Update Global Uniforms
         // Block A: Screen(2), Camera(2)
-        const uniformDataA = new Float32Array([
-            this.canvas.width, this.canvas.height,
-            camera.x, camera.y
-        ]);
-        this.device.queue.writeBuffer(this.uniformBuffer, 0, uniformDataA);
+        this.uniformDataA[0] = this.canvas.width;
+        this.uniformDataA[1] = this.canvas.height;
+        this.uniformDataA[2] = camera.x;
+        this.uniformDataA[3] = camera.y;
+        this.device.queue.writeBuffer(this.uniformBuffer, 0, this.uniformDataA);
 
         // Block B: Time(1) at offset 256
-        const uniformDataB = new Float32Array([time]);
-        this.device.queue.writeBuffer(this.uniformBuffer, 256, uniformDataB);
+        this.uniformDataB[0] = time;
+        this.device.queue.writeBuffer(this.uniformBuffer, 256, this.uniformDataB);
 
         // 2. Update Lighting Uniforms
         // Layout: Screen(2), Camera(2), LightPos(2), Padding(2), LightColor(3+1), Ambient(3+1)
@@ -240,18 +252,27 @@ export class WebGPURenderer {
             playerY = player.y;
         }
 
-        const lightingData = new Float32Array([
-            this.canvas.width, this.canvas.height, // 0-1
-            camera.x, camera.y,                    // 2-3
-            playerX, playerY,                      // 4-5
-            0, 0,                                  // 6-7 (Padding)
-            1.0, 0.7, 0.4, 0.0,                    // 8-11 (Torch Color: Warm Orange)
-            0.1, 0.15, 0.25, 0.0                   // 12-15 (Ambient: Blueish Gloom)
-        ]);
-        this.device.queue.writeBuffer(this.lightingUniformBuffer, 0, lightingData);
+        this.lightingData[0] = this.canvas.width;
+        this.lightingData[1] = this.canvas.height;
+        this.lightingData[2] = camera.x;
+        this.lightingData[3] = camera.y;
+        this.lightingData[4] = playerX;
+        this.lightingData[5] = playerY;
+        this.lightingData[6] = 0;
+        this.lightingData[7] = 0;
+        this.lightingData[8] = 1.0;
+        this.lightingData[9] = 0.7;
+        this.lightingData[10] = 0.4;
+        this.lightingData[11] = 0.0;
+        this.lightingData[12] = 0.1;
+        this.lightingData[13] = 0.15;
+        this.lightingData[14] = 0.25;
+        this.lightingData[15] = 0.0;
+        this.device.queue.writeBuffer(this.lightingUniformBuffer, 0, this.lightingData);
 
         // 3. Update Instance Buffer
-        const instanceData = new Float32Array(this.MAX_INSTANCES * 9); // 9 floats per instance
+        // Optimization: Use pre-allocated buffer
+        const instanceData = this.instanceData;
         let instanceCount = 0;
 
         for (const e of entities) {
