@@ -2,35 +2,49 @@ import { Entity } from './Entity';
 import { Player } from './Player';
 import { UIManager } from '../ui/UIManager';
 import { InputSystem } from '../engine/InputSystem';
+import { NPCDatabase } from '../systems/NPCDatabase';
 
 export class NPCEntity extends Entity {
-    private name: string;
-    private dialogueLines: string[];
+    private name: string = "Unknown";
+    private dialogueLines: string[] = [];
     private currentLine: number = 0;
     private interactRadius: number = 50;
     private target: Player;
     private canInteract: boolean = true;
     private interactCooldown: number = 0;
+    private npcID: string;
+    private dataLoaded: boolean = false;
 
-    constructor(x: number, y: number, svg: string, name: string, dialogue: string[], target: Player) {
-        super(x, y, svg);
-        this.name = name;
-        this.dialogueLines = dialogue;
+    constructor(x: number, y: number, id: string, target: Player) {
+        super(x, y);
         this.target = target;
+        this.npcID = id;
 
-        // Add interaction prompt
-        const prompt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        prompt.id = 'interact-prompt';
-        prompt.setAttribute('y', '-40');
-        prompt.setAttribute('text-anchor', 'middle');
-        prompt.setAttribute('fill', '#fff');
-        prompt.setAttribute('font-size', '10');
-        prompt.setAttribute('opacity', '0');
-        prompt.textContent = '[E] Talk';
-        this.el.appendChild(prompt);
+        this.loadData();
+    }
+
+    private loadData() {
+        const db = NPCDatabase.getInstance();
+        const data = db.get(this.npcID);
+
+        if (data) {
+            this.name = data.name;
+            this.dialogueLines = data.dialogue;
+            this.typeID = data.typeID;
+            this.dataLoaded = true;
+        } else {
+            this.name = "Unknown";
+            this.dialogueLines = ["..."];
+            this.typeID = 0;
+            this.dataLoaded = false;
+        }
     }
 
     update(dt: number) {
+        if (!this.dataLoaded) {
+            this.loadData();
+        }
+
         // Cooldown management
         if (this.interactCooldown > 0) {
             this.interactCooldown -= dt;
@@ -45,12 +59,6 @@ export class NPCEntity extends Entity {
         const dist = Math.sqrt(dx * dx + dy * dy);
         const inRange = dist < this.interactRadius;
 
-        // Show/hide prompt
-        const prompt = this.el.querySelector('#interact-prompt');
-        if (prompt) {
-            prompt.setAttribute('opacity', inRange && this.canInteract ? '1' : '0');
-        }
-
         // Interaction
         if (inRange && this.canInteract) {
             const input = InputSystem.getInstance();
@@ -58,8 +66,6 @@ export class NPCEntity extends Entity {
                 this.interact();
             }
         }
-
-        super.render();
     }
 
     private interact() {
