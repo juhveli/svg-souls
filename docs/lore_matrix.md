@@ -9,6 +9,9 @@ This document explicitly defines *how* the player learns the history of the worl
 | **The Scrapyard** | Mountains of discarded, smooth glass limbs mixed with gears. | The "lower class" were prototypes. Imperfect glass was thrown away. You (The Soft One) woke up here. |
 | **The Cathedral of Ticks** | A massive stained-glass window depicting a figure stopping a pendulum. The glass of the figure is cracked. | The "Architect" tried to stop time but failed. The crack represents the "Shatter". |
 | **The Frozen Plaza** | Citizens frozen in mid-dance, their bodies shattered but suspended in the air. | The "Shatter" happened instantly during a celebration. Time is broken locally here. |
+| **The Clockwork Arteries** | Massive pistons moving in 4/4 time. Steam vents hissing on the off-beat. | The world is a machine that must be kept in rhythm. The "Heartbeat" is artificial. |
+| **The Hushed Halls** | Paintings of people screaming, but no sound comes out. Thick velvet everywhere. | History has been silenced. The "Truth" was too loud for the Conductor to bear. |
+| **The Crystal Belfry** | Stairs that lead nowhere. Patches of the sky are just TV static. | Reality is falling apart at the seams. The Conductor is rewriting the code of existence live. |
 
 ## II. Item Archaeology (The "Read")
 

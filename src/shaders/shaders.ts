@@ -36,13 +36,10 @@ fn main(
   let worldPos = center + (pos[VertexIndex] * size);
 
   // Camera Transform
-  // Note: WebGPU Clip Space is [-1, 1]. Y-axis is up (1) to down (-1) typically?
-  // Wait, WebGPU clip space Y is -1 (bottom) to 1 (top).
-  // Screen coords: 0,0 (top-left) -> 800,600 (bottom-right).
-  // x: 0 -> -1, 800 -> 1
-  // y: 0 -> 1, 600 -> -1
+  // screenSize in uniforms is the Logical Screen Size (Canvas Size)
+  // This preserves the FoV regardless of the actual render target resolution (Low Res)
 
-  let ndcX = (worldPos.x - uniforms.cameraPos.x) / (uniforms.screenSize.x * 0.5); // Range approx -1 to 1 centered
+  let ndcX = (worldPos.x - uniforms.cameraPos.x) / (uniforms.screenSize.x * 0.5);
   let ndcY = (worldPos.y - uniforms.cameraPos.y) / (uniforms.screenSize.y * 0.5);
 
   // Flip Y because Screen Y+ is Down, Clip Y+ is Up.
@@ -88,13 +85,9 @@ fn main(
   // --- 1. SDF LOGIC ---
   if (abs(typeID - 1.0) < 0.1) {
     // HERO
-    // Simple representation: Circle head + simple pulsing body
     let head = sdCircle(uv - vec2<f32>(0.5, 0.3), 0.15);
-
-    // Tentacle Wobble
     let wobble = sin((uv.y * 20.0) + (global.time * 5.0)) * 0.05 * uv.y;
     let body = sdBox(uv - vec2<f32>(0.5 + wobble, 0.6), vec2<f32>(0.1, 0.2));
-
     dist = min(head, body);
     color = vec3<f32>(0.0, 1.0, 1.0); // Cyan Resonance
 
@@ -107,34 +100,21 @@ fn main(
 
   } else if (abs(typeID - 3.0) < 0.1) {
     // SCAVENGER CRAB
-    // Body: Hexagon shape made of boxes or just a rounded box
     let body = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.25, 0.2));
-
-    // Legs: Wiggling lines
-    // Left Legs
     let legL1 = sdBox(uv - vec2<f32>(0.2, 0.4 + sin(global.time * 5.0) * 0.02), vec2<f32>(0.15, 0.02));
     let legL2 = sdBox(uv - vec2<f32>(0.2, 0.5 + cos(global.time * 5.0) * 0.02), vec2<f32>(0.15, 0.02));
     let legL3 = sdBox(uv - vec2<f32>(0.2, 0.6 + sin(global.time * 4.0) * 0.02), vec2<f32>(0.15, 0.02));
-
-    // Right Legs
     let legR1 = sdBox(uv - vec2<f32>(0.8, 0.4 - sin(global.time * 5.0) * 0.02), vec2<f32>(0.15, 0.02));
     let legR2 = sdBox(uv - vec2<f32>(0.8, 0.5 - cos(global.time * 5.0) * 0.02), vec2<f32>(0.15, 0.02));
     let legR3 = sdBox(uv - vec2<f32>(0.8, 0.6 - sin(global.time * 4.0) * 0.02), vec2<f32>(0.15, 0.02));
-
-    // Claws
     let clawL = sdCircle(uv - vec2<f32>(0.15, 0.3), 0.08);
     let clawR = sdCircle(uv - vec2<f32>(0.85, 0.3), 0.08);
 
-    // Combine Legs
     let legs = min(min(legL1, legL2), legL3);
     legs = min(legs, min(min(legR1, legR2), legR3));
-
-    // Combine All
     dist = min(body, legs);
     dist = min(dist, clawL);
     dist = min(dist, clawR);
-
-    // Color: Rusted Brown/Orange
     color = vec3<f32>(0.7, 0.35, 0.1);
 
   } else {
@@ -149,22 +129,12 @@ fn main(
   }
 
   // Fake Normal Calculation
-  // We want the center to point to Z+, edges to bend away.
-  let edgeDist = clamp(abs(dist) * 5.0, 0.0, 1.0);
-  // If edgeDist is 0 (far from center?), wait.
-  // dist is negative inside. center is most negative. edge is 0.
-  // So -dist is positive.
-  // Center: -dist large. Edge: -dist small.
-
-  // Let's model a spherical cap.
-  // n.z = sqrt(1 - x^2 - y^2) roughly.
-  // Here we cheat.
   normalVec = normalize(vec3<f32>((uv.x - 0.5) * 2.0, (uv.y - 0.5) * 2.0, 0.5));
 
   var output : FragmentOutput;
   output.albedo = vec4<f32>(color, 1.0);
   output.normal = vec4<f32>(normalVec * 0.5 + 0.5, 1.0);
-  output.depth = 0.5; // Placeholder
+  output.depth = 0.5;
 
   return output;
 }
@@ -187,7 +157,9 @@ struct Uniforms {
 
 @fragment
 fn main(@builtin(position) coord : vec4<f32>) -> @location(0) vec4<f32> {
-  let uv = coord.xy / uniforms.screenSize;
+  // Use texture dimensions for UV calc to be resolution independent
+  let dims = vec2<f32>(textureDimensions(albedoTex));
+  let uv = coord.xy / dims;
 
   let albedo = textureSample(albedoTex, samp, uv);
 
@@ -199,10 +171,12 @@ fn main(@builtin(position) coord : vec4<f32>) -> @location(0) vec4<f32> {
   let normal = normalize((normalEncoded.xyz - 0.5) * 2.0);
 
   // Reconstruct World Position
+  // We use the Uniform ScreenSize (High Res) for this projection math
+  // because the G-Buffer was rendered using that projection.
+  // The 'uv' variable here runs 0..1 across the low-res texture,
+  // which corresponds to 0..1 across the high-res screen logically.
+
   let ndc = (uv * 2.0) - 1.0;
-  // Remember Y flip
-  // ndc.y is -1 (top) to 1 (bottom) in UV? No, UV is 0 (top) to 1 (bottom).
-  // ndc.y = (0 * 2) - 1 = -1.
 
   let worldPos = vec2<f32>(
      (ndc.x * uniforms.screenSize.x * 0.5) + uniforms.cameraPos.x,
@@ -221,5 +195,92 @@ fn main(@builtin(position) coord : vec4<f32>) -> @location(0) vec4<f32> {
   let lighting = uniforms.ambientColor + (uniforms.lightColor * diffuse * attenuation);
 
   return vec4<f32>(albedo.rgb * lighting, 1.0);
+}
+`;
+
+export const vertexShaderFullscreenWGSL = `
+struct VertexOutput {
+  @builtin(position) position : vec4<f32>,
+  @location(0) uv : vec2<f32>,
+};
+
+@vertex fn main(@builtin(vertex_index) VertexIndex : u32) -> VertexOutput {
+  var pos = array<vec2<f32>, 6>(
+    vec2<f32>(-1.0, -1.0), vec2<f32>( 1.0, -1.0), vec2<f32>(-1.0,  1.0),
+    vec2<f32>(-1.0,  1.0), vec2<f32>( 1.0, -1.0), vec2<f32>( 1.0,  1.0)
+  );
+  var output : VertexOutput;
+  output.position = vec4<f32>(pos[VertexIndex], 0.0, 1.0);
+
+  // Map Clip Space (-1..1) to UV (0..1)
+  // Flip Y: Clip Y=1 (Top) -> UV Y=0. Clip Y=-1 (Bottom) -> UV Y=1.
+  output.uv = vec2<f32>(pos[VertexIndex].x * 0.5 + 0.5, 0.5 - pos[VertexIndex].y * 0.5);
+
+  return output;
+}
+`;
+
+export const fragmentShaderPostProcessWGSL = `
+@group(0) @binding(0) var lightingTex : texture_2d<f32>;
+@group(0) @binding(1) var samp : sampler;
+
+fn getBayer(x: i32, y: i32) -> f32 {
+    let m = array<i32, 16>(
+        0, 8, 2, 10,
+        12, 4, 14, 6,
+        3, 11, 1, 9,
+        15, 7, 13, 5
+    );
+    let idx = (y % 4) * 4 + (x % 4);
+    return f32(m[idx]) / 16.0 - 0.5;
+}
+
+fn getNearestGloomColor(col: vec3<f32>) -> vec3<f32> {
+    var palette = array<vec3<f32>, 16>(
+        vec3<f32>(0.0196, 0.0196, 0.0196), // Void
+        vec3<f32>(0.0588, 0.0784, 0.0588), // Deep Shadow
+        vec3<f32>(0.0980, 0.1373, 0.0980), // Swamp Green
+        vec3<f32>(0.1569, 0.1961, 0.1569), // Dark Moss
+        vec3<f32>(0.2353, 0.1569, 0.1176), // Rusted Iron
+        vec3<f32>(0.3137, 0.1961, 0.1569), // Rust
+        vec3<f32>(0.3922, 0.2745, 0.1961), // Clay
+        vec3<f32>(0.4706, 0.3529, 0.2745), // Old Wood
+        vec3<f32>(0.3922, 0.3922, 0.4314), // Cold Stone
+        vec3<f32>(0.5098, 0.5098, 0.5098), // Grey
+        vec3<f32>(0.6275, 0.6275, 0.5882), // Old Bone
+        vec3<f32>(0.7843, 0.7843, 0.7451), // Pale Bone
+        vec3<f32>(0.1961, 0.0392, 0.0392), // Blood Dry
+        vec3<f32>(0.4706, 0.0784, 0.0784), // Blood Fresh
+        vec3<f32>(0.0392, 0.1176, 0.1961), // Magic Dark
+        vec3<f32>(0.1961, 0.5882, 0.7843)  // Magic Bright
+    );
+
+    var minDist = 100.0; // Large number
+    var bestColor = palette[0];
+
+    for (var i = 0; i < 16; i++) {
+        let p = palette[i];
+        let d = distance(col, p);
+        if (d < minDist) {
+            minDist = d;
+            bestColor = p;
+        }
+    }
+    return bestColor;
+}
+
+@fragment
+fn main(@builtin(position) coord : vec4<f32>, @location(0) uv : vec2<f32>) -> @location(0) vec4<f32> {
+    // Sample texture with nearest sampler (passed in bind group)
+    let color = textureSample(lightingTex, samp, uv).rgb;
+
+    // Apply Dither
+    let dither = getBayer(i32(coord.x), i32(coord.y));
+    let ditheredColor = color + vec3<f32>(dither * 0.15); // Adjust spread as needed
+
+    // Quantize
+    let finalColor = getNearestGloomColor(ditheredColor);
+
+    return vec4<f32>(finalColor, 1.0);
 }
 `;

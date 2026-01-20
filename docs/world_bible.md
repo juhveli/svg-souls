@@ -42,6 +42,6 @@ The world is constructed in five concentric layers, representing the path from t
 *   **Mechanic:** Strike to gain Resonance. Spend Resonance to cast Spells (Dissonant Arts).
 
 ## VI. The Antagonist Hierarchy
-1.  **The Preliminary Antagonists:** The Zone Bosses (Golgotha, The Gardener, The Metronome, etc.). Framed as villains.
+1.  **The Preliminary Antagonists:** The Zone Bosses (Golgotha, Vitria, The Metronome, etc.). Framed as villains.
 2.  **The Hidden Antagonist:** **The Prime Conductor**. The quest giver who guides you via "Echoes" throughout the game.
 3.  **The True Threat:** **The Static**. The void that enters when the song ends.
