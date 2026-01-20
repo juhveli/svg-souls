@@ -219,11 +219,29 @@ fn main(
     color = vec3<f32>(0.4, 0.2, 0.15); // Dark Iron
 
   } else if (abs(typeID - 8.0) < 0.1) {
-    // TODO: Implement VanityWraith
-    discard;
+    // VANITY WRAITH (W2 Enemy)
+    let t = global.time;
+    let body = sdBox(uv - vec2<f32>(0.5, 0.4), vec2<f32>(0.15, 0.25));
+    let crack1 = sdBox(uv - vec2<f32>(0.5, 0.4), vec2<f32>(0.2, 0.01));
+    let crack2 = sdBox(uv - vec2<f32>(0.5, 0.4), vec2<f32>(0.01, 0.3));
+    let shard = sdBox(uv - vec2<f32>(0.5 + sin(t)*0.2, 0.2), vec2<f32>(0.05, 0.05));
+
+    dist = min(body, shard);
+    dist = max(dist, -crack1);
+    dist = max(dist, -crack2);
+    color = vec3<f32>(0.7, 0.7, 0.8); // Mirror Grey
+
   } else if (abs(typeID - 9.0) < 0.1) {
-    // TODO: Implement RazorVine
-    discard;
+    // RAZOR VINE (W2 Hazard)
+    let stem = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.02, 0.4));
+    let thorn1 = sdBox(uv - vec2<f32>(0.55, 0.3), vec2<f32>(0.05, 0.01));
+    let thorn2 = sdBox(uv - vec2<f32>(0.45, 0.5), vec2<f32>(0.05, 0.01));
+    let thorn3 = sdBox(uv - vec2<f32>(0.55, 0.7), vec2<f32>(0.05, 0.01));
+
+    dist = min(stem, thorn1);
+    dist = min(dist, thorn2);
+    dist = min(dist, thorn3);
+    color = vec3<f32>(0.0, 0.5, 0.2); // Green
 
   } else if (abs(typeID - 10.0) < 0.1) {
     // VITRIA (W2 Boss)
@@ -266,8 +284,16 @@ fn main(
     color = vec3<f32>(0.6, 0.6, 0.7); // Silver Mirror
 
   } else if (abs(typeID - 12.0) < 0.1) {
-    // TODO: Implement GearKeeper
-    discard;
+    // GEAR KEEPER (W3 Enemy)
+    let t = global.time * 2.0;
+    let r = length(uv - vec2<f32>(0.5, 0.5));
+    let a = atan2(uv.y - 0.5, uv.x - 0.5);
+    let teeth = sin(a * 8.0 + t) * 0.05;
+    let gear = abs(r - 0.2 - teeth) - 0.05;
+    let hole = sdCircle(uv - vec2<f32>(0.5, 0.5), 0.05);
+
+    dist = max(gear, -hole);
+    color = vec3<f32>(0.6, 0.4, 0.2); // Bronze
 
   } else if (abs(typeID - 13.0) < 0.1) {
     // METRONOME GENERAL (W3 Boss)
@@ -299,8 +325,14 @@ fn main(
     color = vec3<f32>(0.2, 0.8, 0.8); // Cyan Time
 
   } else if (abs(typeID - 15.0) < 0.1) {
-    // TODO: Implement SilenceGuard
-    discard;
+    // SILENCE GUARD (W4 Enemy)
+    let body = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.15, 0.25));
+    let head = sdCircle(uv - vec2<f32>(0.5, 0.3), 0.1);
+    let gag = sdBox(uv - vec2<f32>(0.5, 0.32), vec2<f32>(0.12, 0.02));
+
+    dist = min(body, head);
+    dist = min(dist, gag);
+    color = vec3<f32>(0.1, 0.1, 0.1); // Almost Black
 
   } else if (abs(typeID - 16.0) < 0.1) {
     // CANTOR (W4 Boss)

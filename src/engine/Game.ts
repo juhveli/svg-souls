@@ -19,6 +19,8 @@ import { LootSystem } from '../systems/LootSystem';
 import { ClockworkArteriesMap } from '../world/ClockworkArteriesMap';
 import { ReflectionSystem } from '../systems/ReflectionSystem';
 import { ItemDatabase } from '../systems/ItemDatabase';
+import { NPCDatabase } from '../systems/NPCDatabase';
+import { NPCEntity } from '../entities/NPCEntity';
 import { PersistenceManager } from './PersistenceManager';
 import { Camera } from './Camera';
 import { WebGPURenderer } from './WebGPURenderer';
@@ -64,6 +66,7 @@ export class Game {
             LootSystem.getInstance();
 
             ItemDatabase.getInstance().init();
+            NPCDatabase.getInstance().init();
 
             const persistence = PersistenceManager.getInstance();
             if (persistence.hasSave()) {
@@ -166,6 +169,10 @@ export class Game {
         this.entityManager.add(this.player);
 
         this.spawnScrapyardNarrative();
+
+        // Test NPC
+        const tickTock = new NPCEntity(250, 400, 'tick_tock', this.player);
+        this.entityManager.add(tickTock);
 
         const bot = new SerumBot(650, 300, this.player);
         this.entityManager.add(bot);

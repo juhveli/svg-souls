@@ -1,7 +1,7 @@
 {
     "tick_tock": {
         "name": "Tick-Tock, the Broken Bard",
-        "svg": "<g class=\"npc\"><circle cx=\"0\" cy=\"0\" r=\"15\" fill=\"#8af\" stroke=\"#fff\" stroke-width=\"2\" /><circle cx=\"-4\" cy=\"-3\" r=\"2\" fill=\"#000\" /><circle cx=\"4\" cy=\"-3\" r=\"2\" fill=\"#000\" /><path d=\"M-5,5 Q0,10 5,5\" stroke=\"#000\" stroke-width=\"1\" fill=\"none\" /><line x1=\"0\" y1=\"15\" x2=\"0\" y2=\"30\" stroke=\"#8af\" stroke-width=\"3\" /></g>",
+        "typeID": 0,
         "dialogue": [
             "One, two. One, two. You're off beat, little soft one. Squishy. Quiet. Disgusting.",
             "They say the Carillon will ring again. But I like the quiet between the ticks. That's where the music lives... in the rests.",
@@ -11,7 +11,7 @@
     },
     "maintenance_automaton": {
         "name": "Defunct Maintenance Unit",
-        "svg": "<g class=\"npc\"><rect x=\"-10\" y=\"-10\" width=\"20\" height=\"20\" fill=\"#555\" stroke=\"#333\" stroke-width=\"2\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f00\" opacity=\"0.5\" /></g>",
+        "typeID": 0,
         "dialogue": [
             "ER...ROR... SCHEDULED MAINTENANCE OVERDUE BY... [DATA CORRUPTED]... CENTURIES.",
             "DO NOT... STEP ON THE... GRASS. IT IS... SHARP.",
@@ -21,12 +21,123 @@
     },
     "prime_conductor": {
         "name": "The Prime Conductor",
-        "svg": "<g class=\"npc\"><path d=\"M0,-20 L-10,0 L10,0 Z\" fill=\"#fff\" opacity=\"0.8\" /><circle cx=\"0\" cy=\"-25\" r=\"8\" fill=\"#fff\" opacity=\"0.9\" /><path d=\"M-15,10 Q0,25 15,10\" stroke=\"#fff\" stroke-width=\"2\" fill=\"none\" opacity=\"0.5\" /></g>",
+        "typeID": 18,
         "dialogue": [
             "Ah... a little Dampener. Awake at last. The world is out of tune, my child.",
             "The Dissonance Kings have stolen the sheet music. They hoard the resonance in their frozen domains.",
             "Begin with Golgotha. He gorges himself on the past, refusing to let the measure end.",
             "Bring me their resonance. Only then can I restart the Grand Carillon and save us all."
+        ]
+    },
+    "golgotha": {
+        "name": "Golgotha, The Accumulation",
+        "typeID": 4,
+        "dialogue": [
+            "MORE... SCRAP... MORE... TIME...",
+            "THE RUST... IT WARMS... ME...",
+            "DO NOT... TAKE... MY... GARBAGE...",
+            "I AM... HISTORY... DIGESTING... ITSELF..."
+        ]
+    },
+    "vitria": {
+        "name": "Vitria, The Glass Matriarch",
+        "typeID": 10,
+        "dialogue": [
+            "Do not touch the display! You will smudge the perfection!",
+            "I froze them to save them! Decay is ugly! Life is messy! Glass is forever!",
+            "My garden... my beautiful, silent garden...",
+            "Shatter? No... I simply refract."
+        ]
+    },
+    "narcissus": {
+        "name": "Narcissus, The Shattered Idol",
+        "typeID": 11,
+        "dialogue": [
+            "Who is that? Is that me? No... you are too ugly to be me.",
+            "Look at me! LOOK AT ME! wait, don't look, I'm flawed!",
+            "The mirror lies! It shows lines that aren't there!",
+            "Perfection... is a prison..."
+        ]
+    },
+    "vanity_wraith": {
+        "name": "Vanity Wraith",
+        "typeID": 8,
+        "dialogue": [
+            "My face... where is my face?",
+            "Give it back! Give me back my reflection!",
+            "It hurts to look... it hurts not to look..."
+        ]
+    },
+    "razor_vine": {
+        "name": "Razor Vine",
+        "typeID": 9,
+        "dialogue": [
+            "..."
+        ]
+    },
+    "metronome_general": {
+        "name": "The Metronome General",
+        "typeID": 13,
+        "dialogue": [
+            "TICK. TOCK. MARCH. STOP.",
+            "ORDER. MUST. PREVAIL. CHAOS. IS. LATENESS.",
+            "YOU ARE 0.4 SECONDS LATE. PUNISHMENT: DELETION.",
+            "THE EMPIRE NEVER ENDS. IT JUST REPEATS."
+        ]
+    },
+    "chrono_wraith": {
+        "name": "Chrono-Wraith",
+        "typeID": 14,
+        "dialogue": [
+            "Yesterday... tomorrow... it's all the same screaming loop.",
+            "I killed you already... why are you back?",
+            "Time bleeds... and we drown in it."
+        ]
+    },
+    "gear_keeper": {
+        "name": "Gear Keeper",
+        "typeID": 12,
+        "dialogue": [
+            "Grease... more grease...",
+            "The teeth must mesh. The flesh must yield."
+        ]
+    },
+    "cantor": {
+        "name": "Cantor, Voice of the Void",
+        "typeID": 16,
+        "dialogue": [
+            "There is no song. Only the scream.",
+            "I saw the sheet music. It's blank. It's all blank!",
+            "Silence! I will shout the world into nothingness!",
+            "The void does not listen. It eats."
+        ]
+    },
+    "banshee": {
+        "name": "The Banshee",
+        "typeID": 17,
+        "dialogue": [
+            "Hush... sleep now...",
+            "The end is a lullaby.",
+            "Why do you struggle? Silence is peace."
+        ]
+    },
+    "silence_guard": {
+        "name": "Silence Guard",
+        "typeID": 15,
+        "dialogue": [
+            "...",
+            "Dampen the noise.",
+            "Shhh."
+        ]
+    },
+    "paradox": {
+        "name": "The Paradox",
+        "typeID": 19,
+        "dialogue": [
+            "You are not supposed to be here. This timeline was deleted.",
+            "I am the error you refused to fix.",
+            "Restart? There is no restart. Only crash.",
+            "01000110 01000001 01001100 01010011 01000101"
         ]
     }
 }

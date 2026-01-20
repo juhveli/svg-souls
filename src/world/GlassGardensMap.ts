@@ -65,14 +65,7 @@ export class GlassGardensMap extends GameMap {
             }
 
             // 4. NPC: Tick-Tock the Broken Bard
-            const tickTockSVG = `<g class="npc"><circle cx="0" cy="0" r="15" fill="#8af" stroke="#fff" stroke-width="2" /><circle cx="-4" cy="-3" r="2" fill="#000" /><circle cx="4" cy="-3" r="2" fill="#000" /><path d="M-5,5 Q0,10 5,5" stroke="#000" stroke-width="1" fill="none" /><line x1="0" y1="15" x2="0" y2="30" stroke="#8af" stroke-width="3" /></g>`;
-            const tickTockDialogue = [
-                "One, two. One, two. You're off beat, little soft one.",
-                "They say the Carillon will ring again. But I like the quiet between the ticks.",
-                "Do you know why the dancers broke? They couldn't hear the silence.",
-                "You don't reflect. How curious. Are you even real?"
-            ];
-            game.entityManager.add(new NPCEntity(400, 500, tickTockSVG, "Tick-Tock", tickTockDialogue, game.player));
+            game.entityManager.add(new NPCEntity(400, 500, "tick_tock", game.player));
         }
     }
 

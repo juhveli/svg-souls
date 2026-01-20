@@ -11,6 +11,9 @@ export class Entity {
     vx: number = 0;
     vy: number = 0;
 
+    // Rendering
+    typeID: number = 0;
+
     // Lifecycle
     markedForDeletion: boolean = false;
 
