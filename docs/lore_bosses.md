@@ -1,7 +1,9 @@
 # Lore Bosses: The Hierarchy of Dissonance
 
 ## World 1: The Scrapyard
-*   **Sub-Boss:** **The Trash-Compactor**. A mindless machine that tries to crush you.
+*   **Sub-Boss:** **The Trash-Compactor**.
+    *   *Lore:* "Once a standard recycling unit, it gained a flicker of sentience when it crushed a prototype that looked like itself. Now it weeps oil as it flattens the discards, believing it is 'saving' them from the shame of being imperfect."
+    *   *Mechanic:* A mindless machine that tries to crush you.
 *   **End Boss:** **Golgotha, The Accumulation**. A massive blob of molten scrap and glass.
     *   *Title:* "Keeper of the Waste"
     *   *Lore:* "It gathered the pieces we threw away and made a god of garbage."
@@ -11,7 +13,7 @@
 
 ## World 2: Glass Gardens
 *   **Sub-Boss:** **The Glass-Blower Deity**.
-    *   *Lore:* "He gave his breath to make them beautiful, but he had no breath left to tell them they were fragile."
+    *   *Lore:* "He gave his breath to make them beautiful, but he had no breath left to tell them they were fragile. He floats above the ruins, frantically trying to blow new life into the shattered remains of his children."
     *   *Mechanic:* Exhales bubbles of molten glass that trap the player.
 *   **End Boss:** **Vitria, The Glass Matriarch**. She controls the razor-grass.
     *   *Lore:* "She loved her garden so much she watered it with her own molten blood."
@@ -21,7 +23,7 @@
 
 ## World 3: The Clockwork Arteries
 *   **Sub-Boss:** **The Steam-Marshal**.
-    *   *Lore:* "He monitors the pressure. If the world sighs too loud, he tightens the valves until it chokes."
+    *   *Lore:* "He monitors the pressure. If the world sighs too loud, he tightens the valves until it chokes. He believes the outside world is 'Chaos' and only the Engine is 'Order', so he burns intruders to keep the pressure stable."
     *   *Mechanic:* Uses pressure vents to obscure vision and push the player into hazards.
 *   **End Boss:** **The Metronome General**.
     *   *Title:* "The Keeper of the Beat"
@@ -34,7 +36,7 @@
 
 ## World 4: The Hushed Halls
 *   **Sub-Boss:** **The Librarian**.
-    *   *Lore:* "She guards the forbidden history. She knows that knowledge is loud, so she burns the books."
+    *   *Lore:* "She guards the forbidden history. She knows that knowledge is loud—ideas vibrate and cause dissonance. She burns the books not out of hate, but to keep the library silent."
     *   *Mechanic:* Casts "Shush" zones (Silence status effect) preventing spell usage.
 *   **End Boss:** **Cantor, The Voice of Void**.
     *   *Title:* "The Anti-Bard"
@@ -47,18 +49,18 @@
 
 ## World 5: The Crystal Belfry
 *   **Sub-Boss:** **The Gatekeeper**.
-    *   *Lore:* "A golem made of pure lens flare. It has no mass, only brightness."
+    *   *Lore:* "A golem made of pure lens flare. It has no mass, only brightness. It acts as the Focusing Lens for the Conductor, ensuring his vision is the only one the world sees."
     *   *Mechanic:* Blinds the player (white screen) if they look directly at it during "Flash" attacks.
 *   **End Boss:** **The Prime Conductor (Reveal)**.
     *   *Title:* "The Architect of the Loop"
     *   *Phase 1:* He fights you with the stolen Resonance of the previous bosses, mocking your journey.
     *   *Phase 2:* He merges with the Grand Carillon. The arena becomes a scrolling sheet of music; notes are projectiles.
 *   **Secret Boss:** **The Paradox**.
-    *   *Lore:* "The Glitch in the Universe. The code that shouldn't be there."
+    *   *Lore:* "The Glitch in the Universe. The code that shouldn't be there. A being composed of the deleted timelines."
     *   *Trigger Gimmick:* Can only be summoned if you have the four **Keys to the Paradox**:
         1.  Scale of Decay (W1)
         2.  Shard of Narcissus (W2)
         3.  Spring of Eternity (W3)
         4.  Velvet Throat (W4)
-    *   *Location:* The Singularity Point (Developer's Room).
-    *   *Reward:* The "True Ending" (The Player wakes up at their computer).
+    *   *Location:* The Zero Point (Archive of the First Song).
+    *   *Reward:* The "True Ending" (The Player erases the timeline, ending the loop permanently and allowing a natural silence to fall).

@@ -52,19 +52,30 @@ To a Gear-Keeper, killing an intruder isn't murder; it's "removing an obstructio
 
 ### History
 The Silent Choir was once the "Backup Singers" for the Grand Carillon. They resided in the library, recording the sheet music of history.
-They were the first to discover the Prime Conductor's betrayal. They read the "Final Note" in the archives and realized it would erase free will. To prevent themselves from singing it, they took a vow of absolute silence. When the Conductor tried to force them, they sewed their own mouths shut.
+They were the first to discover the Prime Conductor's betrayal. They read the "Final Note" in the archives and realized it would erase free will. To prevent themselves from singing it, they took a vow of absolute silence.
 
 ### Philosophy
-**"The Song is a Lie."**
+**"The Song is a Lie. The Silence is Truth."**
 They worship the **Rest** (the silence between notes). They believe that sound is a corruption of the Void, and that true peace only exists in absolute zero-decibel environments.
-They are not fighting to destroy the world; they are fighting to "quiet" it. They view the Player (The Echo Walker) as a kindred spirit—a being of silence—until they realize you intend to restart the Carillon.
+They view the Conductor as a tyrant who enslaves reality through rhythm. By silencing the world, they believe they are freeing it. They are tragic figures, acting as "Sound-Eaters" to prevent the Apocalypse.
+
+### Rituals: The Vow of the Gag
+*   **The Stitching:** Upon initiation, a monk's lips are sewn shut with gold thread. This is not a punishment, but a "sealing of the vessel" to prevent the Conductor's song from entering or escaping.
+*   **The Drowning:** They submerge themselves in tanks of heavy, viscous fluid that blocks all sound, meditating for weeks in sensory deprivation to "hear the Void."
+*   **The Burning of Words:** Every year, they burn thousands of books from the library, believing that written words are "frozen noise" that must be released into ash.
+
+### Architecture
+Their domain is built to kill sound.
+*   **Void-Stone:** The walls are made of a porous, black stone that absorbs 99% of acoustic energy.
+*   **Velvet Drapes:** Every surface is covered in thick, heavy purple velvet.
+*   **Dead Zones:** Certain chambers are magically enchanted so that sound waves literally cannot propagate; magic requiring verbal components fails here.
 
 ### Visual Design
 *   **Attire:** Thick, heavy velvet robes in deep purple and black. These fabrics are designed to absorb sound. They wear soft slippers to walk silently.
-*   **Physiology:** Pale, gaunt humanoids. Their most striking feature is their mouths, which are stitched shut with gold thread. They have no eyes, only ears.
+*   **Physiology:** Pale, gaunt humanoids. Their most striking feature is their mouths, which are stitched shut. They have no eyes (as they do not need to read anymore), only massive, sensitive ears.
 *   **Weapons:** Sonic-dampening bells, tuning forks that cancel out magic, "Hush" spells that silence the player.
 
 ### Hierarchy
-*   **The Voice (Cantor):** The only one allowed to make sound, but he uses it as a weapon. He screams the "Anti-Verse."
+*   **The Voice (Cantor):** The only one allowed to make sound, but he uses it as a weapon. He screams the "Anti-Verse" to shatter the Conductor's melodies.
 *   **The Librarians:** Guardians of the forbidden sheet music. They "Shush" intruders (magic silence).
-*   **The Monks:** The foot soldiers who swarm silently, strangling targets with velvet ropes.
+*   **The Monks:** The foot soldiers who swarm silently, strangling targets with velvet ropes to avoid the noise of a blade striking bone.
