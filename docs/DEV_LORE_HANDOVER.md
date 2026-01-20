@@ -33,7 +33,7 @@ All detailed specifications are located in `docs/`:
 ### 4. Level specific Hooks
 *   **Area 1 (Scrapyard):** Implement "Time-Slow" zones (Physics gravity modification).
 *   **Area 2 (Glass Gardens):** Implement "Reflection Rendering" for mirrors (RenderTexture showing alternate "Golden Age" geometry).
-*   **Area 4 (Silent Spire):** Implement "Audio Muting" zones where sound effects are disabled.
+*   **Area 4 (Hushed Halls):** Implement "Audio Muting" zones where sound effects are disabled.
 
 ## Final Note
 The goal is **Immersion**. If the player has to stop playing to read about the story, we have failed. The story is that the world is a broken instrument; the player is here to fix the tune. let the mechanics reflect that.

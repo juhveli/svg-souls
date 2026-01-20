@@ -1,4 +1,4 @@
-# Level Design: Area 4 - The Silent Spire
+# Level Design: Area 4 - The Hushed Halls
 **Role:** The Climax / Void & Absolution
 **Theme:** Silence, Emptiness, Regret
 **Key Mechanic:** Absence of Audio Cues & Visual Dependency
