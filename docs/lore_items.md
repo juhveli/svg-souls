@@ -31,6 +31,13 @@
     > *A dog whistle made of rusted iron. It makes no sound when blown, but the rust on nearby metal begins to flake off.*
     > *"The scavengers used these to call the beast, feeding it scrap to keep it from eating them. It answers only to the song of decay."*
 
+### The Rusty Key-Hand
+*   **Location:** World 1 (The Scrapyard) - Disposal Unit Corpse.
+*   **Use:** Opens the Maintenance Doors.
+*   **Description:**
+    > *The severed hand of a disposal unit, joints fused by oxidation. Even in death, it clutches its charge with mechanical devotion.*
+    > *"The Architects built the Maintenance Doors to hide the grinding noise of the undercity from the glass gardens above. This hand is the only thing that remembers how to open them."*
+
 ### Mannequin's Glass Eye
 *   **Location:** World 1 (The Scrapyard) - The Mannequin Graves.
 *   **Use:** Passive Lore Item / Tradeable?
@@ -95,12 +102,12 @@
 ### Tuning Fork Spear (The Dampener)
 *   **Type:** Starter Weapon.
 *   **Description:**
-    > *A massive, two-pronged spear made of heavy, dull iron. It vibrates violently upon impact.*
-    > *"Standard issue for the Silence Guard. While the glass nobility sought perfect pitch, the guards were tasked with 'dampening' dissonance—usually by skewering the source to stop its vibration. It does not cut; it shakes the target apart."*
+    > *A heavy iron partisan, forged with a bifurcated tip. The Silence Guard did not carry these to kill, but to 'correct.'*
+    > *"When struck against a dissonant soul, the prongs vibrate with such violence that the victim's bones are pulverized into silence. It does not cut the flesh; it shatters the song within."*
 
 ---
 
-## V. Flavor Items (Trinkets & Junk)
+## V. Flavor Items & Narrative Fragments
 *Useless to the practical, priceless to the historian.*
 
 ### Calcified Tuning Peg
@@ -115,23 +122,29 @@
     > *A square of spun glass, impossibly thin and flexible.*
     > *"The nobility used these to wipe away tears. However, glass does not absorb moisture; it only smears it across the face. A cruel design for a people who were forbidden to be unhappy."*
 
+### Opaque Mirror
+*   **Source:** Glass Gardens (Hidden Chest).
+*   **Description:**
+    > *A hand mirror that has been painted over with matte black paint.*
+    > *"A scandalous contraband item. To own a mirror that does not reflect is to deny one's existence. It was likely used by a Glazewright who wanted, just for a moment, to be unseen."*
+
+### A Cracked Mirror
+*   **Source:** World 2 (Glass Gardens).
+*   **Description:**
+    > *A shard of glass that reflects the smog and the steel, but not you.*
+    > *"Only a hollow ache remains where your image should be. Proof that in this machine, you are not the operator, but the ghost."*
+
 ### Punch-Card of the Late
 *   **Source:** Clockwork Arteries (Piston Drone Drop).
 *   **Description:**
     > *A brass card with a single error punched into the timeline.*
     > *"Worker Unit 734 missed a beat by 0.04 seconds. The error was logged, the unit was melted down, and the metal was reused to make this card. Efficiency is a circle."*
 
-### Jar of Stifled Laughter
-*   **Source:** Hushed Halls (Library Shelves).
+### Foreman's Ledger
+*   **Source:** Clockwork Arteries (Office Desk).
 *   **Description:**
-    > *A small, vacuum-sealed jar. It vibrates slightly.*
-    > *"The Silent Choir believes that joy is the loudest noise of all. They captured this sound from a child before sewing his mouth shut. If you shake it, it sounds like weeping."*
-
-### Glitch-Dust
-*   **Source:** Crystal Belfry (Environmental).
-*   **Description:**
-    > *A handful of white powder that flickers in and out of existence.*
-    > *"Matter that cannot decide if it is real. Snorting it grants a brief vision of a world without crystal, where the sky is blue instead of white static. The user usually wakes up screaming."*
+    > *A log of 'Soft Units' marked for the furnace. The final entry is stamped 12:00:00, repeated until the ink ran dry.*
+    > *"It documents the exact second the world decided that breathing was inefficient."*
 
 ### Metronome Oil
 *   **Source:** Clockwork Arteries (Gear-Keeper Drop).
@@ -139,14 +152,43 @@
     > *A flask of thick, black lubricant that smells of burnt coffee.*
     > *"The Gear-Keepers drink this to stay awake. It keeps their internal pendulums swinging without friction. Warning: Highly addictive to anyone with a heartbeat."*
 
+### Jar of Stifled Laughter
+*   **Source:** Hushed Halls (Library Shelves).
+*   **Description:**
+    > *A small, vacuum-sealed jar. It vibrates slightly.*
+    > *"The Silent Choir believes that joy is the loudest noise of all. They captured this sound from a child before sewing his mouth shut. If you shake it, it sounds like weeping."*
+
 ### Velvet Ear-Plugs
 *   **Source:** Hushed Halls (Silent Monk Drop).
 *   **Description:**
     > *Two small cones of dense, purple foam.*
     > *"Standard issue for the initiates. Before they are ready to sew their mouths shut, they must first learn to stop listening to the world's lies. It blocks out everything but the sound of your own blood."*
 
-### Opaque Mirror
-*   **Source:** Glass Gardens (Hidden Chest).
+### Sheet Music Fragment
+*   **Source:** Hushed Halls (Hidden).
 *   **Description:**
-    > *A hand mirror that has been painted over with matte black paint.*
-    > *"A scandalous contraband item. To own a mirror that does not reflect is to deny one's existence. It was likely used by a Glazewright who wanted, just for a moment, to be unseen."*
+    > *A torn page of the score, notes written in blood and oil. It ends abruptly at the 13th measure.*
+    > *"The ink is still wet, as if the composer was interrupted by a realization too terrible to write down."*
+
+### Glitch-Dust
+*   **Source:** Crystal Belfry (Environmental).
+*   **Description:**
+    > *A handful of white powder that flickers in and out of existence.*
+    > *"Matter that cannot decide if it is real. Snorting it grants a brief vision of a world without crystal, where the sky is blue instead of white static. The user usually wakes up screaming."*
+
+### General's Log: Entry 404
+*   **Source:** The Zero Point.
+*   **Description:**
+    > *A corrupted data log that shouldn't exist.*
+    > *"We locked the door not to keep them out, but to keep Him in. The Conductor's song... it doesn't end. It just gets louder."*
+
+---
+
+## VI. Boss Remembrances (Souls of the Shatter)
+
+### Breath of the Creator
+*   **Source:** Drop from *The Glass-Blower Deity* (Sub-Boss).
+*   **Use:** Unlock 'Glass Form' Spell.
+*   **Description:**
+    > *The crystallized final breath of the Glass-Blower Deity. It is warm and smells of molten sand.*
+    > *"He gave his breath to make his children beautiful, but he had no breath left to tell them they were fragile."*

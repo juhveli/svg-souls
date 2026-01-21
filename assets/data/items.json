@@ -46,7 +46,7 @@
     },
     "rusty_key_hand": {
         "name": "The Rusty Key-Hand",
-        "description": "The severed hand of a disposal unit, joints fused by oxidation. Even in death, it clutches its charge with mechanical devotion. It opens the Maintenance Doors, which were sealed to keep the grinding noise of the undercity from reaching the glass gardens above.",
+        "description": "The severed hand of a disposal unit, joints fused by oxidation. Even in death, it clutches its charge with mechanical devotion. The Architects built the Maintenance Doors to hide the grinding noise of the undercity from the glass gardens above. This hand is the only thing that remembers how to open them.",
         "category": "key",
         "effect": {
             "type": "unlock",
@@ -56,7 +56,7 @@
     },
     "breath_of_creator": {
         "name": "Breath of the Creator",
-        "description": "He gave his breath to make them beautiful, but he had no breath left to tell them they were fragile.",
+        "description": "The crystallized final breath of the Glass-Blower Deity. It is warm and smells of molten sand. He gave his breath to make his children beautiful, but he had no breath left to tell them they were fragile.",
         "category": "boss_soul",
         "effect": {
             "type": "unlock_spell",
@@ -66,7 +66,7 @@
     },
     "tuning_fork_spear": {
         "name": "Tuning Fork Spear",
-        "description": "A massive, two-pronged spear made of heavy, dull iron. It vibrates violently upon impact. \"Standard issue for the Silence Guard. While the glass nobility sought perfect pitch, the guards were tasked with 'dampening' dissonance—usually by skewering the source to stop its vibration. It does not cut; it shakes the target apart.\"",
+        "description": "A heavy iron partisan, forged with a bifurcated tip. The Silence Guard did not carry these to kill, but to 'correct.' When struck against a dissonant soul, the prongs vibrate with such violence that the victim's bones are pulverized into silence. It does not cut the flesh; it shatters the song within.",
         "category": "weapon",
         "effect": {
             "type": "equip",
@@ -77,14 +77,14 @@
     },
     "cracked_mirror": {
         "name": "A Cracked Mirror",
-        "description": "The glass reflects the smog and the steel, but your face is absent. Only a hollow ache remains where your image should be. Proof that you are a ghost in this machine.",
+        "description": "A shard of glass that reflects the smog and the steel, but not you. Only a hollow ache remains where your image should be. Proof that in this machine, you are not the operator, but the ghost.",
         "category": "narrative",
         "effect": null,
         "icon": "mirror"
     },
     "foremans_ledger": {
         "name": "Foreman's Ledger",
-        "description": "A log of 'Soft Units' marked for the furnace. The final entry is stamped 12:00:00, repeated until the ink ran dry. The exact second the world decided to stop breathing.",
+        "description": "A log of 'Soft Units' marked for the furnace. The final entry is stamped 12:00:00, repeated until the ink ran dry. It documents the exact second the world decided that breathing was inefficient.",
         "category": "narrative",
         "effect": null,
         "icon": "book"
@@ -153,14 +153,14 @@
     },
     "generals_log": {
         "name": "General's Log: Entry 404",
-        "description": "'We locked the door not to keep them out, but to keep Him in. The Conductor's song... it doesn't end. It just gets louder.'",
+        "description": "\"We locked the door not to keep them out, but to keep Him in. The Conductor's song... it doesn't end. It just gets louder.\"",
         "category": "narrative",
         "effect": null,
         "icon": "scroll"
     },
     "sheet_music_fragment": {
         "name": "Sheet Music Fragment",
-        "description": "A torn page of the score. The notes are written in blood and oil. It ends abruptly at the 13th measure.",
+        "description": "A torn page of the score, notes written in blood and oil. It ends abruptly at the 13th measure. The ink is still wet, as if the composer was interrupted by a realization too terrible to write down.",
         "category": "narrative",
         "effect": null,
         "icon": "paper"
