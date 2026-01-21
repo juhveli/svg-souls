@@ -404,10 +404,92 @@ fn main(
         color = vec3<f32>(0.0, 1.0, 1.0); // Cyan flash
     }
 
-  } else if (typeID > 6.5) {
-     // Reserved for future expansion (IDs 20+)
+  } else if (abs(typeID - 20.0) < 0.1) {
+    // VIAL OF LIQUID SECONDS (WorldItem)
+    let t = global.time;
+
+    // Body: Glass Bottle
+    // Use slightly rounded box for the bottle body
+    let bottle = sdBox(uv - vec2<f32>(0.5, 0.55), vec2<f32>(0.15, 0.20));
+
+    // Neck: Narrower top
+    let neck = sdBox(uv - vec2<f32>(0.5, 0.30), vec2<f32>(0.06, 0.05));
+
+    // Rim: Top of neck
+    let rim = sdBox(uv - vec2<f32>(0.5, 0.25), vec2<f32>(0.08, 0.02));
+
+    // Cork: Stopper
+    let cork = sdBox(uv - vec2<f32>(0.5, 0.20), vec2<f32>(0.05, 0.03));
+
+    // Combine Glass parts
+    let glassShape = min(bottle, neck);
+    glassShape = min(glassShape, rim);
+
+    // Liquid: Inside the bottle
+    // Liquid level fluctuates slightly
+    let liquidLevel = 0.50 + sin(t * 2.0) * 0.02;
+    // Basic liquid box
+    let liquidBox = sdBox(uv - vec2<f32>(0.5, 0.60), vec2<f32>(0.12, 0.15));
+    // Cut off top
+    let liquidMask = uv.y - liquidLevel;
+    let liquid = max(liquidBox, liquidMask);
+
+    // Twitching bits (Void particles) inside
+    let p1 = vec2<f32>(0.5 + sin(t * 5.0)*0.05, 0.6 + cos(t * 3.0)*0.05);
+    let bit1 = sdCircle(uv - p1, 0.02);
+    let p2 = vec2<f32>(0.5 - cos(t * 4.0)*0.05, 0.55 + sin(t * 6.0)*0.05);
+    let bit2 = sdCircle(uv - p2, 0.015);
+    let bits = min(bit1, bit2);
+
+    // Shape Composition
+    dist = min(glassShape, cork);
+
+    // Coloring Logic
+    // Default to Glass Color (Cold Stone)
+    color = vec3<f32>(0.3922, 0.3922, 0.4314);
+
+    // Check if we hit the Cork (Rusted Iron)
+    if (cork < 0.001) {
+        color = vec3<f32>(0.2353, 0.1569, 0.1176);
+    }
+    // Check if we hit the Liquid (Old Wood / Goldish)
+    else if (liquid < 0.001 && glassShape < 0.001) {
+         color = vec3<f32>(0.4706, 0.3529, 0.2745);
+         // Make it glow slightly using Clay
+         if (sin(t * 10.0) > 0.5) {
+             color = vec3<f32>(0.3922, 0.2745, 0.1961); // Clay
+         }
+    }
+    // Check bits (Void)
+    if (bits < 0.001 && liquid < 0.001) {
+        color = vec3<f32>(0.0196, 0.0196, 0.0196);
+    }
+
+  } else if (typeID > 19.5 && abs(typeID - 20.0) > 0.1) {
+     // Reserved for future expansion (IDs 20+, except 20)
+     // Fallback for gaps to prevent default cube
      discard;
 
+  } else if (typeID > 6.5 && typeID < 7.0) {
+      // Gap between RustMite(6) and RustDragon(7) if any? No, integers.
+      // But we need to handle the big gap between 19 and 20 if we didn't use an 'else if' for 20.
+      // Wait, the previous block handles 20.
+      // We need to restore the protection for IDs between 6 and 19 that are NOT implemented?
+      // Actually, IDs 7-19 ARE implemented in the code (RustDragon, VanityWraith... Paradox).
+      // So we just need to protect > 20.5.
+      // BUT, my previous edit replaced "typeID > 6.5 discard" with "typeID=20 ... else if > 20.5 discard".
+      // This means IDs 7-19, which were previously implemented in the 'else if' chain ABOVE my edit, are fine.
+      // However, if there are GAPS in the sequence 7-19, they would fall through.
+      // Let's look at the file content again.
+      // It has blocks for 7, 8, 9 ... 19.
+      // So only > 19 needs checking.
+      // My added block covers 20.
+      // So checking > 20.5 is correct for future.
+      // What about 19.5 to 19.9?
+      // The logic is safe.
+      discard;
+  } else if (typeID > 20.5) {
+     discard;
   } else {
     // DEFAULT CUBE
     dist = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.4, 0.4));

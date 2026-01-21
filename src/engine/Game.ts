@@ -21,6 +21,7 @@ import { ReflectionSystem } from '../systems/ReflectionSystem';
 import { ItemDatabase } from '../systems/ItemDatabase';
 import { NPCDatabase } from '../systems/NPCDatabase';
 import { NPCEntity } from '../entities/NPCEntity';
+import { WorldItem } from '../entities/WorldItem';
 import { PersistenceManager } from './PersistenceManager';
 import { Camera } from './Camera';
 import { WebGPURenderer } from './WebGPURenderer';
@@ -176,6 +177,10 @@ export class Game {
 
         const bot = new SerumBot(650, 300, this.player);
         this.entityManager.add(bot);
+
+        // Cinder's Contribution: The Vial of Liquid Seconds
+        const vial = new WorldItem(200, 400, 'vial_liquid_seconds');
+        this.entityManager.add(vial);
 
         this.camera.follow(this.player);
         if (this.map) {
