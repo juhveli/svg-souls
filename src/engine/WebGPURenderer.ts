@@ -410,6 +410,10 @@ export class WebGPURenderer {
                 else if (name === 'Banshee') typeID = 17;
                 else if (name === 'PrimeConductor') typeID = 18;
                 else if (name === 'Paradox') typeID = 19;
+                else if (name === 'WorldItem') {
+                    const item = e as any;
+                    if (item.itemId === 'vial_liquid_seconds') typeID = 20;
+                }
             }
 
             // Params
