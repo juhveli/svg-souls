@@ -74,6 +74,8 @@ export class CrystalBelfryMap extends GameMap {
         // Walls
         this.addRect(0, 0, 20, 600, '#00000088');
         this.addRect(this.width - 20, 0, 20, 600, '#00000088');
+
+        // TODO: Spawn Gatekeeper entity when implemented (W5 Sub-Boss)
     }
 
     private addRect(x: number, y: number, w: number, h: number, color: string) {

@@ -3,6 +3,7 @@ import { Game } from '../engine/Game';
 import { CrystalFlora } from '../entities/Flora';
 import { PorcelainDancer } from '../entities/enemies/PorcelainDancer';
 import { NPCEntity } from '../entities/NPCEntity';
+import { GlassBlowerDeity } from '../entities/enemies/GlassBlowerDeity';
 
 export class GlassGardensMap extends GameMap {
     el: SVGGElement;
@@ -66,6 +67,9 @@ export class GlassGardensMap extends GameMap {
 
             // 4. NPC: Tick-Tock the Broken Bard
             game.entityManager.add(new NPCEntity(400, 500, "tick_tock", game.player));
+
+            // 5. Sub-Boss: The Glass-Blower Deity
+            game.entityManager.add(new GlassBlowerDeity(650, 400, game.player));
         }
     }
 
