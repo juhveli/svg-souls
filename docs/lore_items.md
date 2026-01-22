@@ -200,6 +200,42 @@
     > *A teardrop made of large, blocky crystals. It looks low-resolution.*
     > *"A tear shed by a being from a lower bandwidth. It suggests that suffering is constant, regardless of the resolution."*
 
+### Industrial Gear
+*   **Source:** Clockwork Arteries (Environmental).
+*   **Description:**
+    > *A heavy iron gear, teeth worn smooth by centuries of grinding.*
+    > *"It was once part of the Great Clock's heartbeat. Now, it lies silent, a testament to a time when the world moved forward instead of in circles."*
+
+### Compacted Junk
+*   **Source:** Scrapyard (Environmental).
+*   **Description:**
+    > *A dense cube of refuse, crushed into a solid mass.*
+    > *"It contains everything from broken toys to discarded limbs. In the Scrapyard, nothing is ever truly lost; it is merely compressed until it fits."*
+
+### Heavy Chain-Link
+*   **Source:** Scrapyard (Environmental).
+*   **Description:**
+    > *A single link of a chain thick enough to anchor a ship.*
+    > *"The metal is cold and smells of dried blood. It once held something massive in place, something that did not want to be held."*
+
+### Hollow Book-Spine
+*   **Source:** Hushed Halls (Environmental).
+*   **Description:**
+    > *The spine of a leather-bound tome, the pages long since turned to dust.*
+    > *"The title is illegible, scratched out by a frantic hand. In the Hushed Halls, knowledge is not lost to time, but to fear."*
+
+### Crystal Shard-Spire
+*   **Source:** Crystal Belfry (Environmental).
+*   **Description:**
+    > *A jagged splinter of the Crystal Belfry. It hums with a faint, static charge.*
+    > *"Looking through it distorts reality, showing a world where the sky is not white static, but a terrifying, endless blue."*
+
+### Marble Fragment
+*   **Source:** Hushed Halls (Environmental).
+*   **Description:**
+    > *A chip of white marble from a grand pillar. It is cool to the touch.*
+    > *"The Architects built their temples to last forever, forgetting that even stone must bow to the weight of entropy."*
+
 ---
 
 ## VI. Boss Remembrances (Souls of the Shatter)

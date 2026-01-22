@@ -1,3 +1,16 @@
+/**
+ * @fileoverview SVGAssets.ts
+ * "The Blueprint of the Broken World"
+ *
+ * This file contains the procedural vector definitions (Stage A of the Crunch Pipeline).
+ * While the game engine is transitioning to WebGPU-based SDF rendering, these SVG assets
+ * serve as the "Source of Truth" for the visual design of key environmental elements.
+ *
+ * Usage:
+ * - Legacy: Direct DOM insertion in GameMap classes (e.g., HushedHallsMap).
+ * - Pipeline: Used by tools/asset_pipeline/ scripts to generate pixel-art textures.
+ * - Lore: The shapes defined here correspond to "Flavor Items" in items.json (e.g., Industrial Gear).
+ */
 export const SVGAssets = {
     // 1. Procedural Gear (Clockwork)
     gear: (cx: number, cy: number, r: number, teeth: number, hole: boolean = true) => {
