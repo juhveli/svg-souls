@@ -72,6 +72,24 @@ fn sdBox(p: vec2<f32>, b: vec2<f32>) -> f32 {
     return length(max(d, vec2<f32>(0.0))) + min(max(d.x, d.y), 0.0);
 }
 
+fn rotate(p: vec2<f32>, angle: f32) -> vec2<f32> {
+    let c = cos(angle);
+    let s = sin(angle);
+    return vec2<f32>(p.x * c - p.y * s, p.x * s + p.y * c);
+}
+
+fn sdTuningFork(p: vec2<f32>) -> f32 {
+    // Handle
+    let handle = sdBox(p - vec2<f32>(0.0, 0.1), vec2<f32>(0.015, 0.15));
+    // Base of Fork (Y slightly up)
+    let base = sdBox(p - vec2<f32>(0.0, -0.05), vec2<f32>(0.05, 0.015));
+    // Prongs
+    let prongL = sdBox(p - vec2<f32>(-0.04, -0.15), vec2<f32>(0.015, 0.1));
+    let prongR = sdBox(p - vec2<f32>( 0.04, -0.15), vec2<f32>(0.015, 0.1));
+
+    return min(min(min(handle, base), prongL), prongR);
+}
+
 @fragment
 fn main(
   @location(0) uv : vec2<f32>,
@@ -84,12 +102,89 @@ fn main(
 
   // --- 1. SDF LOGIC ---
   if (abs(typeID - 1.0) < 0.1) {
-    // HERO
-    let head = sdCircle(uv - vec2<f32>(0.5, 0.3), 0.15);
-    let wobble = sin((uv.y * 20.0) + (global.time * 5.0)) * 0.05 * uv.y;
-    let body = sdBox(uv - vec2<f32>(0.5 + wobble, 0.6), vec2<f32>(0.1, 0.2));
-    dist = min(head, body);
-    color = vec3<f32>(0.0, 1.0, 1.0); // Cyan Resonance
+    // ECHO WALKER (Player)
+    let t = global.time;
+
+    // Params
+    let weaponAngle = params.x;
+    let moveAngle = params.y;
+    let speed = params.z;
+    let isAttacking = params.w;
+
+    // --- TENTACLES (Legs) ---
+    // Center of mass for tentacles
+    let tentacleCenter = vec2<f32>(0.5, 0.7);
+    var pTentacle = uv - tentacleCenter;
+
+    // Trailing Logic
+    if (speed > 0.5) {
+        // Rotate local coordinates to align with movement
+        // We want the mass to trail "behind", so if moving right (0), trailing is left (-x)
+        pTentacle = rotate(pTentacle, -moveAngle);
+        // Stretch backward (positive X in rotated space because we rotated -moveAngle? No.)
+        // If moving Right (Angle 0), we want stuff at Left (X < 0) to trail.
+        // If we rotate by -MoveAngle, then the X axis aligns with the movement direction.
+        // X+ is forward, X- is backward.
+        // We want to skew/bend the X- part.
+        pTentacle.x += sin(pTentacle.y * 10.0 + t * 15.0) * 0.05; // Fast wiggle
+    } else {
+        // Idle
+        pTentacle.x += sin(pTentacle.y * 10.0 + t * 3.0) * 0.02;
+    }
+
+    let tentacleBlob = sdCircle(pTentacle, 0.15);
+    // Add noise for "writhing mass" look
+    let noise = sin(uv.x * 20.0 + t) * sin(uv.y * 20.0 + t) * 0.01;
+
+    // --- CLOAK (Body) ---
+    let pBody = uv - vec2<f32>(0.5, 0.5);
+    // Tattered bottom
+    let tatter = sin(uv.x * 40.0 + t * 2.0) * 0.03;
+    let cloakBox = sdBox(pBody, vec2<f32>(0.12, 0.2));
+    let cloakCut = pBody.y - (0.2 + tatter);
+    let cloak = max(cloakBox, cloakCut);
+
+    // --- HEAD ---
+    let pHead = uv - vec2<f32>(0.5, 0.3);
+    let head = sdCircle(pHead, 0.1);
+
+    // Eyes (Glowing)
+    // Offset slightly based on aim (weaponAngle) to "look"
+    let lookOffset = vec2<f32>(cos(weaponAngle), sin(weaponAngle)) * 0.02;
+    let eyeL = sdCircle(pHead - vec2<f32>(-0.04, 0.02) - lookOffset, 0.02);
+    let eyeR = sdCircle(pHead - vec2<f32>( 0.04, 0.02) - lookOffset, 0.02);
+
+    // --- WEAPON (Tuning Fork Spear) ---
+    let orbitR = 0.35;
+    let hover = sin(t * 3.0) * 0.03;
+    // Calculate weapon position in UV space (0..1)
+    let wx = 0.5 + cos(weaponAngle) * (orbitR + hover);
+    let wy = 0.5 + sin(weaponAngle) * (orbitR + hover);
+    var pWeapon = uv - vec2<f32>(wx, wy);
+
+    // Rotate weapon to point outwards
+    pWeapon = rotate(pWeapon, -weaponAngle - 1.5708); // -90 deg
+    let weapon = sdTuningFork(pWeapon);
+
+    // Combine
+    let lowerBody = tentacleBlob + noise;
+    dist = min(head, cloak);
+    dist = min(dist, lowerBody);
+    dist = min(dist, weapon);
+
+    // Color
+    color = vec3<f32>(0.25, 0.25, 0.3); // Lighter Void to survive lighting/quantization
+
+    if (weapon < 0.001) {
+        color = vec3<f32>(0.8, 0.9, 1.0); // Bright Cyan Metal
+        if (isAttacking > 0.5) {
+             color = vec3<f32>(1.0, 1.0, 1.0); // White Flash
+        }
+    } else if (min(eyeL, eyeR) < 0.001) {
+        color = vec3<f32>(0.0, 1.0, 1.0); // Cyan Eyes
+    } else if (lowerBody < 0.001 && dist == lowerBody) {
+        color = vec3<f32>(0.15, 0.25, 0.2); // Visible Dark Green
+    }
 
   } else if (abs(typeID - 2.0) < 0.1) {
     // SERUM BOT
