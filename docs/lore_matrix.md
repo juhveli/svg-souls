@@ -18,11 +18,11 @@ This document explicitly defines *how* the player learns the history of the worl
 ### 1. Consumable: *Vial of Liquid Seconds*
 > *A small glass vial containing a golden, viscous fluid that twitches on its own.*
 > *Restores health by rewinding the body's timeline slightly.*
-> *"The rich drank time like wine, believing it would keep their glass skins from growing dull. They did not know that hoarding time leaves none for the rest of the world."*
+> *"The rich drank time like wine, believing it would keep their glass skins from growing dull. They did not know that hoarding time leaves none for the rest of the world. It tastes of copper and regret."*
 
 ### 2. Weapon: *Tuning Fork Spear*
-> *A massive, two-pronged spear made of heavy iron. Vibrates violently upon impact.*
-> *"Standard issue for the Silence Guard. While the glass nobility sought perfect pitch, the guards were tasked with 'dampening' dissonance—usually by skewering the source to stop its vibration."*
+> *A heavy iron partisan, forged with a bifurcated tip.*
+> *"The Silence Guard did not carry these to kill, but to 'correct.' When struck against a dissonant soul, the prongs vibrate with such violence that the victim's bones are pulverized into silence. It does not cut the flesh; it shatters the song within."*
 
 ### 3. Key Item: *The Stopped Watch*
 > *A pocket watch with hands fused to the face. It feels impossibly heavy.*
@@ -35,7 +35,7 @@ This document explicitly defines *how* the player learns the history of the worl
 *   **Visual Design:** A giant, bloated figure made of molten, glowing glass. He is constantly "exhaling" to keep his shape.
 *   **Mechanic:** He blows "bubbles" of glass that trap you. You must break them before they cool and harden (instant kill).
 *   **Lore Hook:** He was the one who made the bodies for the nobility. Now, in his madness, he is trying to blow a "New World," but his breath is too hot, and everything he makes melts.
-*   **Soul Drop:** *Breath of the Creator.* ("He gave his breath to make them beautiful, but he had no breath left to tell them they were fragile.")
+*   **Soul Drop:** *Breath of the Creator.* ("The crystallized final breath of the Glass-Blower Deity. It is warm and smells of molten sand. He gave his breath to make his children beautiful, but he had no breath left to tell them they were fragile.")
 
 ## IV. NPC Interaction
 *   **Character:** *Tick-Tock, the Broken Bard*
