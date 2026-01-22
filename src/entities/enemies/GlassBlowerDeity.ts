@@ -9,24 +9,22 @@ export class GlassBlowerDeity extends Enemy {
     target: Player;
     hp: number = 120;
     maxHp: number = 120;
-    state: 'IDLE' | 'BLOWING' | 'COOLDOWN' = 'IDLE';
+    state: 'IDLE' | 'INHALING' | 'BLOWING' = 'IDLE';
+    breathTimer: number = 0;
 
-    // For Shader
-    // p1: Blow Param (0.0 = No Bubble, 1.0 = Max Size)
-    blowParam: number = 0;
-
-    // Alias
-    get heatParam(): number { return this.blowParam; }
+    // Shader Params
+    // p1: Expansion/Heat Level (0..1)
+    heatParam: number = 0;
 
     private beatListener: () => void;
     private attackListener: EventListener;
 
-    constructor(x: number, y: number, target?: Player) {
+    constructor(x: number, y: number) {
         super(x, y);
         this.width = 80;
         this.height = 120;
         this.typeID = 25;
-        this.target = target || Game.getInstance().player;
+        this.target = Game.getInstance().player;
         this.radius = 40;
 
         this.beatListener = () => this.onBeat();
@@ -46,21 +44,11 @@ export class GlassBlowerDeity extends Enemy {
     }
 
     takeDamage(amount: number) {
-        // If bubble is up, it might pop and deal area damage or just negate damage?
-        if (this.state === 'BLOWING' && this.blowParam > 0.5) {
-            amount = Math.ceil(amount * 0.7);
-            // Pop early
-            this.state = 'COOLDOWN';
-            this.blowParam = 0;
-            UIManager.getInstance().showBark(this.x, this.y, "POP!");
-            // TODO: Add glass shattering sound effect when bubble pops
-        }
-
         this.hp -= amount;
 
         const game = Game.getInstance();
         if (game && game.particles) {
-            game.particles.emit(this.x, this.y, '#aff', 8); // Glass shards
+            game.particles.emit(this.x, this.y, '#aaf', 10); // Glass shards
         }
 
         if (this.hp <= 0) {
@@ -77,43 +65,39 @@ export class GlassBlowerDeity extends Enemy {
 
         if (this.state === 'IDLE') {
             if (dist < 300) {
-                this.state = 'BLOWING';
-                this.blowParam = 0;
-                UIManager.getInstance().showBark(this.x, this.y, "MOLTEN GLASS!");
+                this.state = 'INHALING';
+                UIManager.getInstance().showBark(this.x, this.y, "Inhaling...");
+                this.breathTimer = 0;
             } else {
-                // Float around
-                this.x += (Math.random() - 0.5) * 5;
-                this.y += Math.sin(performance.now() / 500) * 10;
+                 // Float closer slowly
+                this.x += dx * 0.01;
+                this.y += dy * 0.01;
+            }
+        } else if (this.state === 'INHALING') {
+            this.breathTimer++;
+            if (this.breathTimer >= 3) {
+                this.state = 'BLOWING';
+                UIManager.getInstance().showBark(this.x, this.y, "MOLTEN GLASS!");
+            }
+        } else if (this.state === 'BLOWING') {
+            this.state = 'IDLE';
+            // Spawn Projectile logic would go here, for now direct hit if in line
+            // Or simple distance check for heat wave
+            if (dist < 200) {
+                this.target.takeDamage(15);
+                const game = Game.getInstance();
+                game.particles.emit(this.target.x, this.target.y, '#fa0', 10); // Burn
             }
         }
     }
 
     update(dt: number) {
-        if (this.state === 'BLOWING') {
-            // Expand bubble
-            this.blowParam += dt * 0.8;
-
-            // Check collision with bubble
-            const bubbleRadius = this.blowParam * 80; // Max 80px radius
-            const dx = this.target.x - this.x;
-            const dy = this.target.y - (this.y - 20); // Bubble is slightly above center?
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < bubbleRadius) {
-                // Player trapped inside - Damage
-                this.target.takeDamage(1); // Continuous damage
-            }
-
-            if (this.blowParam >= 1.2) {
-                // Pop naturally
-                this.state = 'COOLDOWN';
-                this.blowParam = 0;
-            }
-        } else if (this.state === 'COOLDOWN') {
-            this.blowParam = 0;
-            if (Math.random() < 0.05) { // Random chance to return to idle
-                 this.state = 'IDLE';
-            }
+        if (this.state === 'INHALING') {
+            this.heatParam = Math.min(1.0, this.heatParam + dt * 0.5);
+        } else if (this.state === 'BLOWING') {
+            this.heatParam = Math.max(0.0, this.heatParam - dt * 2.0);
+        } else {
+             this.heatParam = Math.max(0.0, this.heatParam - dt * 0.2);
         }
 
         super.update(dt);

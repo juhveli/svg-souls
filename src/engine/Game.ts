@@ -265,7 +265,7 @@ export class Game {
         }
 
         if (this.player.x > 600 && !boss && !this.bossesDefeated.has('vitria')) {
-            const vitria = new Vitria(500, 300);
+            const vitria = new Vitria(500, 300, this.player);
             this.entityManager.add(vitria);
             this.ui.showBark(vitria.x, vitria.y, "PERFECTION.");
         }
@@ -287,7 +287,7 @@ export class Game {
          }
 
          if (this.player.x > 650 && !boss && !this.bossesDefeated.has('metronome_general')) {
-             const general = new MetronomeGeneral(600, 300);
+             const general = new MetronomeGeneral(600, 300, this.player);
              this.entityManager.add(general);
              this.ui.showBark(general.x, general.y, "TICK. TOCK.");
          }

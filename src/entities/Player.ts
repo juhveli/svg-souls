@@ -14,6 +14,8 @@ export class Player extends Entity {
     attackMoveSpeed: number = 50;
     moveAngle: number = 0;
     aimAngle: number = 0;
+    weaponAngle: number = 0;
+    movementIntensity: number = 0;
 
     // State
     state: 'ASLEEP' | 'ACTIVE' = 'ACTIVE';
@@ -126,6 +128,15 @@ export class Player extends Entity {
         // Mouse Aim
         const mouseVec = input.getVectorToMouse(this.x, this.y);
         this.aimAngle = Math.atan2(mouseVec.y, mouseVec.x);
+
+        // Weapon Physics (Telekinetic Lerp)
+        let diff = this.aimAngle - this.weaponAngle;
+        while (diff < -Math.PI) diff += Math.PI * 2;
+        while (diff > Math.PI) diff -= Math.PI * 2;
+        this.weaponAngle += diff * 5.0 * dt;
+
+        // Movement Intensity
+        this.movementIntensity = (dx !== 0 || dy !== 0 || this.isRolling) ? 1.0 : 0.0;
 
         // Heat & Regen Logic
         const zoneSystem = (window as any).ZoneSystem;

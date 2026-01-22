@@ -9,24 +9,22 @@ export class TrashCompactor extends Enemy {
     target: Player;
     hp: number = 150;
     maxHp: number = 150;
-    state: 'IDLE' | 'CRUSHING' | 'RECOVERING' = 'IDLE';
+    state: 'IDLE' | 'COMPRESSING' | 'SLAM' = 'IDLE';
+    compressTimer: number = 0;
 
-    // For Shader
-    // p1: Crush Param (0.0 = Up/Open, 1.0 = Down/Crushed)
-    crushParam: number = 0;
-
-    // Alias for compatibility if needed
-    get compressionParam(): number { return this.crushParam; }
+    // Shader Params
+    // p1: Compression Level (0..1) - controls visual squashing
+    compressionParam: number = 0;
 
     private beatListener: () => void;
     private attackListener: EventListener;
 
-    constructor(x: number, y: number, target?: Player) {
+    constructor(x: number, y: number) {
         super(x, y);
         this.width = 120;
         this.height = 100;
         this.typeID = 24;
-        this.target = target || Game.getInstance().player;
+        this.target = Game.getInstance().player;
         this.radius = 50;
 
         this.beatListener = () => this.onBeat();
@@ -46,12 +44,6 @@ export class TrashCompactor extends Enemy {
     }
 
     takeDamage(amount: number) {
-        // Reduced damage when crushed (armored)
-        if (this.state === 'RECOVERING' || this.crushParam > 0.8) {
-             amount = Math.ceil(amount / 2);
-             UIManager.getInstance().showBark(this.x, this.y - 50, "CLANG!");
-        }
-
         this.hp -= amount;
 
         const game = Game.getInstance();
@@ -64,7 +56,7 @@ export class TrashCompactor extends Enemy {
             EventManager.getInstance().emit('ENTITY_DIED', { type: 'trash_compactor', id: this.id, x: this.x, y: this.y });
             this.destroy();
         } else {
-             if (Math.random() < 0.2) {
+             if (Math.random() < 0.3) {
                  UIManager.getInstance().showBark(this.x, this.y, "OBSTRUCTION DETECTED.");
              }
         }
@@ -77,51 +69,50 @@ export class TrashCompactor extends Enemy {
 
         if (this.state === 'IDLE') {
             if (dist < 150) {
-                this.state = 'CRUSHING';
+                this.state = 'COMPRESSING';
                 UIManager.getInstance().showBark(this.x, this.y, "COMPRESSING...");
+                this.compressTimer = 0;
             } else {
                 // Slow lumbering movement
-                this.x += (Math.random() - 0.5) * 10;
-                this.y += (Math.random() - 0.5) * 10;
+                this.x += dx * 0.02;
+                this.y += dy * 0.02;
+            }
+        } else if (this.state === 'COMPRESSING') {
+            this.compressTimer++;
+            if (this.compressTimer >= 2) {
+                this.state = 'SLAM';
+            }
+        } else if (this.state === 'SLAM') {
+            // Damage check handled in update/visual sync, resetting here
+            this.state = 'IDLE';
+            this.compressionParam = 0;
+
+            // Check hit
+            if (dist < 100) {
+                 this.target.takeDamage(25);
+                 const game = Game.getInstance();
+                 game.particles.emit(this.target.x, this.target.y, '#f00', 10);
             }
         }
     }
 
     update(dt: number) {
-        if (this.state === 'CRUSHING') {
-            // Slam down fast
-            this.crushParam += dt * 5.0;
-            if (this.crushParam >= 1.0) {
-                this.crushParam = 1.0;
-                this.checkHit();
-                // TODO: Add crushing sound effect on impact
-                this.state = 'RECOVERING';
-            }
-        } else if (this.state === 'RECOVERING') {
-            // Rise up slowly
-            this.crushParam -= dt * 0.5;
-            if (this.crushParam <= 0.0) {
-                this.crushParam = 0.0;
-                this.state = 'IDLE';
-            }
+        if (this.state === 'COMPRESSING') {
+            this.compressionParam = Math.min(1.0, this.compressionParam + dt);
+        } else if (this.state === 'SLAM') {
+            this.compressionParam = 0; // Snap back
+        } else {
+            this.compressionParam = Math.max(0.0, this.compressionParam - dt);
         }
+
+        // Pass params to shader
+        // Assuming the renderer picks up properties, but Entity base class might not map them automatically
+        // The Renderer typically checks typeID and maps specific props.
+        // We'll need to update WebGPURenderer to map 'compressionParam' to p1 if it's not generic.
+        // Actually, looking at WebGPURenderer in memory, it maps manually.
+        // I'll need to check WebGPURenderer.ts later or assume standard param slots.
 
         super.update(dt);
-    }
-
-    checkHit() {
-        // Hitbox check
-        const dx = Math.abs(this.target.x - this.x);
-        const dy = Math.abs(this.target.y - this.y);
-
-        if (dx < 60 && dy < 60) {
-            this.target.takeDamage(25);
-            const game = Game.getInstance();
-            if (game.particles) game.particles.emit(this.target.x, this.target.y, '#f00', 10);
-
-            // Knockback
-            this.target.x += (this.target.x > this.x ? 50 : -50);
-        }
     }
 
     destroy() {

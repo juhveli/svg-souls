@@ -422,7 +422,10 @@ export class WebGPURenderer {
                 p1 = (e as any).isVisible ? 1.0 : 0.0;
             }
             if (typeID === 1) {
-                // p1 can be used for tentacle phase offset or direction
+                p1 = (e as any).weaponAngle || 0;
+                p2 = (e as any).moveAngle || 0;
+                p3 = (e as any).movementIntensity || 0;
+                p4 = (e as any).isAttacking ? 1.0 : 0.0;
             }
             if (typeID === 21) {
                 p1 = (e as any).isActive ? 1.0 : 0.0;
@@ -436,10 +439,10 @@ export class WebGPURenderer {
                 p2 = (e as any).attackParam || 0;
             }
             if (typeID === 24) {
-                p1 = (e as any).crushParam || (e as any).compressionParam || 0;
+                p1 = (e as any).compressionParam || 0;
             }
             if (typeID === 25) {
-                p1 = (e as any).blowParam || (e as any).heatParam || 0;
+                p1 = (e as any).heatParam || 0;
             }
 
             const offset = chunk.instanceCount * 9;

@@ -72,6 +72,24 @@ fn sdBox(p: vec2<f32>, b: vec2<f32>) -> f32 {
     return length(max(d, vec2<f32>(0.0))) + min(max(d.x, d.y), 0.0);
 }
 
+fn rotate(p: vec2<f32>, angle: f32) -> vec2<f32> {
+    let c = cos(angle);
+    let s = sin(angle);
+    return vec2<f32>(p.x * c - p.y * s, p.x * s + p.y * c);
+}
+
+fn sdTuningFork(p: vec2<f32>) -> f32 {
+    // Handle
+    let handle = sdBox(p - vec2<f32>(0.0, 0.1), vec2<f32>(0.015, 0.15));
+    // Base of Fork (Y slightly up)
+    let base = sdBox(p - vec2<f32>(0.0, -0.05), vec2<f32>(0.05, 0.015));
+    // Prongs
+    let prongL = sdBox(p - vec2<f32>(-0.04, -0.15), vec2<f32>(0.015, 0.1));
+    let prongR = sdBox(p - vec2<f32>( 0.04, -0.15), vec2<f32>(0.015, 0.1));
+
+    return min(min(min(handle, base), prongL), prongR);
+}
+
 @fragment
 fn main(
   @location(0) uv : vec2<f32>,
@@ -84,12 +102,89 @@ fn main(
 
   // --- 1. SDF LOGIC ---
   if (abs(typeID - 1.0) < 0.1) {
-    // HERO
-    let head = sdCircle(uv - vec2<f32>(0.5, 0.3), 0.15);
-    let wobble = sin((uv.y * 20.0) + (global.time * 5.0)) * 0.05 * uv.y;
-    let body = sdBox(uv - vec2<f32>(0.5 + wobble, 0.6), vec2<f32>(0.1, 0.2));
-    dist = min(head, body);
-    color = vec3<f32>(0.0, 1.0, 1.0); // Cyan Resonance
+    // ECHO WALKER (Player)
+    let t = global.time;
+
+    // Params
+    let weaponAngle = params.x;
+    let moveAngle = params.y;
+    let speed = params.z;
+    let isAttacking = params.w;
+
+    // --- TENTACLES (Legs) ---
+    // Center of mass for tentacles
+    let tentacleCenter = vec2<f32>(0.5, 0.7);
+    var pTentacle = uv - tentacleCenter;
+
+    // Trailing Logic
+    if (speed > 0.5) {
+        // Rotate local coordinates to align with movement
+        // We want the mass to trail "behind", so if moving right (0), trailing is left (-x)
+        pTentacle = rotate(pTentacle, -moveAngle);
+        // Stretch backward (positive X in rotated space because we rotated -moveAngle? No.)
+        // If moving Right (Angle 0), we want stuff at Left (X < 0) to trail.
+        // If we rotate by -MoveAngle, then the X axis aligns with the movement direction.
+        // X+ is forward, X- is backward.
+        // We want to skew/bend the X- part.
+        pTentacle.x += sin(pTentacle.y * 10.0 + t * 15.0) * 0.05; // Fast wiggle
+    } else {
+        // Idle
+        pTentacle.x += sin(pTentacle.y * 10.0 + t * 3.0) * 0.02;
+    }
+
+    let tentacleBlob = sdCircle(pTentacle, 0.15);
+    // Add noise for "writhing mass" look
+    let noise = sin(uv.x * 20.0 + t) * sin(uv.y * 20.0 + t) * 0.01;
+
+    // --- CLOAK (Body) ---
+    let pBody = uv - vec2<f32>(0.5, 0.5);
+    // Tattered bottom
+    let tatter = sin(uv.x * 40.0 + t * 2.0) * 0.03;
+    let cloakBox = sdBox(pBody, vec2<f32>(0.12, 0.2));
+    let cloakCut = pBody.y - (0.2 + tatter);
+    let cloak = max(cloakBox, cloakCut);
+
+    // --- HEAD ---
+    let pHead = uv - vec2<f32>(0.5, 0.3);
+    let head = sdCircle(pHead, 0.1);
+
+    // Eyes (Glowing)
+    // Offset slightly based on aim (weaponAngle) to "look"
+    let lookOffset = vec2<f32>(cos(weaponAngle), sin(weaponAngle)) * 0.02;
+    let eyeL = sdCircle(pHead - vec2<f32>(-0.04, 0.02) - lookOffset, 0.02);
+    let eyeR = sdCircle(pHead - vec2<f32>( 0.04, 0.02) - lookOffset, 0.02);
+
+    // --- WEAPON (Tuning Fork Spear) ---
+    let orbitR = 0.35;
+    let hover = sin(t * 3.0) * 0.03;
+    // Calculate weapon position in UV space (0..1)
+    let wx = 0.5 + cos(weaponAngle) * (orbitR + hover);
+    let wy = 0.5 + sin(weaponAngle) * (orbitR + hover);
+    var pWeapon = uv - vec2<f32>(wx, wy);
+
+    // Rotate weapon to point outwards
+    pWeapon = rotate(pWeapon, -weaponAngle - 1.5708); // -90 deg
+    let weapon = sdTuningFork(pWeapon);
+
+    // Combine
+    let lowerBody = tentacleBlob + noise;
+    dist = min(head, cloak);
+    dist = min(dist, lowerBody);
+    dist = min(dist, weapon);
+
+    // Color
+    color = vec3<f32>(0.25, 0.25, 0.3); // Lighter Void to survive lighting/quantization
+
+    if (weapon < 0.001) {
+        color = vec3<f32>(0.8, 0.9, 1.0); // Bright Cyan Metal
+        if (isAttacking > 0.5) {
+             color = vec3<f32>(1.0, 1.0, 1.0); // White Flash
+        }
+    } else if (min(eyeL, eyeR) < 0.001) {
+        color = vec3<f32>(0.0, 1.0, 1.0); // Cyan Eyes
+    } else if (lowerBody < 0.001 && dist == lowerBody) {
+        color = vec3<f32>(0.15, 0.25, 0.2); // Visible Dark Green
+    }
 
   } else if (abs(typeID - 2.0) < 0.1) {
     // SERUM BOT
@@ -540,72 +635,67 @@ fn main(
 
   } else if (abs(typeID - 24.0) < 0.1) {
     // TRASH COMPACTOR (W1 Sub-Boss)
+    let t = global.time;
+    let compress = params.x; // 0..1
 
-    // p1: Crush Param (0.0 = Up, 1.0 = Down)
-    let crush = params.x;
+    // Main Housing
+    let housing = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.3, 0.35));
 
-    // Frame
-    let frameL = sdBox(uv - vec2<f32>(0.3, 0.5), vec2<f32>(0.05, 0.4));
-    let frameR = sdBox(uv - vec2<f32>(0.7, 0.5), vec2<f32>(0.05, 0.4));
-    let frameTop = sdBox(uv - vec2<f32>(0.5, 0.15), vec2<f32>(0.25, 0.05));
-    let base = sdBox(uv - vec2<f32>(0.5, 0.85), vec2<f32>(0.25, 0.05));
+    // Piston/Crusher
+    // Moves down based on compress param
+    let pistonY = 0.7 - (compress * 0.4);
+    let piston = sdBox(uv - vec2<f32>(0.5, pistonY), vec2<f32>(0.25, 0.1));
 
-    // Piston Head (Moving)
-    let pistonY = 0.25 + crush * 0.5; // Moves from 0.25 to 0.75
-    let piston = sdBox(uv - vec2<f32>(0.5, pistonY), vec2<f32>(0.15, 0.05));
-    let rod = sdBox(uv - vec2<f32>(0.5, (pistonY + 0.15) * 0.5), vec2<f32>(0.04, pistonY * 0.5));
+    // Internal Void (where trash goes)
+    let voidBox = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.2, 0.2));
 
-    dist = min(frameL, frameR);
-    dist = min(dist, frameTop);
-    dist = min(dist, base);
+    dist = max(housing, -voidBox);
     dist = min(dist, piston);
-    dist = min(dist, rod);
 
-    color = vec3<f32>(0.3, 0.3, 0.35); // Industrial Grey
-    if (dist == piston) {
-        color = vec3<f32>(0.6, 0.2, 0.2); // Hazard Red/Rust
+    // Hydraulics
+    let hyd1 = sdBox(uv - vec2<f32>(0.3, 0.5), vec2<f32>(0.05, 0.3));
+    let hyd2 = sdBox(uv - vec2<f32>(0.7, 0.5), vec2<f32>(0.05, 0.3));
+    dist = min(dist, hyd1);
+    dist = min(dist, hyd2);
 
+    color = vec3<f32>(0.3, 0.3, 0.35); // Steel
+    if (compress > 0.5) {
+         color = vec3<f32>(0.5, 0.2, 0.2); // Overheating/Active
     }
 
   } else if (abs(typeID - 25.0) < 0.1) {
     // GLASS BLOWER DEITY (W2 Sub-Boss)
-
-    // p1: Blow Param (Bubble Size)
-    let blow = params.x;
     let t = global.time;
+    let heat = params.x; // 0..1 (Glow intensity)
 
-    // Figure
-    let head = sdCircle(uv - vec2<f32>(0.5, 0.3), 0.08);
-    let body = sdBox(uv - vec2<f32>(0.5, 0.55), vec2<f32>(0.1, 0.2));
-    let arm = sdBox(uv - vec2<f32>(0.5, 0.4), vec2<f32>(0.15, 0.02));
+    // Body: Molten Blob
+    let wobble = sin(t * 3.0 + uv.y * 10.0) * 0.05;
+    let body = sdCircle(uv - vec2<f32>(0.5 + wobble, 0.4), 0.15 + heat * 0.05);
 
     // Pipe
-    let pipe = sdBox(uv - vec2<f32>(0.65, 0.38), vec2<f32>(0.1, 0.01));
+    let pipe = sdBox(uv - vec2<f32>(0.5, 0.7), vec2<f32>(0.02, 0.3));
 
-    // Bubble
-    let bubbleR = blow * 0.25;
-    let bubbleP = vec2<f32>(0.75 + bubbleR, 0.38);
-    let bubble = sdCircle(uv - bubbleP, bubbleR);
-    // Make bubble hollow
-    bubble = abs(bubble) - 0.01;
+    // Head/Mask
+    let mask = sdBox(uv - vec2<f32>(0.5, 0.75), vec2<f32>(0.08, 0.1));
 
-    dist = min(head, body);
-    dist = min(dist, arm);
-    dist = min(dist, pipe);
+    dist = min(body, pipe);
+    dist = min(dist, mask);
 
-    if (blow > 0.05) {
-         dist = min(dist, bubble);
-    }
-
-    color = vec3<f32>(0.2, 0.6, 0.6); // Teal Robes
-    if (abs(dist - bubble) < 0.01 && blow > 0.05) {
-        color = vec3<f32>(0.8, 1.0, 1.0); // Glass
+    // Color Logic
+    color = vec3<f32>(0.6, 0.8, 0.9); // Cold Glass
+    if (heat > 0.1) {
+        // Transition to Orange/Red
+        let mixFactor = heat;
+        let hotColor = vec3<f32>(1.0, 0.5, 0.1);
+        color = mix(color, hotColor, mixFactor);
     }
 
   } else if (abs(typeID - 26.0) < 0.1) {
-    // TODO: Implement Shader for The Gatekeeper (W5 Sub-Boss) when entity is created
-    discard;
-
+    // TODO: Implement Shader for The Gatekeeper (W5 Sub-Boss)
+    // Placeholder Cube for now to avoid crash if spawned
+    let cube = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.2, 0.2));
+    dist = cube;
+    color = vec3<f32>(0.5, 0.0, 0.5); // Purple Placeholder
   } else if (typeID > 26.5) {
      // Safety discard for undefined future IDs
      discard;
