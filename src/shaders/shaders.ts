@@ -539,14 +539,68 @@ fn main(
     }
 
   } else if (abs(typeID - 24.0) < 0.1) {
-    // TODO: Implement Shader for The Trash-Compactor (W1 Sub-Boss)
-    discard;
+    // TRASH COMPACTOR (W1 Sub-Boss)
+    let t = global.time;
+    let compress = params.x; // 0..1
+
+    // Main Housing
+    let housing = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.3, 0.35));
+
+    // Piston/Crusher
+    // Moves down based on compress param
+    let pistonY = 0.7 - (compress * 0.4);
+    let piston = sdBox(uv - vec2<f32>(0.5, pistonY), vec2<f32>(0.25, 0.1));
+
+    // Internal Void (where trash goes)
+    let voidBox = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.2, 0.2));
+
+    dist = max(housing, -voidBox);
+    dist = min(dist, piston);
+
+    // Hydraulics
+    let hyd1 = sdBox(uv - vec2<f32>(0.3, 0.5), vec2<f32>(0.05, 0.3));
+    let hyd2 = sdBox(uv - vec2<f32>(0.7, 0.5), vec2<f32>(0.05, 0.3));
+    dist = min(dist, hyd1);
+    dist = min(dist, hyd2);
+
+    color = vec3<f32>(0.3, 0.3, 0.35); // Steel
+    if (compress > 0.5) {
+         color = vec3<f32>(0.5, 0.2, 0.2); // Overheating/Active
+    }
+
   } else if (abs(typeID - 25.0) < 0.1) {
-    // TODO: Implement Shader for The Glass-Blower Deity (W2 Sub-Boss)
-    discard;
+    // GLASS BLOWER DEITY (W2 Sub-Boss)
+    let t = global.time;
+    let heat = params.x; // 0..1 (Glow intensity)
+
+    // Body: Molten Blob
+    let wobble = sin(t * 3.0 + uv.y * 10.0) * 0.05;
+    let body = sdCircle(uv - vec2<f32>(0.5 + wobble, 0.4), 0.15 + heat * 0.05);
+
+    // Pipe
+    let pipe = sdBox(uv - vec2<f32>(0.5, 0.7), vec2<f32>(0.02, 0.3));
+
+    // Head/Mask
+    let mask = sdBox(uv - vec2<f32>(0.5, 0.75), vec2<f32>(0.08, 0.1));
+
+    dist = min(body, pipe);
+    dist = min(dist, mask);
+
+    // Color Logic
+    color = vec3<f32>(0.6, 0.8, 0.9); // Cold Glass
+    if (heat > 0.1) {
+        // Transition to Orange/Red
+        let mixFactor = heat;
+        let hotColor = vec3<f32>(1.0, 0.5, 0.1);
+        color = mix(color, hotColor, mixFactor);
+    }
+
   } else if (abs(typeID - 26.0) < 0.1) {
     // TODO: Implement Shader for The Gatekeeper (W5 Sub-Boss)
-    discard;
+    // Placeholder Cube for now to avoid crash if spawned
+    let cube = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.2, 0.2));
+    dist = cube;
+    color = vec3<f32>(0.5, 0.0, 0.5); // Purple Placeholder
   } else if (typeID > 26.5) {
      // Safety discard for undefined future IDs
      discard;
