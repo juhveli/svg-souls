@@ -538,30 +538,20 @@ fn main(
         color = vec3<f32>(0.8, 0.7, 0.5); // Paper/Leather
     }
 
-  } else if (typeID > 23.5) {
-     discard;
-  } else if (typeID > 6.5 && typeID < 7.0) {
-      // Gap between RustMite(6) and RustDragon(7) if any? No, integers.
-      // But we need to handle the big gap between 19 and 20 if we didn't use an 'else if' for 20.
-      // Wait, the previous block handles 20.
-      // We need to restore the protection for IDs between 6 and 19 that are NOT implemented?
-      // Actually, IDs 7-19 ARE implemented in the code (RustDragon, VanityWraith... Paradox).
-      // So we just need to protect > 20.5.
-      // BUT, my previous edit replaced "typeID > 6.5 discard" with "typeID=20 ... else if > 20.5 discard".
-      // This means IDs 7-19, which were previously implemented in the 'else if' chain ABOVE my edit, are fine.
-      // However, if there are GAPS in the sequence 7-19, they would fall through.
-      // Let's look at the file content again.
-      // It has blocks for 7, 8, 9 ... 19.
-      // So only > 19 needs checking.
-      // My added block covers 20.
-      // So checking > 20.5 is correct for future.
-      // What about 19.5 to 19.9?
-      // The logic is safe.
-      discard;
-  } else if (typeID > 20.5) {
+  } else if (abs(typeID - 24.0) < 0.1) {
+    // TODO: Implement Shader for The Trash-Compactor (W1 Sub-Boss)
+    discard;
+  } else if (abs(typeID - 25.0) < 0.1) {
+    // TODO: Implement Shader for The Glass-Blower Deity (W2 Sub-Boss)
+    discard;
+  } else if (abs(typeID - 26.0) < 0.1) {
+    // TODO: Implement Shader for The Gatekeeper (W5 Sub-Boss)
+    discard;
+  } else if (typeID > 26.5) {
+     // Safety discard for undefined future IDs
      discard;
   } else {
-    // DEFAULT CUBE
+    // DEFAULT CUBE (Fallback for debugging or glitched entities)
     dist = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.4, 0.4));
     color = vec3<f32>(0.5, 0.5, 0.5);
   }

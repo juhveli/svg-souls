@@ -63,5 +63,89 @@ export const SVGAssets = {
         const mx = (x1 + x2) / 2;
         const my = (y1 + y2) / 2 + sag;
         return `M${x1},${y1} Q${mx},${my} ${x2},${y2}`;
+    },
+
+    // 4. Bookshelf (Archive)
+    bookshelf: (x: number, y: number, w: number, h: number) => {
+        // Frame
+        let d = `M${x},${y} h${w} v${h} h${-w} Z `;
+
+        // Shelves
+        const numShelves = 4;
+        const shelfH = h / numShelves;
+        for(let i=1; i<numShelves; i++) {
+            d += `M${x},${y + i*shelfH} h${w} `;
+        }
+
+        // Books (Random vertical lines)
+        for(let i=0; i<numShelves; i++) {
+            const shelfY = y + (i+1)*shelfH;
+            let currentX = x + 5;
+            while(currentX < x + w - 5) {
+                const bookW = 5 + Math.random() * 10;
+                const bookH = (shelfH - 5) * (0.8 + Math.random() * 0.2);
+                // Draw book spine
+                // Simple box
+                d += `M${currentX},${shelfY} v${-bookH} h${bookW} v${bookH} `;
+                currentX += bookW + 1; // 1px gap
+            }
+        }
+        return d;
+    },
+
+    // 5. Crystal Spire (Belfry)
+    crystalSpire: (x: number, y: number, w: number, h: number) => {
+        // Jagged spike pointing up
+        let d = `M${x},${y+h} `; // Bottom Left
+
+        // Left side going up
+        let cx = x;
+        let cy = y+h;
+        const steps = 5;
+        const stepH = h / steps;
+
+        for(let i=0; i<steps; i++) {
+            cx += (w/2 - (cx-x)) * 0.4 + (Math.random()-0.5)*10;
+            cy -= stepH;
+            d += `L${cx},${cy} `;
+        }
+
+        // Peak
+        d += `L${x + w/2},${y} `;
+
+        // Right side going down
+        cy = y;
+        cx = x + w/2;
+
+        for(let i=0; i<steps; i++) {
+            cx += ((x+w) - cx) * 0.4 + (Math.random()-0.5)*10;
+            cy += stepH;
+             d += `L${cx},${cy} `;
+        }
+
+        d += `L${x+w},${y+h} Z`; // Close to bottom right
+
+        // Internal facets (random lines)
+        d += `M${x + w/2},${y} L${x + w/2},${y+h} `;
+
+        return d;
+    },
+
+    // 6. Pillar (Archive/General)
+    pillar: (x: number, y: number, w: number, h: number) => {
+         // Base
+         let d = `M${x-5},${y+h} h${w+10} v-10 h-${(w+10-w)/2} v-${h-20} `; // Up left side of shaft
+
+         // Capital
+         d += `h-${5} v-10 h${w+10} v10 h-${5} `;
+
+         // Down right side of shaft
+         d += `v${h-20} h${(w+10-w)/2} v10 Z `;
+
+         // Fluting (vertical lines)
+         d += `M${x + w/3},${y+10} v${h-20} `;
+         d += `M${x + 2*w/3},${y+10} v${h-20} `;
+
+         return d;
     }
 };
