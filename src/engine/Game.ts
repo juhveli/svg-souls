@@ -17,6 +17,8 @@ import { NarrativeItem } from '../entities/NarrativeItem';
 import { ProgressionSystem } from '../systems/ProgressionSystem';
 import { LootSystem } from '../systems/LootSystem';
 import { ClockworkArteriesMap } from '../world/ClockworkArteriesMap';
+import { HushedHallsMap } from '../world/HushedHallsMap';
+import { CrystalBelfryMap } from '../world/CrystalBelfryMap';
 import { ReflectionSystem } from '../systems/ReflectionSystem';
 import { ItemDatabase } from '../systems/ItemDatabase';
 import { NPCDatabase } from '../systems/NPCDatabase';
@@ -202,6 +204,10 @@ export class Game {
             this.map = new GlassGardensMap();
         } else if (name === "The Clockwork Arteries") {
             this.map = new ClockworkArteriesMap();
+        } else if (name === "The Hushed Halls") {
+            this.map = new HushedHallsMap();
+        } else if (name === "The Crystal Belfry") {
+            this.map = new CrystalBelfryMap();
         } else {
             this.map = new ScrapyardMap();
             this.spawnScrapyardNarrative();
@@ -267,6 +273,11 @@ export class Game {
                 this.ui.showBark(golgotha.x, golgotha.y, "I AM THE ACCUMULATION.");
             }
         }
+
+        // TODO: Implement Wave Logic for World 2 (Glass Gardens) - Missing Spawning Logic
+        // TODO: Implement Wave Logic for World 3 (Clockwork Arteries) - Missing Spawning Logic
+        // TODO: Implement Wave Logic for World 4 (Hushed Halls) - Missing Spawning Logic
+        // TODO: Implement Wave Logic for World 5 (Crystal Belfry) - Missing Spawning Logic
 
         const bossInstance = this.entityManager.enemies.find(e => e instanceof Golgotha) as Golgotha;
         if (bossInstance) {
