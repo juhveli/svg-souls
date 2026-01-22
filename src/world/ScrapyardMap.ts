@@ -1,5 +1,7 @@
 import { SVGAssets } from './SVGAssets';
 import { GameMap } from './GameMap';
+import { Game } from '../engine/Game';
+import { TrashCompactor } from '../entities/enemies/TrashCompactor';
 
 export class ScrapyardMap extends GameMap {
     el: SVGGElement;
@@ -64,6 +66,13 @@ export class ScrapyardMap extends GameMap {
         // Walls (Invisible Collision boundaries, visualized as darker shadows)
         this.addRect(0, 0, 20, 600, '#00000088');
         this.addRect(1580, 0, 20, 600, '#00000088');
+
+        // 5. Entities (Sub-Boss)
+        const game = Game.getInstance();
+        if (game && game.entityManager) {
+            // Spawn Trash Compactor near the end
+            game.entityManager.add(new TrashCompactor(1400, 500, game.player));
+        }
     }
 
     private addRect(x: number, y: number, w: number, h: number, color: string) {

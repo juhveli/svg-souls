@@ -539,13 +539,68 @@ fn main(
     }
 
   } else if (abs(typeID - 24.0) < 0.1) {
-    // TODO: Implement Shader for The Trash-Compactor (W1 Sub-Boss)
-    discard;
+    // TRASH COMPACTOR (W1 Sub-Boss)
+    // p1: Crush Param (0.0 = Up, 1.0 = Down)
+    let crush = params.x;
+
+    // Frame
+    let frameL = sdBox(uv - vec2<f32>(0.3, 0.5), vec2<f32>(0.05, 0.4));
+    let frameR = sdBox(uv - vec2<f32>(0.7, 0.5), vec2<f32>(0.05, 0.4));
+    let frameTop = sdBox(uv - vec2<f32>(0.5, 0.15), vec2<f32>(0.25, 0.05));
+    let base = sdBox(uv - vec2<f32>(0.5, 0.85), vec2<f32>(0.25, 0.05));
+
+    // Piston Head (Moving)
+    let pistonY = 0.25 + crush * 0.5; // Moves from 0.25 to 0.75
+    let piston = sdBox(uv - vec2<f32>(0.5, pistonY), vec2<f32>(0.15, 0.05));
+    let rod = sdBox(uv - vec2<f32>(0.5, (pistonY + 0.15) * 0.5), vec2<f32>(0.04, pistonY * 0.5));
+
+    dist = min(frameL, frameR);
+    dist = min(dist, frameTop);
+    dist = min(dist, base);
+    dist = min(dist, piston);
+    dist = min(dist, rod);
+
+    color = vec3<f32>(0.3, 0.3, 0.35); // Industrial Grey
+    if (dist == piston) {
+        color = vec3<f32>(0.6, 0.2, 0.2); // Hazard Red/Rust
+    }
+
   } else if (abs(typeID - 25.0) < 0.1) {
-    // TODO: Implement Shader for The Glass-Blower Deity (W2 Sub-Boss)
-    discard;
+    // GLASS BLOWER DEITY (W2 Sub-Boss)
+    // p1: Blow Param (Bubble Size)
+    let blow = params.x;
+    let t = global.time;
+
+    // Figure
+    let head = sdCircle(uv - vec2<f32>(0.5, 0.3), 0.08);
+    let body = sdBox(uv - vec2<f32>(0.5, 0.55), vec2<f32>(0.1, 0.2));
+    let arm = sdBox(uv - vec2<f32>(0.5, 0.4), vec2<f32>(0.15, 0.02));
+
+    // Pipe
+    let pipe = sdBox(uv - vec2<f32>(0.65, 0.38), vec2<f32>(0.1, 0.01));
+
+    // Bubble
+    let bubbleR = blow * 0.25;
+    let bubbleP = vec2<f32>(0.75 + bubbleR, 0.38);
+    let bubble = sdCircle(uv - bubbleP, bubbleR);
+    // Make bubble hollow
+    bubble = abs(bubble) - 0.01;
+
+    dist = min(head, body);
+    dist = min(dist, arm);
+    dist = min(dist, pipe);
+
+    if (blow > 0.05) {
+         dist = min(dist, bubble);
+    }
+
+    color = vec3<f32>(0.2, 0.6, 0.6); // Teal Robes
+    if (abs(dist - bubble) < 0.01 && blow > 0.05) {
+        color = vec3<f32>(0.8, 1.0, 1.0); // Glass
+    }
+
   } else if (abs(typeID - 26.0) < 0.1) {
-    // TODO: Implement Shader for The Gatekeeper (W5 Sub-Boss)
+    // TODO: Implement Shader for The Gatekeeper (W5 Sub-Boss) when entity is created
     discard;
   } else if (typeID > 26.5) {
      // Safety discard for undefined future IDs
