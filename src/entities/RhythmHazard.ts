@@ -7,23 +7,18 @@ export class SteamVent extends Entity {
     beatCounter: number = 0;
     target: Player;
     damage: number = 10;
+    isActive: boolean = false; // For Renderer (TypeID 21)
+    private beatListener: () => void;
 
     constructor(x: number, y: number, target: Player) {
-        const svg = `
-            <g class="steam-vent">
-                <circle cx="0" cy="0" r="15" fill="#444" stroke="#222" stroke-width="2" />
-                <path id="vent-grill" d="M-10,-5 L10,-5 M-10,5 L10,5" stroke="#222" stroke-width="2" />
-                <g id="steam-cloud" opacity="0">
-                    <circle cx="0" cy="-20" r="10" fill="#fff" opacity="0.3" />
-                    <circle cx="-5" cy="-25" r="8" fill="#fff" opacity="0.3" />
-                    <circle cx="5" cy="-25" r="8" fill="#fff" opacity="0.3" />
-                </g>
-            </g>
-        `;
-        super(x, y, svg);
+        super(x, y); // Removed SVG
+        this.typeID = 21;
         this.target = target;
+        this.width = 32;
+        this.height = 32;
 
-        AudioController.getInstance().subscribeToBeat(() => this.onBeat());
+        this.beatListener = () => this.onBeat();
+        AudioController.getInstance().subscribeToBeat(this.beatListener);
     }
 
     onBeat() {
@@ -39,8 +34,7 @@ export class SteamVent extends Entity {
 
     activate() {
         this.state = 'DANGEROUS';
-        const steam = this.el.querySelector('#steam-cloud');
-        if (steam) steam.setAttribute('opacity', '1');
+        this.isActive = true;
 
         // Check for player damage
         const dx = this.target.x - this.x;
@@ -54,12 +48,11 @@ export class SteamVent extends Entity {
 
     deactivate() {
         this.state = 'SAFE';
-        const steam = this.el.querySelector('#steam-cloud');
-        if (steam) steam.setAttribute('opacity', '0');
+        this.isActive = false;
     }
 
     destroy() {
-        // Unsubscribe? (AudioController needs a matching unsubscribe or we need to handle it)
+        AudioController.getInstance().unsubscribeFromBeat(this.beatListener);
         super.destroy();
     }
 }

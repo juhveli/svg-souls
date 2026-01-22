@@ -5,5 +5,6 @@ export class RustMite extends Enemy {
         super(x, y);
         this.width = 16;
         this.height = 16;
+        this.typeID = 6;
     }
 }

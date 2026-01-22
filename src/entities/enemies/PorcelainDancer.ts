@@ -15,6 +15,7 @@ export class PorcelainDancer extends Enemy {
 
     constructor(x: number, y: number, target: Player) {
         super(x, y); // No SVG, handled by WebGPU TypeID 5
+        this.typeID = 5;
         this.target = target;
 
         this.beatListener = () => this.onBeat();

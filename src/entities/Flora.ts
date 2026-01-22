@@ -2,6 +2,7 @@ import { Entity } from './Entity';
 import { Game } from '../engine/Game';
 import { EventManager } from '../engine/EventManager';
 
+// TODO: Refactor Flora to use WebGPU instancing instead of legacy SVG injection for better performance and consistency.
 export class Flora extends Entity {
     type: string;
     hp: number = 1;
@@ -13,7 +14,7 @@ export class Flora extends Entity {
 
     takeDamage(amount: number): void {
         this.hp -= amount;
-        if (this.hp <= 0 && !this.isDead) {
+        if (this.hp <= 0 && !this.markedForDeletion) {
             this.shatter();
         }
     }

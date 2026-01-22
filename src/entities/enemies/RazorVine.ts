@@ -5,5 +5,6 @@ export class RazorVine extends Enemy {
         super(x, y);
         this.width = 32;
         this.height = 32;
+        this.typeID = 9;
     }
 }

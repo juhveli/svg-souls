@@ -21,6 +21,7 @@ export class Golgotha extends Enemy {
         this.height = 100;
         this.target = target;
         this.radius = 40;
+        this.typeID = 4;
 
         this.beatListener = () => this.onBeat();
         AudioController.getInstance().subscribeToBeat(this.beatListener);

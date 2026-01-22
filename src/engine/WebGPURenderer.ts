@@ -424,6 +424,17 @@ export class WebGPURenderer {
             if (typeID === 1) {
                 // p1 can be used for tentacle phase offset or direction
             }
+            if (typeID === 21) {
+                p1 = (e as any).isActive ? 1.0 : 0.0;
+            }
+            if (typeID === 22) {
+                p1 = (e as any).blastParam || 0;
+                p2 = (e as any).chargeParam || 0;
+            }
+            if (typeID === 23) {
+                p1 = (e as any).hoverParam || 0;
+                p2 = (e as any).attackParam || 0;
+            }
 
             const offset = chunk.instanceCount * 9;
             chunk.cpuData[offset + 0] = x;

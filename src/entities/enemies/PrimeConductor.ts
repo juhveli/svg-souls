@@ -5,5 +5,6 @@ export class PrimeConductor extends Enemy {
         super(x, y);
         this.width = 100;
         this.height = 120;
+        this.typeID = 18;
     }
 }

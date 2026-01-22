@@ -5,5 +5,6 @@ export class VanityWraith extends Enemy {
         super(x, y);
         this.width = 32;
         this.height = 48;
+        this.typeID = 8;
     }
 }

@@ -46,6 +46,7 @@ export class Player extends Entity {
         super(x, y);
         this.width = 64;
         this.height = 64;
+        this.typeID = 1;
     }
 
     update(dt: number) {

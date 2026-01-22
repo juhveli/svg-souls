@@ -10,7 +10,6 @@ export const SVGAssets = {
         for (let i = 0; i < teeth; i++) {
             const a0 = i * angleStep;
             const a1 = a0 + angleStep * 0.5; // Tooth width
-            const a2 = a0 + angleStep;
 
             // Tooth Out
             const x0 = cx + Math.cos(a0) * innerR;
@@ -35,11 +34,10 @@ export const SVGAssets = {
     },
 
     // 2. Junk Pile (Scrapyard Silhouette)
-    junkPile: (x: number, y: number, w: number, h: number, seed: number) => {
+    junkPile: (x: number, y: number, w: number, h: number, _seed: number) => {
         // Jagged mountain of trash
         let d = `M${x},${y + h} L${x},${y + h - 10} `; // Start bottom-left
         let cx = x;
-        let cy = y + h - 10;
 
         while (cx < x + w) {
             const stepX = 10 + Math.random() * 20;

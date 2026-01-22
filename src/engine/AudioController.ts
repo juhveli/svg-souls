@@ -20,7 +20,7 @@ export class AudioController {
         return AudioController.instance;
     }
 
-    update(dt: number) {
+    update(_dt: number) {
         const now = Date.now() / 1000;
 
         if (now - this.lastBeatTime >= this.beatDuration) {

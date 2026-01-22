@@ -16,7 +16,7 @@ export class SerumBotIdleState extends State {
 
     exit() { }
 
-    update(dt: number) {
+    update(_dt: number) {
         const dx = this.bot.target.x - this.bot.x;
         const dy = this.bot.target.y - this.bot.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
