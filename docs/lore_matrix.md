@@ -28,6 +28,10 @@ This document explicitly defines *how* the player learns the history of the worl
 > *A pocket watch with hands fused to the face. It feels impossibly heavy.*
 > *"A keepsake of the Architect. It is said he stared at this watch for so long he forgot to wind the heavy heart of the world. Or perhaps, he chose not to."*
 
+### 4. Boss Remembrance: *Core of the Accumulation*
+> *A pulsating heart of molten slag and fused glass.*
+> *"Golgotha was not a monster; he was a memory. He held onto everything the world threw away, because he was terrified of being forgotten. In the end, he became the very garbage he sought to save."*
+
 ## III. Boss Design (The "Fight")
 
 ### Boss: *The Glass-Blower Deity*
@@ -36,6 +40,13 @@ This document explicitly defines *how* the player learns the history of the worl
 *   **Mechanic:** He blows "bubbles" of glass that trap you. You must break them before they cool and harden (instant kill).
 *   **Lore Hook:** He was the one who made the bodies for the nobility. Now, in his madness, he is trying to blow a "New World," but his breath is too hot, and everything he makes melts.
 *   **Soul Drop:** *Breath of the Creator.* ("The crystallized final breath of the Glass-Blower Deity. It is warm and smells of molten sand. He gave his breath to make his children beautiful, but he had no breath left to tell them they were fragile.")
+
+### Boss: *Archivist Pellinore*
+*   **Arena:** The Archive of Lost Seconds. Infinite rows of glowing jars.
+*   **Visual Design:** A tall, slender figure in robes that absorb light. She wears a veil and holds a massive, burning quill.
+*   **Mechanic:** She casts "Shush" runes on the floor. Standing in them silences the player (no spells). She attacks by writing explosive runes in the air.
+*   **Lore Hook:** She burns books to keep the library silent. She isn't destroying knowledge; she's "muting" it because the truth is too loud for the world to bear.
+*   **Soul Drop:** *Quill of the Archivist.* ("She wrote the history of the world in invisible ink... In her library, ignorance was not bliss; it was survival.")
 
 ## IV. NPC Interaction
 *   **Character:** *Tick-Tock, the Broken Bard*
