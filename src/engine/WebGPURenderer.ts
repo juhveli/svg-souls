@@ -410,6 +410,7 @@ export class WebGPURenderer {
                 else if (name === 'Banshee') typeID = 17;
                 else if (name === 'PrimeConductor') typeID = 18;
                 else if (name === 'Paradox') typeID = 19;
+                else if (name === 'Gatekeeper') typeID = 26;
                 else if (name === 'WorldItem') {
                     const item = e as any;
                     if (item.itemId === 'vial_liquid_seconds') typeID = 20;
@@ -443,6 +444,9 @@ export class WebGPURenderer {
             }
             if (typeID === 25) {
                 p1 = (e as any).heatParam || 0;
+            }
+            if (typeID === 26) {
+                p1 = (e as any).flashParam || 0;
             }
 
             const offset = chunk.instanceCount * 9;
