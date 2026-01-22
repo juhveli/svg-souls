@@ -7,23 +7,27 @@ import { EventManager } from '../../engine/EventManager';
 
 export class GlassBlowerDeity extends Enemy {
     target: Player;
-    hp: number = 90;
-    maxHp: number = 90;
+    hp: number = 120;
+    maxHp: number = 120;
     state: 'IDLE' | 'BLOWING' | 'COOLDOWN' = 'IDLE';
 
     // For Shader
     // p1: Blow Param (0.0 = No Bubble, 1.0 = Max Size)
     blowParam: number = 0;
 
+    // Alias
+    get heatParam(): number { return this.blowParam; }
+
     private beatListener: () => void;
     private attackListener: EventListener;
 
-    constructor(x: number, y: number, target: Player) {
+    constructor(x: number, y: number, target?: Player) {
         super(x, y);
-        this.width = 70;
-        this.height = 90;
+        this.width = 80;
+        this.height = 120;
         this.typeID = 25;
-        this.target = target;
+        this.target = target || Game.getInstance().player;
+        this.radius = 40;
 
         this.beatListener = () => this.onBeat();
         AudioController.getInstance().subscribeToBeat(this.beatListener);
@@ -34,7 +38,7 @@ export class GlassBlowerDeity extends Enemy {
             const dx = this.x - atk.x;
             const dy = this.y - atk.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < atk.range + 35) {
+            if (dist < atk.range + this.radius) {
                 this.takeDamage(10);
             }
         }) as EventListener;
@@ -43,7 +47,6 @@ export class GlassBlowerDeity extends Enemy {
 
     takeDamage(amount: number) {
         // If bubble is up, it might pop and deal area damage or just negate damage?
-        // Let's make the bubble shield him partially.
         if (this.state === 'BLOWING' && this.blowParam > 0.5) {
             amount = Math.ceil(amount * 0.7);
             // Pop early
@@ -57,10 +60,11 @@ export class GlassBlowerDeity extends Enemy {
 
         const game = Game.getInstance();
         if (game && game.particles) {
-            game.particles.emit(this.x, this.y, '#aff', 5); // Glass shards
+            game.particles.emit(this.x, this.y, '#aff', 8); // Glass shards
         }
 
         if (this.hp <= 0) {
+            UIManager.getInstance().showBark(this.x, this.y, "SHATTERED...");
             EventManager.getInstance().emit('ENTITY_DIED', { type: 'glass_blower', id: this.id, x: this.x, y: this.y });
             this.destroy();
         }
@@ -75,8 +79,10 @@ export class GlassBlowerDeity extends Enemy {
             if (dist < 300) {
                 this.state = 'BLOWING';
                 this.blowParam = 0;
+                UIManager.getInstance().showBark(this.x, this.y, "MOLTEN GLASS!");
             } else {
                 // Float around
+                this.x += (Math.random() - 0.5) * 5;
                 this.y += Math.sin(performance.now() / 500) * 10;
             }
         }

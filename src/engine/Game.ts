@@ -7,6 +7,12 @@ import { ScrapyardMap } from '../world/ScrapyardMap';
 import { GlassGardensMap } from '../world/GlassGardensMap';
 import { SerumBot } from '../entities/enemies/SerumBot';
 import { Golgotha } from '../entities/enemies/Golgotha';
+import { TrashCompactor } from '../entities/enemies/TrashCompactor';
+import { GlassBlowerDeity } from '../entities/enemies/GlassBlowerDeity';
+import { Vitria } from '../entities/enemies/Vitria';
+import { SteamMarshal } from '../entities/enemies/SteamMarshal';
+import { MetronomeGeneral } from '../entities/enemies/MetronomeGeneral';
+import { GearKeeper } from '../entities/enemies/GearKeeper';
 import { ParticleSystem } from './ParticleSystem';
 import { LoreFXSystem } from '../systems/LoreFXSystem';
 import { EventManager } from './EventManager';
@@ -222,6 +228,71 @@ export class Game {
         }
     }
 
+    checkWorld1Spawns() {
+        const enemies = this.entityManager.enemies.filter(e => e instanceof SerumBot);
+        const boss = this.entityManager.enemies.find(e => e instanceof Golgotha);
+        const subBoss = this.entityManager.enemies.find(e => e instanceof TrashCompactor);
+
+        if (enemies.length === 0 && !boss) {
+            const ex = 100 + Math.random() * 600;
+            const ey = 100 + Math.random() * 400;
+            const bot = new SerumBot(ex, ey, this.player);
+            this.entityManager.add(bot);
+            this.ui.showBark(ex, ey, "Another rises...");
+        }
+
+        if (this.player.x > 300 && !subBoss && !this.bossesDefeated.has('trash_compactor')) {
+             const compactor = new TrashCompactor(500, 200);
+             this.entityManager.add(compactor);
+             this.ui.showBark(compactor.x, compactor.y, "SYSTEM ONLINE.");
+        }
+
+        if (this.player.x > 600 && !boss && !this.bossesDefeated.has('golgotha')) {
+            const golgotha = new Golgotha(400, 300, this.player);
+            this.entityManager.add(golgotha);
+            this.ui.showBark(golgotha.x, golgotha.y, "I AM THE ACCUMULATION.");
+        }
+    }
+
+    checkWorld2Spawns() {
+        const boss = this.entityManager.enemies.find(e => e instanceof Vitria);
+        const subBoss = this.entityManager.enemies.find(e => e instanceof GlassBlowerDeity);
+
+        if (this.player.x > 250 && !subBoss && !this.bossesDefeated.has('glass_blower')) {
+            const blower = new GlassBlowerDeity(400, 100);
+            this.entityManager.add(blower);
+            this.ui.showBark(blower.x, blower.y, "Careful...");
+        }
+
+        if (this.player.x > 600 && !boss && !this.bossesDefeated.has('vitria')) {
+            const vitria = new Vitria(500, 300);
+            this.entityManager.add(vitria);
+            this.ui.showBark(vitria.x, vitria.y, "PERFECTION.");
+        }
+    }
+
+    checkWorld3Spawns() {
+         const boss = this.entityManager.enemies.find(e => e instanceof MetronomeGeneral);
+         const subBoss = this.entityManager.enemies.find(e => e instanceof SteamMarshal);
+         const keepers = this.entityManager.enemies.filter(e => e instanceof GearKeeper);
+
+         if (keepers.length < 2 && !boss) {
+             const k = new GearKeeper(600, 300 + (Math.random()-0.5)*200);
+             this.entityManager.add(k);
+         }
+
+         if (this.player.x > 300 && !subBoss && !this.bossesDefeated.has('steam_marshal')) {
+             const marshal = new SteamMarshal(500, 300, this.player);
+             this.entityManager.add(marshal);
+         }
+
+         if (this.player.x > 650 && !boss && !this.bossesDefeated.has('metronome_general')) {
+             const general = new MetronomeGeneral(600, 300);
+             this.entityManager.add(general);
+             this.ui.showBark(general.x, general.y, "TICK. TOCK.");
+         }
+    }
+
     loop(time: number) {
         if (this.state !== 'PLAY') {
             requestAnimationFrame((t) => this.loop(t));
@@ -256,28 +327,16 @@ export class Game {
         const zoneIndex = ZoneSystem.getInstance().currentZoneIndex;
 
         if (zoneIndex === 0) {
-            const enemies = this.entityManager.enemies.filter(e => e instanceof SerumBot);
-            const boss = this.entityManager.enemies.find(e => e instanceof Golgotha);
-
-            if (enemies.length === 0 && !boss) {
-                const ex = 100 + Math.random() * 600;
-                const ey = 100 + Math.random() * 400;
-                const bot = new SerumBot(ex, ey, this.player);
-                this.entityManager.add(bot);
-                this.ui.showBark(ex, ey, "Another rises...");
-            }
-
-            if (this.player.x > 600 && !boss && !this.bossesDefeated.has('golgotha')) {
-                const golgotha = new Golgotha(400, 300, this.player);
-                this.entityManager.add(golgotha);
-                this.ui.showBark(golgotha.x, golgotha.y, "I AM THE ACCUMULATION.");
-            }
+            this.checkWorld1Spawns();
+        } else if (zoneIndex === 1) {
+            this.checkWorld2Spawns();
+        } else if (zoneIndex === 2) {
+            this.checkWorld3Spawns();
+        } else if (zoneIndex === 3) {
+            // TODO: Implement Wave Logic for World 4 (Hushed Halls) - Missing Spawning Logic
+        } else if (zoneIndex === 4) {
+             // TODO: Implement Wave Logic for World 5 (Crystal Belfry) - Missing Spawning Logic
         }
-
-        // TODO: Implement Wave Logic for World 2 (Glass Gardens) - Missing Spawning Logic
-        // TODO: Implement Wave Logic for World 3 (Clockwork Arteries) - Missing Spawning Logic
-        // TODO: Implement Wave Logic for World 4 (Hushed Halls) - Missing Spawning Logic
-        // TODO: Implement Wave Logic for World 5 (Crystal Belfry) - Missing Spawning Logic
 
         const bossInstance = this.entityManager.enemies.find(e => e instanceof Golgotha) as Golgotha;
         if (bossInstance) {

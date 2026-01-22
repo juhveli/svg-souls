@@ -540,6 +540,7 @@ fn main(
 
   } else if (abs(typeID - 24.0) < 0.1) {
     // TRASH COMPACTOR (W1 Sub-Boss)
+
     // p1: Crush Param (0.0 = Up, 1.0 = Down)
     let crush = params.x;
 
@@ -563,10 +564,12 @@ fn main(
     color = vec3<f32>(0.3, 0.3, 0.35); // Industrial Grey
     if (dist == piston) {
         color = vec3<f32>(0.6, 0.2, 0.2); // Hazard Red/Rust
+
     }
 
   } else if (abs(typeID - 25.0) < 0.1) {
     // GLASS BLOWER DEITY (W2 Sub-Boss)
+
     // p1: Blow Param (Bubble Size)
     let blow = params.x;
     let t = global.time;
@@ -602,6 +605,7 @@ fn main(
   } else if (abs(typeID - 26.0) < 0.1) {
     // TODO: Implement Shader for The Gatekeeper (W5 Sub-Boss) when entity is created
     discard;
+
   } else if (typeID > 26.5) {
      // Safety discard for undefined future IDs
      discard;

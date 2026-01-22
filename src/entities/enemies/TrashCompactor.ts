@@ -7,23 +7,27 @@ import { EventManager } from '../../engine/EventManager';
 
 export class TrashCompactor extends Enemy {
     target: Player;
-    hp: number = 100;
-    maxHp: number = 100;
+    hp: number = 150;
+    maxHp: number = 150;
     state: 'IDLE' | 'CRUSHING' | 'RECOVERING' = 'IDLE';
 
     // For Shader
     // p1: Crush Param (0.0 = Up/Open, 1.0 = Down/Crushed)
     crushParam: number = 0;
 
+    // Alias for compatibility if needed
+    get compressionParam(): number { return this.crushParam; }
+
     private beatListener: () => void;
     private attackListener: EventListener;
 
-    constructor(x: number, y: number, target: Player) {
+    constructor(x: number, y: number, target?: Player) {
         super(x, y);
-        this.width = 80;
+        this.width = 120;
         this.height = 100;
         this.typeID = 24;
-        this.target = target;
+        this.target = target || Game.getInstance().player;
+        this.radius = 50;
 
         this.beatListener = () => this.onBeat();
         AudioController.getInstance().subscribeToBeat(this.beatListener);
@@ -34,7 +38,7 @@ export class TrashCompactor extends Enemy {
             const dx = this.x - atk.x;
             const dy = this.y - atk.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < atk.range + 40) {
+            if (dist < atk.range + this.radius) {
                 this.takeDamage(10);
             }
         }) as EventListener;
@@ -52,12 +56,17 @@ export class TrashCompactor extends Enemy {
 
         const game = Game.getInstance();
         if (game && game.particles) {
-            game.particles.emit(this.x, this.y, '#555', 5);
+            game.particles.emit(this.x, this.y, '#555', 8);
         }
 
         if (this.hp <= 0) {
+            UIManager.getInstance().showBark(this.x, this.y, "SYSTEM... HALTED.");
             EventManager.getInstance().emit('ENTITY_DIED', { type: 'trash_compactor', id: this.id, x: this.x, y: this.y });
             this.destroy();
+        } else {
+             if (Math.random() < 0.2) {
+                 UIManager.getInstance().showBark(this.x, this.y, "OBSTRUCTION DETECTED.");
+             }
         }
     }
 
@@ -69,10 +78,13 @@ export class TrashCompactor extends Enemy {
         if (this.state === 'IDLE') {
             if (dist < 150) {
                 this.state = 'CRUSHING';
-                UIManager.getInstance().showBark(this.x, this.y, "CRUSH!");
+                UIManager.getInstance().showBark(this.x, this.y, "COMPRESSING...");
+            } else {
+                // Slow lumbering movement
+                this.x += (Math.random() - 0.5) * 10;
+                this.y += (Math.random() - 0.5) * 10;
             }
         }
-        // Logic for state transitions handles in update
     }
 
     update(dt: number) {
@@ -100,11 +112,13 @@ export class TrashCompactor extends Enemy {
     checkHit() {
         // Hitbox check
         const dx = Math.abs(this.target.x - this.x);
-        const dy = Math.abs(this.target.y - this.y); // Vertical alignment matters less for a slam, but let's check
+        const dy = Math.abs(this.target.y - this.y);
 
-        // 80 width, so 40 half-width. Height check?
-        if (dx < 50 && dy < 60) {
-            this.target.takeDamage(20);
+        if (dx < 60 && dy < 60) {
+            this.target.takeDamage(25);
+            const game = Game.getInstance();
+            if (game.particles) game.particles.emit(this.target.x, this.target.y, '#f00', 10);
+
             // Knockback
             this.target.x += (this.target.x > this.x ? 50 : -50);
         }
