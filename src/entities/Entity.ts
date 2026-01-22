@@ -7,6 +7,7 @@ export class Entity {
     height: number = 64;
 
     // Physics
+    // TODO: Upgrade collision detection from simple Circles to SDF-based or approximated hitboxes to match the high-fidelity graphics.
     radius: number = 10;
     vx: number = 0;
     vy: number = 0;
@@ -17,7 +18,7 @@ export class Entity {
     // Lifecycle
     markedForDeletion: boolean = false;
 
-    constructor(x: number, y: number, svgString?: string) {
+    constructor(x: number, y: number, _svgString?: string) {
         this.id = Math.random().toString(36).substr(2, 9);
         this.x = x;
         this.y = y;
@@ -32,7 +33,7 @@ export class Entity {
         this.markedForDeletion = true;
     }
 
-    takeDamage(amount: number): void {
+    takeDamage(_amount: number): void {
         // Override
     }
 }

@@ -5,5 +5,6 @@ export class Paradox extends Enemy {
         super(x, y);
         this.width = 64;
         this.height = 64;
+        this.typeID = 19;
     }
 }

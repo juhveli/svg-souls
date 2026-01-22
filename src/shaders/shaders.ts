@@ -465,11 +465,81 @@ fn main(
         color = vec3<f32>(0.0196, 0.0196, 0.0196);
     }
 
-  } else if (typeID > 19.5 && abs(typeID - 20.0) > 0.1) {
-     // Reserved for future expansion (IDs 20+, except 20)
-     // Fallback for gaps to prevent default cube
-     discard;
+  } else if (abs(typeID - 21.0) < 0.1) {
+    // STEAM VENT (W3 Hazard)
+    let t = global.time;
+    let rim = abs(sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.4, 0.4))) - 0.05;
+    let grill1 = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.35, 0.02));
+    let grill2 = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.02, 0.35));
 
+    dist = min(rim, grill1);
+    dist = min(dist, grill2);
+
+    let isActive = params.x > 0.5;
+    if (isActive) {
+        let steam = sdCircle(uv - vec2<f32>(0.5, 0.5), 0.3 + sin(t * 20.0) * 0.02);
+        dist = min(dist, steam);
+    }
+
+    color = vec3<f32>(0.2, 0.2, 0.2); // Dark Metal
+    if (isActive && length(uv - vec2<f32>(0.5, 0.5)) < 0.4) {
+        color = vec3<f32>(0.9, 0.9, 1.0); // Steam
+    }
+
+  } else if (abs(typeID - 22.0) < 0.1) {
+    // STEAM MARSHAL (W3 Sub-Boss)
+    let t = global.time;
+    // Body
+    let body = sdBox(uv - vec2<f32>(0.5, 0.4), vec2<f32>(0.2, 0.25));
+    // Head
+    let head = sdCircle(uv - vec2<f32>(0.5, 0.75), 0.12);
+    // Shoulders
+    let shoulders = sdBox(uv - vec2<f32>(0.5, 0.6), vec2<f32>(0.35, 0.1));
+
+    dist = min(body, head);
+    dist = min(dist, shoulders);
+
+    // Blast Ring (p1)
+    let blastR = params.x * 1.5; // Scale radius
+    if (blastR > 0.01) {
+        let ring = abs(length(uv - vec2<f32>(0.5, 0.4)) - blastR) - 0.05;
+        dist = min(dist, ring);
+    }
+
+    color = vec3<f32>(0.7, 0.5, 0.2); // Brass
+    if (blastR > 0.01 && abs(length(uv - vec2<f32>(0.5, 0.4)) - blastR) < 0.1) {
+        color = vec3<f32>(1.0, 1.0, 1.0); // Steam White
+    }
+
+  } else if (abs(typeID - 23.0) < 0.1) {
+    // LIBRARIAN (W4 Sub-Boss)
+    let t = global.time;
+    // p1: hoverParam, p2: attackParam
+    let hover = sin(params.x) * 0.05;
+
+    // Robes
+    let robe = sdBox(uv - vec2<f32>(0.5, 0.4 + hover), vec2<f32>(0.15, 0.3));
+    let head = sdCircle(uv - vec2<f32>(0.5, 0.8 + hover), 0.1);
+
+    // Floating Books
+    let attack = params.y;
+    let bookAngle = t + attack * 10.0;
+    let bookDist = 0.3 + attack * 0.5;
+
+    let bookX = 0.5 + cos(bookAngle) * bookDist;
+    let bookY = 0.6 + hover + sin(bookAngle) * 0.1;
+    let book = sdBox(uv - vec2<f32>(bookX, bookY), vec2<f32>(0.05, 0.07));
+
+    dist = min(robe, head);
+    dist = min(dist, book);
+
+    color = vec3<f32>(0.3, 0.1, 0.3); // Dark Purple
+    if (dist == book) {
+        color = vec3<f32>(0.8, 0.7, 0.5); // Paper/Leather
+    }
+
+  } else if (typeID > 23.5) {
+     discard;
   } else if (typeID > 6.5 && typeID < 7.0) {
       // Gap between RustMite(6) and RustDragon(7) if any? No, integers.
       // But we need to handle the big gap between 19 and 20 if we didn't use an 'else if' for 20.

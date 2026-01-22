@@ -145,7 +145,10 @@ export class LoreFXSystem {
     private spawnEcho(target: Entity) {
         // Clone the entity's looking
         // This is a "Frozen Moment" in time
-        const clone = target.el.cloneNode(true) as SVGElement;
+        // TODO: Update for WebGPU (No DOM 'el')
+        if (!(target as any).el) return;
+
+        const clone = (target as any).el.cloneNode(true) as SVGElement;
         clone.removeAttribute('id'); // specific ID not needed
         clone.setAttribute('transform', `translate(${target.x}, ${target.y}) rotate(${target.rotation * 180 / Math.PI})`);
 

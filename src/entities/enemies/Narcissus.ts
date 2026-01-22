@@ -5,5 +5,6 @@ export class Narcissus extends Enemy {
         super(x, y);
         this.width = 48;
         this.height = 48;
+        this.typeID = 11;
     }
 }

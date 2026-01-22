@@ -5,5 +5,6 @@ export class Cantor extends Enemy {
         super(x, y);
         this.width = 64;
         this.height = 100;
+        this.typeID = 16;
     }
 }

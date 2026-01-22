@@ -5,5 +5,6 @@ export class Vitria extends Enemy {
         super(x, y);
         this.width = 64;
         this.height = 80;
+        this.typeID = 10;
     }
 }

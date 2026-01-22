@@ -10,9 +10,7 @@ export class ShardEntity extends Entity {
     target: Player;
 
     // Animation
-    private pulsePhase: number = Math.random() * Math.PI * 2;
     private bobPhase: number = Math.random() * Math.PI * 2;
-    private baseY: number;
 
     constructor(x: number, y: number, value: number, target: Player) {
         super(x, y);
@@ -20,7 +18,6 @@ export class ShardEntity extends Entity {
         this.height = 16;
         this.value = value;
         this.target = target;
-        this.baseY = y;
 
         this.vx = (Math.random() - 0.5) * 200;
         this.vy = (Math.random() - 0.5) * 200 - 100;
