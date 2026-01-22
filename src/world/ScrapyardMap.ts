@@ -71,7 +71,7 @@ export class ScrapyardMap extends GameMap {
         const game = Game.getInstance();
         if (game && game.entityManager) {
             // Spawn Trash Compactor near the end
-            game.entityManager.add(new TrashCompactor(1400, 500, game.player));
+            game.entityManager.add(new TrashCompactor(1400, 500));
         }
     }
 

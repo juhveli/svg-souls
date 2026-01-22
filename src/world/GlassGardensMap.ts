@@ -69,7 +69,7 @@ export class GlassGardensMap extends GameMap {
             game.entityManager.add(new NPCEntity(400, 500, "tick_tock", game.player));
 
             // 5. Sub-Boss: The Glass-Blower Deity
-            game.entityManager.add(new GlassBlowerDeity(650, 400, game.player));
+            game.entityManager.add(new GlassBlowerDeity(650, 400));
         }
     }
 
