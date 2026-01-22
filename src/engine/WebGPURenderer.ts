@@ -435,6 +435,12 @@ export class WebGPURenderer {
                 p1 = (e as any).hoverParam || 0;
                 p2 = (e as any).attackParam || 0;
             }
+            if (typeID === 24) {
+                p1 = (e as any).compressionParam || 0;
+            }
+            if (typeID === 25) {
+                p1 = (e as any).heatParam || 0;
+            }
 
             const offset = chunk.instanceCount * 9;
             chunk.cpuData[offset + 0] = x;
