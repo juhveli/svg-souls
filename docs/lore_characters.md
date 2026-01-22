@@ -74,3 +74,15 @@ The Prime Conductor appears to the player as a disembodied voice and through "Ec
 *   **Visuals:** A being of pure white light and geometry. He plays the Grand Carillon like an organ.
 *   **The Glitch:** He is terrified of death/silence. He wants to ring the "Final Note"—a frequency so high it freezes time forever, creating a "Perfect Moment" that never ends.
 *   **Combat Lore:** He uses the stolen abilities of the previous 4 bosses against you. Phase 2 involves him merging with the Carillon, turning the entire arena into a bullet-hell music sheet.
+
+---
+
+## Friendly(ish) Faces: The Survivors
+
+### Tick-Tock, the Broken Bard
+*   **Location:** World 3 (The Clockwork Arteries) - Sitting on a giant cog near the start of the Gear-Train.
+*   **Visuals:** A figure wrapped in rags, but with a visible glass knee that he taps rhythmically with a wrench. His face is hidden by a welder's mask, but human eyes peer out.
+*   **Role:** Lore Dump / Rhythm Tutor.
+*   **The Story:** He was once a musician in the Glass Gardens, but he was thrown into the pit for playing "Jazz" (improvisation, which the Conductor hates). He survived the fall but broke his legs. The Gear-Keepers didn't kill him because his tapping was perfectly on beat. He now lives in the machine, finding the "music in the noise."
+*   **Dialogue Sample:**
+    > "One, two. One, two. You're off beat, little soft one. Squishy. Quiet. Disgusting. They say the Carillon will ring again. But I like the quiet between the ticks. That's where the music lives... using the rests."

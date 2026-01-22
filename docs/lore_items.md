@@ -182,6 +182,24 @@
     > *A corrupted data log that shouldn't exist.*
     > *"We locked the door not to keep them out, but to keep Him in. The Conductor's song... it doesn't end. It just gets louder."*
 
+### Wireframe Apple
+*   **Source:** Crystal Belfry (Singularity Point).
+*   **Description:**
+    > *An apple that has no texture. It is a mesh of neon green lines in the shape of fruit.*
+    > *"It has no taste, no weight, and no scent. It is the idea of an apple, waiting for a reality to exist in. Eating it makes you feel full, but your stomach remains empty."*
+
+### Null_Texture_Sample
+*   **Source:** Crystal Belfry (The Spiral Stair).
+*   **Description:**
+    > *A square of fabric consisting of a purple and black checkerboard pattern.*
+    > *"The universe ran out of memory here. This is the default setting for existence when the Conductor forgets to write the code."*
+
+### Pixelated Tear
+*   **Source:** Crystal Belfry (The Bell-Foundry).
+*   **Description:**
+    > *A teardrop made of large, blocky crystals. It looks low-resolution.*
+    > *"A tear shed by a being from a lower bandwidth. It suggests that suffering is constant, regardless of the resolution."*
+
 ---
 
 ## VI. Boss Remembrances (Souls of the Shatter)
@@ -192,3 +210,66 @@
 *   **Description:**
     > *The crystallized final breath of the Glass-Blower Deity. It is warm and smells of molten sand.*
     > *"He gave his breath to make his children beautiful, but he had no breath left to tell them they were fragile."*
+
+### Cube of Compacted Regret
+*   **Source:** Drop from *The Trash-Compactor* (Sub-Boss).
+*   **Use:** Unlocks 'Heavy Slam' Ability.
+*   **Description:**
+    > *A dense, heavy cube of scrap metal, no larger than a fist but weighing as much as a man.*
+    > *"It believed that if it could make things small enough, they would cease to be broken. It did not understand that a crushed flower is not a seed."*
+
+### Core of the Accumulation
+*   **Source:** Drop from *Golgotha, The Accumulation* (End Boss).
+*   **Use:** Transpose into 'Magma Cannon'.
+*   **Description:**
+    > *A pulsating heart of molten slag and fused glass.*
+    > *"Golgotha was not a monster; he was a memory. He held onto everything the world threw away, because he was terrified of being forgotten. In the end, he became the very garbage he sought to save."*
+
+### Heart of the Matriarch
+*   **Source:** Drop from *Vitria, The Glass Matriarch* (End Boss).
+*   **Use:** Transpose into 'Razor-Vine Whip'.
+*   **Description:**
+    > *A multifaceted gem that bleeds when touched. The blood is hot.*
+    > *"She watered her garden with her own essence until there was nothing left of her but thorns. She loved her children so much she forbade them from ever leaving her embrace."*
+
+### Valve of the Marshal
+*   **Source:** Drop from *The Steam-Marshal* (Sub-Boss).
+*   **Use:** Unlocks 'Steam Vent' Trap.
+*   **Description:**
+    > *A heavy brass valve that is permanently stuck in the 'Closed' position.*
+    > *"He believed that pressure was the only thing holding the world together. To vent was to admit weakness. He died as he lived: exploding from the inside out."*
+
+### Pendulum of the General
+*   **Source:** Drop from *The Metronome General* (End Boss).
+*   **Use:** Transpose into 'Rhythm Mace'.
+*   **Description:**
+    > *A weighted brass pendulum that still swings, even when placed on a table.*
+    > *"He marched to a beat that no one else could hear. He did not hate the silence; he simply could not understand it. To him, a pause in the music was a flaw in the universe."*
+
+### Quill of the Archivist
+*   **Source:** Drop from *Archivist Pellinore* (Sub-Boss).
+*   **Use:** Unlocks 'Silence Glyph' Spell.
+*   **Description:**
+    > *A feather quill made of bone, the tip stained with dry, black ink.*
+    > *"She wrote the history of the world in invisible ink, so that no one would be burdened by the truth. In her library, ignorance was not bliss; it was survival."*
+
+### Tongue of the Void
+*   **Source:** Drop from *Cantor, The Voice of Void* (End Boss).
+*   **Use:** Transpose into 'Sonic Scream' Spell.
+*   **Description:**
+    > *A shriveled, blackened tongue that absorbs all sound around it.*
+    > *"He sang the song of the end, hoping it would be a lullaby. But the void does not sleep. It only hungers."*
+
+### Lens of the Gatekeeper
+*   **Source:** Drop from *The Gatekeeper* (Sub-Boss).
+*   **Use:** Unlocks 'Flashbang' Ability.
+*   **Description:**
+    > *A perfectly clear lens that hurts to look at.*
+    > *"He was the first line of defense for a lie. He blinded the world so they would not see that the heaven they marched toward was empty."*
+
+### Baton of the Prime
+*   **Source:** Drop from *The Prime Conductor* (End Boss).
+*   **Use:** The Final Resonance.
+*   **Description:**
+    > *A conductor's baton made of pure starlight. It hums with the power of creation.*
+    > *"He wanted to write a symphony that would last forever. He forgot that music only has meaning because it ends."*

@@ -84,7 +84,7 @@ A sanctuary built to absorb sound. Every surface is covered in heavy curtains, t
 
 2.  **The Archive of Lost Seconds**
     A library not of books, but of jars. Each jar contains a "Lost Second"—a moment of time that was wasted by a citizen. The jars glow with a dim, regretful light. Smashing one releases a ghost of the person who wasted it.
-    *   *Sub-Boss:* **The Librarian**. She patrols the aisles, shushing anyone who makes noise. If you are silenced, you cannot cast spells.
+    *   *Sub-Boss:* **Archivist Pellinore**. She patrols the aisles, shushing anyone who makes noise. If you are silenced, you cannot cast spells.
 
 3.  **The Velvet Sanctum**
     *Lore: "The Gag of the Saint".*

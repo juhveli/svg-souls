@@ -99,7 +99,7 @@ See `active_storytelling.md` for technical implementation. This document contain
 *   **[Hit]** "Pressure rising! Critical levels!"
 *   **[Death]** "The pipe... bursts..."
 
-### World 4: The Librarian
+### World 4: Archivist Pellinore
 *Concept: A strict guardian of silence.*
 *   **[Idle]** "Shhh... the ink is sleeping."
 *   **[Aggro]** "Quiet! No running in the archives!"

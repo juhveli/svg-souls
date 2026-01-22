@@ -35,7 +35,7 @@
     *   *Reward:* **Spring of Eternity** (Key Item).
 
 ## World 4: The Hushed Halls
-*   **Sub-Boss:** **The Librarian**.
+*   **Sub-Boss:** **Archivist Pellinore**.
     *   *Lore:* "She guards the forbidden history. She knows that knowledge is loud—ideas vibrate and cause dissonance. She burns the books not out of hate, but to keep the library silent."
     *   *Mechanic:* Casts "Shush" zones (Silence status effect) preventing spell usage.
 *   **End Boss:** **Cantor, The Voice of Void**.
