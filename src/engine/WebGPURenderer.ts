@@ -20,7 +20,6 @@ export class WebGPURenderer {
 
     // Buffers
     uniformBuffer!: GPUBuffer;
-    // instanceBuffer removed in Phase 4
     lightingUniformBuffer!: GPUBuffer;
 
     // Textures (G-Buffer)
@@ -52,12 +51,15 @@ export class WebGPURenderer {
     private readonly INITIAL_CHUNK_CAPACITY = 64;
 
     // CPU-side Buffers (Optimization: Reuse to avoid GC)
-    // instanceData removed in Phase 4
     private uniformDataA!: Float32Array;
     private uniformDataB!: Float32Array;
     private lightingData!: Float32Array;
 
     private static instance: WebGPURenderer;
+
+    // Resize Tracking
+    private currentWidth: number = 0;
+    private currentHeight: number = 0;
 
     constructor() {
         this.canvas = document.getElementById('webgpu-canvas') as HTMLCanvasElement;
@@ -66,7 +68,6 @@ export class WebGPURenderer {
         }
 
         // Initialize CPU-side buffers
-        // this.instanceData removed
         this.uniformDataA = new Float32Array(4); // Screen(2) + Camera(2)
         this.uniformDataB = new Float32Array(1); // Time(1)
         this.lightingData = new Float32Array(16); // Lighting Block
@@ -105,15 +106,35 @@ export class WebGPURenderer {
             alphaMode: 'premultiplied',
         });
 
+        // Initialize size tracking
+        this.currentWidth = this.canvas.width;
+        this.currentHeight = this.canvas.height;
+
         await this.createResources();
         this.createPipelines();
+        this.createBindGroups();
 
         console.log("WebGPU Renderer Initialized.");
     }
 
+    destroyResources() {
+        if (this.albedoTexture) this.albedoTexture.destroy();
+        if (this.normalTexture) this.normalTexture.destroy();
+        if (this.depthTexture) this.depthTexture.destroy();
+        if (this.lightingTexture) this.lightingTexture.destroy();
+        if (this.uniformBuffer) this.uniformBuffer.destroy();
+        if (this.lightingUniformBuffer) this.lightingUniformBuffer.destroy();
+        // Sampler is persistent/reusable usually, but let's leave it for now.
+    }
+
     async createResources() {
+        this.destroyResources();
+
         const width = Math.max(1, this.canvas.width);
         const height = Math.max(1, this.canvas.height);
+
+        this.currentWidth = width;
+        this.currentHeight = height;
 
         // Retro Crunch: Low Resolution Dimensions
         const lowResWidth = Math.max(1, Math.ceil(width / this.RETRO_SCALE));
@@ -146,10 +167,12 @@ export class WebGPURenderer {
         });
 
         // Sampler
-        this.nearestSampler = this.device.createSampler({
-            magFilter: 'nearest',
-            minFilter: 'nearest',
-        });
+        if (!this.nearestSampler) {
+            this.nearestSampler = this.device.createSampler({
+                magFilter: 'nearest',
+                minFilter: 'nearest',
+            });
+        }
 
         // 2. Uniform Buffer
         // We need 2 blocks:
@@ -168,75 +191,99 @@ export class WebGPURenderer {
             size: 256,
             usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
         });
-
-        // 4. Instance Buffer removed (Chunking System uses per-chunk buffers)
     }
 
     createPipelines() {
         // --- G-BUFFER PIPELINE ---
-        const gBufferModule = this.device.createShaderModule({
-            code: vertexShaderWGSL + "\n" + fragmentShaderGBufferWGSL
-        });
+        if (!this.gBufferPipeline) {
+            const gBufferModule = this.device.createShaderModule({
+                code: vertexShaderWGSL + "\n" + fragmentShaderGBufferWGSL
+            });
 
-        this.gBufferPipeline = this.device.createRenderPipeline({
-            layout: 'auto',
-            vertex: {
-                module: gBufferModule,
-                entryPoint: 'main',
-                buffers: [{
-                    arrayStride: this.INSTANCE_SIZE,
-                    stepMode: 'instance',
-                    attributes: [
-                        { shaderLocation: 0, offset: 0, format: 'float32x2' }, // center
-                        { shaderLocation: 1, offset: 8, format: 'float32x2' }, // size
-                        { shaderLocation: 2, offset: 16, format: 'float32' },  // typeID
-                        { shaderLocation: 3, offset: 20, format: 'float32x4' } // params
+            this.gBufferPipeline = this.device.createRenderPipeline({
+                layout: 'auto',
+                vertex: {
+                    module: gBufferModule,
+                    entryPoint: 'main',
+                    buffers: [{
+                        arrayStride: this.INSTANCE_SIZE,
+                        stepMode: 'instance',
+                        attributes: [
+                            { shaderLocation: 0, offset: 0, format: 'float32x2' }, // center
+                            { shaderLocation: 1, offset: 8, format: 'float32x2' }, // size
+                            { shaderLocation: 2, offset: 16, format: 'float32' },  // typeID
+                            { shaderLocation: 3, offset: 20, format: 'float32x4' } // params
+                        ]
+                    }]
+                },
+                fragment: {
+                    module: gBufferModule,
+                    entryPoint: 'main',
+                    targets: [
+                        { format: 'bgra8unorm' }, // Albedo
+                        { format: 'rgba8unorm' }, // Normal
+                        { format: 'r32float' }    // Depth
                     ]
-                }]
-            },
-            fragment: {
-                module: gBufferModule,
-                entryPoint: 'main',
-                targets: [
-                    { format: 'bgra8unorm' }, // Albedo
-                    { format: 'rgba8unorm' }, // Normal
-                    { format: 'r32float' }    // Depth
-                ]
-            },
-            primitive: { topology: 'triangle-list' }
-        });
+                },
+                primitive: { topology: 'triangle-list' }
+            });
+        }
 
+        // --- LIGHTING PIPELINE ---
+        if (!this.lightingPipeline) {
+            const lightingModule = this.device.createShaderModule({ code: fragmentShaderLightingWGSL });
+
+            this.lightingPipeline = this.device.createRenderPipeline({
+                layout: 'auto',
+                vertex: {
+                    module: this.device.createShaderModule({
+                        code: `
+                        @vertex fn main(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4<f32> {
+                            var pos = array<vec2<f32>, 6>(
+                                vec2<f32>(-1.0, -1.0), vec2<f32>( 1.0, -1.0), vec2<f32>(-1.0,  1.0),
+                                vec2<f32>(-1.0,  1.0), vec2<f32>( 1.0, -1.0), vec2<f32>( 1.0,  1.0)
+                            );
+                            return vec4<f32>(pos[VertexIndex], 0.0, 1.0);
+                        }`
+                    }),
+                    entryPoint: 'main',
+                },
+                fragment: {
+                    module: lightingModule,
+                    entryPoint: 'main',
+                    targets: [{ format: this.format }]
+                }
+            });
+        }
+
+        // --- POST PROCESS PIPELINE ---
+        if (!this.postProcessPipeline) {
+            const postProcessModule = this.device.createShaderModule({ code: fragmentShaderPostProcessWGSL });
+            const fsVertexModule = this.device.createShaderModule({ code: vertexShaderFullscreenWGSL });
+
+            this.postProcessPipeline = this.device.createRenderPipeline({
+                layout: 'auto',
+                vertex: {
+                    module: fsVertexModule,
+                    entryPoint: 'main'
+                },
+                fragment: {
+                    module: postProcessModule,
+                    entryPoint: 'main',
+                    targets: [{ format: this.format }] // Output to Screen
+                },
+                primitive: { topology: 'triangle-list' }
+            });
+        }
+    }
+
+    createBindGroups() {
         this.gBufferBindGroup = this.device.createBindGroup({
             layout: this.gBufferPipeline.getBindGroupLayout(0),
             entries: [
                 { binding: 0, resource: { buffer: this.uniformBuffer, offset: 0, size: 16 } },
                 { binding: 1, resource: { buffer: this.uniformBuffer, offset: 256, size: 16 } } // Time
             ]
-        });
-
-        // --- LIGHTING PIPELINE ---
-        const lightingModule = this.device.createShaderModule({ code: fragmentShaderLightingWGSL });
-
-        this.lightingPipeline = this.device.createRenderPipeline({
-            layout: 'auto',
-            vertex: {
-                module: this.device.createShaderModule({
-                    code: `
-                    @vertex fn main(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4<f32> {
-                        var pos = array<vec2<f32>, 6>(
-                            vec2<f32>(-1.0, -1.0), vec2<f32>( 1.0, -1.0), vec2<f32>(-1.0,  1.0),
-                            vec2<f32>(-1.0,  1.0), vec2<f32>( 1.0, -1.0), vec2<f32>( 1.0,  1.0)
-                        );
-                        return vec4<f32>(pos[VertexIndex], 0.0, 1.0);
-                    }`
-                }),
-                entryPoint: 'main',
-            },
-            fragment: {
-                module: lightingModule,
-                entryPoint: 'main',
-                targets: [{ format: this.format }]
-            }
         });
 
         this.lightingBindGroup = this.device.createBindGroup({
@@ -250,24 +297,6 @@ export class WebGPURenderer {
             ]
         });
 
-        // --- POST PROCESS PIPELINE ---
-        const postProcessModule = this.device.createShaderModule({ code: fragmentShaderPostProcessWGSL });
-        const fsVertexModule = this.device.createShaderModule({ code: vertexShaderFullscreenWGSL });
-
-        this.postProcessPipeline = this.device.createRenderPipeline({
-            layout: 'auto',
-            vertex: {
-                module: fsVertexModule,
-                entryPoint: 'main'
-            },
-            fragment: {
-                module: postProcessModule,
-                entryPoint: 'main',
-                targets: [{ format: this.format }] // Output to Screen
-            },
-            primitive: { topology: 'triangle-list' }
-        });
-
         this.postProcessBindGroup = this.device.createBindGroup({
             layout: this.postProcessPipeline.getBindGroupLayout(0),
             entries: [
@@ -277,12 +306,31 @@ export class WebGPURenderer {
         });
     }
 
-    render(entities: any[], camera: any, playerRef?: any) {
-        // TODO: Phase 5 - Retro Crunch
-        // Render to a low-res texture (e.g. 320x180) instead of screen.
-        // Add a Post-Process pass to upscale with "Nearest Neighbor" and apply Dithering.
+    resize(width: number, height: number) {
+        if (width === this.currentWidth && height === this.currentHeight) return;
 
+        // Ensure canvas matches
+        this.canvas.width = width;
+        this.canvas.height = height;
+
+        this.context.configure({
+            device: this.device,
+            format: this.format,
+            alphaMode: 'premultiplied',
+        });
+
+        // Recreate resources and bind groups
+        this.createResources();
+        this.createBindGroups();
+    }
+
+    render(entities: any[], camera: any, playerRef?: any) {
         if (!this.device || !this.context) return;
+
+        // Check for resize
+        if (this.canvas.width !== this.currentWidth || this.canvas.height !== this.currentHeight) {
+            this.resize(this.canvas.width, this.canvas.height);
+        }
 
         const time = performance.now() / 1000;
 
