@@ -30,6 +30,7 @@ export class AudioController {
     }
 
     private triggerBeat() {
+        // TODO: Implement unique sound effects for Crystal Shard shattering and Gatekeeper Flash.
         // Dispatch to listeners
         this.onBeat.forEach(cb => cb());
 

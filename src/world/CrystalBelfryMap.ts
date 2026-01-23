@@ -2,6 +2,7 @@ import { SVGAssets } from './SVGAssets';
 import { GameMap } from './GameMap';
 import { Game } from '../engine/Game';
 import { Gatekeeper } from '../entities/enemies/Gatekeeper';
+import { CrystalShard } from '../entities/enemies/CrystalShard';
 
 export class CrystalBelfryMap extends GameMap {
     el: SVGGElement;
@@ -77,10 +78,19 @@ export class CrystalBelfryMap extends GameMap {
         this.addRect(0, 0, 20, 600, '#00000088');
         this.addRect(this.width - 20, 0, 20, 600, '#00000088');
 
-        // Spawn Gatekeeper (W5 Sub-Boss)
+        // Spawn Enemies
         const game = Game.getInstance();
         if (game && game.entityManager) {
+            // Sub-Boss
             game.entityManager.add(new Gatekeeper(1000, 300));
+
+            // Standard Enemies (Crystal Shards)
+            for (let i = 0; i < 8; i++) {
+                // Random position above floor
+                const rx = 200 + Math.random() * 1200;
+                const ry = 100 + Math.random() * 300;
+                game.entityManager.add(new CrystalShard(rx, ry));
+            }
         }
     }
 
