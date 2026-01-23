@@ -31,10 +31,27 @@ export class ScrapyardMap extends GameMap {
     }
 
     private generateGeometry() {
-        // 0. Background (Global Darkness)
-        this.addRect(0, 0, this.width, this.height, '#0a0505');
+        // 0. Background (Global Darkness with Radial Gradient)
+        // TODO: Replace with WebGPU textured quad with noise shader for "Smog" effect.
+
+        // Define Gradient
+        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'radialGradient');
+        gradient.id = 'smog-gradient';
+        gradient.setAttribute('cx', '50%');
+        gradient.setAttribute('cy', '50%');
+        gradient.setAttribute('r', '70%');
+        gradient.innerHTML = `
+            <stop offset="0%" stop-color="#2a1a1a" stop-opacity="1" />
+            <stop offset="100%" stop-color="#050505" stop-opacity="1" />
+        `;
+        defs.appendChild(gradient);
+        this.el.appendChild(defs);
+
+        this.addRect(0, 0, this.width, this.height, 'url(#smog-gradient)');
 
         // 1. Base Floor (The Junk Pile)
+        // TODO: Use SpriteBatch or Tiled Map for floor instead of expensive SVG Path.
         const junkPath = SVGAssets.junkPile(0, 500, 1600, 100, 123);
         const floor = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         floor.setAttribute('d', junkPath);

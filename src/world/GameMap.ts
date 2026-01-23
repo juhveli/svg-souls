@@ -5,7 +5,10 @@ import { Game } from '../engine/Game';
  * Using an abstract class ensures a runtime presence to avoid ESM export errors
  */
 export abstract class GameMap {
+    // TODO: Phase 1 - Parallax Layers. Split 'el' into bgFar, bgMid, fgClose for depth.
+    // TODO: Phase 2 - Move away from SVG DOM entirely to WebGPU Texture/Tile rendering for performance and lighting.
     abstract el: SVGGElement;
+
     abstract width: number;
     abstract height: number;
     abstract destroy(): void;

@@ -235,7 +235,16 @@ export class Game {
 
         const bossInstance = this.entityManager.enemies.find(e => e instanceof Golgotha) as Golgotha;
         if (bossInstance) {
-            this.ui.updateBossHealth("GOLGOTHA", bossInstance.hp, bossInstance.maxHp);
+            // Logic Polish: Only show boss bar if nearby (Zelda/Dark Souls style)
+            const dx = this.player.x - bossInstance.x;
+            const dy = this.player.y - bossInstance.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 600) {
+                this.ui.updateBossHealth("GOLGOTHA", bossInstance.hp, bossInstance.maxHp);
+            } else {
+                this.ui.hideBossHealth();
+            }
         } else {
             this.ui.hideBossHealth();
         }
