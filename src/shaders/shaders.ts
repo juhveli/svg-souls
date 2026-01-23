@@ -691,11 +691,36 @@ fn main(
     }
 
   } else if (abs(typeID - 26.0) < 0.1) {
-    // TODO: Implement Shader for The Gatekeeper (W5 Sub-Boss)
-    // Placeholder Cube for now to avoid crash if spawned
-    let cube = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.2, 0.2));
-    dist = cube;
-    color = vec3<f32>(0.5, 0.0, 0.5); // Purple Placeholder
+    // THE GATEKEEPER (W5 Sub-Boss)
+    let t = global.time;
+    let flash = params.x; // 0..1
+
+    // Central Lens
+    let lens = sdCircle(uv - vec2<f32>(0.5, 0.5), 0.2);
+
+    // Outer Rim (Mechanical)
+    let rim = abs(length(uv - vec2<f32>(0.5, 0.5)) - 0.22) - 0.02;
+
+    // Tendrils/Spikes (Rotating)
+    let pRot = rotate(uv - vec2<f32>(0.5, 0.5), t * 0.5);
+    let spike1 = sdBox(pRot - vec2<f32>(0.0, 0.3), vec2<f32>(0.02, 0.1));
+    let spike2 = sdBox(pRot - vec2<f32>(0.0, -0.3), vec2<f32>(0.02, 0.1));
+    let spike3 = sdBox(pRot - vec2<f32>(0.3, 0.0), vec2<f32>(0.1, 0.02));
+    let spike4 = sdBox(pRot - vec2<f32>(-0.3, 0.0), vec2<f32>(0.1, 0.02));
+
+    dist = min(lens, rim);
+    dist = min(dist, spike1);
+    dist = min(dist, spike2);
+    dist = min(dist, spike3);
+    dist = min(dist, spike4);
+
+    // Color
+    color = vec3<f32>(0.2, 0.6, 0.8); // Magic Bright Blue
+
+    // Flash Effect
+    if (flash > 0.01) {
+       color = mix(color, vec3<f32>(1.0, 1.0, 1.0), flash);
+    }
   } else if (typeID > 26.5) {
      // Safety discard for undefined future IDs
      discard;

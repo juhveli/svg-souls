@@ -1,5 +1,7 @@
 import { SVGAssets } from './SVGAssets';
 import { GameMap } from './GameMap';
+import { Game } from '../engine/Game';
+import { Gatekeeper } from '../entities/enemies/Gatekeeper';
 
 export class CrystalBelfryMap extends GameMap {
     el: SVGGElement;
@@ -75,7 +77,11 @@ export class CrystalBelfryMap extends GameMap {
         this.addRect(0, 0, 20, 600, '#00000088');
         this.addRect(this.width - 20, 0, 20, 600, '#00000088');
 
-        // TODO: Spawn Gatekeeper entity when implemented (W5 Sub-Boss)
+        // Spawn Gatekeeper (W5 Sub-Boss)
+        const game = Game.getInstance();
+        if (game && game.entityManager) {
+            game.entityManager.add(new Gatekeeper(1000, 300));
+        }
     }
 
     private addRect(x: number, y: number, w: number, h: number, color: string) {
