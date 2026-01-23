@@ -251,8 +251,8 @@
 *   **Source:** Drop from *The Trash-Compactor* (Sub-Boss).
 *   **Use:** Unlocks 'Heavy Slam' Ability.
 *   **Description:**
-    > *A dense, heavy cube of scrap metal, no larger than a fist but weighing as much as a man.*
-    > *"It believed that if it could make things small enough, they would cease to be broken. It did not understand that a crushed flower is not a seed."*
+    > *A dense, heavy cube of scrap metal, weighing as much as a man.*
+    > *"The Trash-Compactor believed that compression was a form of healing—that by forcing the broken pieces together, they would become whole again. It never learned that a crushed flower is not a seed."*
 
 ### Core of the Accumulation
 *   **Source:** Drop from *Golgotha, The Accumulation* (End Boss).
@@ -272,8 +272,8 @@
 *   **Source:** Drop from *The Steam-Marshal* (Sub-Boss).
 *   **Use:** Unlocks 'Steam Vent' Trap.
 *   **Description:**
-    > *A heavy brass valve that is permanently stuck in the 'Closed' position.*
-    > *"He believed that pressure was the only thing holding the world together. To vent was to admit weakness. He died as he lived: exploding from the inside out."*
+    > *A heavy brass valve, rusted shut in the 'Closed' position.*
+    > *"The Steam-Marshal believed that pressure was the only virtue; that to vent was to bleed. He held the world's breath until his own lungs burst."*
 
 ### Pendulum of the General
 *   **Source:** Drop from *The Metronome General* (End Boss).
@@ -287,7 +287,7 @@
 *   **Use:** Unlocks 'Silence Glyph' Spell.
 *   **Description:**
     > *A feather quill made of bone, the tip stained with dry, black ink.*
-    > *"She wrote the history of the world in invisible ink, so that no one would be burdened by the truth. In her library, ignorance was not bliss; it was survival."*
+    > *"She wrote the history of the world in invisible ink, ensuring the weight of the truth would not crush the reader. She silenced the books not out of malice, but because she knew that some stories, if read aloud, would scream."*
 
 ### Tongue of the Void
 *   **Source:** Drop from *Cantor, The Voice of Void* (End Boss).
