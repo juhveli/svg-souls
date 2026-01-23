@@ -278,10 +278,6 @@ export class WebGPURenderer {
     }
 
     render(entities: any[], camera: any, playerRef?: any) {
-        // TODO: Phase 4 - Chunking System
-        // Instead of a single instanceBuffer for all entities, use per-chunk buffers.
-        // Culling: Only upload/render chunks visible to camera.
-
         // TODO: Phase 5 - Retro Crunch
         // Render to a low-res texture (e.g. 320x180) instead of screen.
         // Add a Post-Process pass to upscale with "Nearest Neighbor" and apply Dithering.
