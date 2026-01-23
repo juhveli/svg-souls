@@ -39,6 +39,7 @@ export class Player extends Entity {
     regenDelay = 2.0;
     heatIncreaseRate = 20;
     heatDecreaseRate = 10;
+    weaponReach = 60; // Matches visual reach of Tuning Fork Spear SDF
 
     // Logic
     rollDir = { x: 0, y: 0 };
@@ -100,7 +101,8 @@ export class Player extends Entity {
         }
 
         // Actions
-        if (input.isKeyDown('KeyE') && this.attackCooldown <= 0 && this.currentResonance >= 10 && this.heat < 100) {
+        // Attack on Mouse Click OR 'KeyE' (legacy support)
+        if ((input.isMouseDown || input.isKeyDown('KeyE')) && this.attackCooldown <= 0 && this.currentResonance >= 10 && this.heat < 100) {
             this.performAttack(now);
         } else if (input.isKeyDown('Space') && this.currentResonance >= 15 && this.heat < 100) {
             this.startRoll(dx, dy, now);
@@ -202,7 +204,7 @@ export class Player extends Entity {
         }, 300);
 
         const attackEvent = new CustomEvent('player-attack', {
-            detail: { x: this.x, y: this.y, rot: this.aimAngle, range: 70, angle: Math.PI / 2 }
+            detail: { x: this.x, y: this.y, rot: this.aimAngle, range: this.weaponReach, angle: Math.PI / 2 }
         });
         document.dispatchEvent(attackEvent);
     }

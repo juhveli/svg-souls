@@ -773,7 +773,65 @@ fn main(
 
     color = vec3<f32>(0.7, 0.6, 0.2); // Brass
 
-  } else if (typeID > 28.5) {
+  } else if (abs(typeID - 29.0) < 0.1) {
+    // WIREFRAME APPLE (W5 Glitch Item)
+    // "Tastes of ozone and math."
+    let t = global.time;
+    let wobble = sin(t * 5.0) * 0.02;
+
+    // Base Shape: Circle
+    let p = uv - vec2<f32>(0.5, 0.45 + wobble);
+    let apple = sdCircle(p, 0.18);
+    // Leaf
+    let leaf = sdBox(uv - vec2<f32>(0.55, 0.65 + wobble), vec2<f32>(0.04, 0.02));
+
+    dist = min(apple, leaf);
+
+    // Wireframe Grid Logic
+    // We only render if we are near a grid line
+    let gridSize = 15.0;
+    let gridX = abs(fract(uv.x * gridSize + t * 0.5) - 0.5);
+    let gridY = abs(fract(uv.y * gridSize - t * 0.5) - 0.5);
+    let lineThick = 0.1;
+
+    // Check if inside the shape
+    if (dist < 0.001) {
+        // If on a grid line, draw bright green
+        if (gridX < lineThick || gridY < lineThick) {
+            color = vec3<f32>(0.2, 1.0, 0.2); // Bright Matrix Green
+        } else {
+            // Otherwise, dark transparent green
+            color = vec3<f32>(0.0, 0.1, 0.0);
+        }
+    } else {
+        // Outside, just discard as usual (handled by main check)
+    }
+
+  } else if (abs(typeID - 30.0) < 0.1) {
+    // PIXELATED TEAR (W5 Glitch Item)
+    // "Sorrow at low resolution."
+    let t = global.time;
+
+    // Pixelate UVs
+    let pixels = 16.0;
+    let uvi = floor(uv * pixels) / pixels + (0.5 / pixels);
+
+    // Falling animation (stepped)
+    let yOffset = floor(sin(t * 2.0) * 4.0) / 4.0 * 0.05;
+    let p = uvi - vec2<f32>(0.5, 0.5 + yOffset);
+
+    // Blocky Teardrop Shape construction
+    let centerBox = sdBox(p, vec2<f32>(0.1, 0.1));
+    let bottomBox = sdBox(p - vec2<f32>(0.0, -0.1), vec2<f32>(0.1, 0.05));
+    let topBox = sdBox(p - vec2<f32>(0.0, 0.1), vec2<f32>(0.05, 0.05));
+    let tipBox = sdBox(p - vec2<f32>(0.0, 0.15), vec2<f32>(0.02, 0.02));
+
+    let shape = min(min(min(centerBox, bottomBox), topBox), tipBox);
+
+    dist = shape;
+    color = vec3<f32>(0.2, 0.4, 1.0); // Blue
+
+  } else if (typeID > 30.5) {
      // Safety discard for undefined future IDs
      discard;
   } else {
