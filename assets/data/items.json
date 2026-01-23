@@ -251,5 +251,35 @@
         "category": "narrative",
         "effect": null,
         "icon": "marble"
+    },
+    "cube_of_compacted_regret": {
+        "name": "Cube of Compacted Regret",
+        "description": "A dense, heavy cube of scrap metal, weighing as much as a man. \"The Trash-Compactor believed that compression was a form of healing—that by forcing the broken pieces together, they would become whole again. It never learned that a crushed flower is not a seed.\"",
+        "category": "boss_soul",
+        "effect": {
+            "type": "unlock_ability",
+            "ability": "heavy_slam"
+        },
+        "icon": "junk"
+    },
+    "valve_of_marshal": {
+        "name": "Valve of the Marshal",
+        "description": "A heavy brass valve, rusted shut in the 'Closed' position. \"The Steam-Marshal believed that pressure was the only virtue; that to vent was to bleed. He held the world's breath until his own lungs burst.\"",
+        "category": "boss_soul",
+        "effect": {
+            "type": "unlock_ability",
+            "ability": "steam_vent"
+        },
+        "icon": "gear"
+    },
+    "quill_of_archivist": {
+        "name": "Quill of the Archivist",
+        "description": "A feather quill made of bone, the tip stained with dry, black ink. \"She wrote the history of the world in invisible ink, ensuring the weight of the truth would not crush the reader. She silenced the books not out of malice, but because she knew that some stories, if read aloud, would scream.\"",
+        "category": "boss_soul",
+        "effect": {
+            "type": "unlock_spell",
+            "spell": "silence_glyph"
+        },
+        "icon": "book_spine"
     }
 }
