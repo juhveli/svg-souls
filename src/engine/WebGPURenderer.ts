@@ -455,9 +455,15 @@ export class WebGPURenderer {
                 else if (name === 'PrimeConductor') typeID = 18;
                 else if (name === 'Paradox') typeID = 19;
                 else if (name === 'Gatekeeper') typeID = 26;
+                else if (name === 'Mannequin') typeID = 27;
+                else if (name === 'PistonDrone') typeID = 28;
                 else if (name === 'WorldItem') {
                     const item = e as any;
                     if (item.itemId === 'vial_liquid_seconds') typeID = 20;
+
+                    // TODO: Create unique SDF typeID and shader logic for 'wireframe_apple'.
+                    // TODO: Create unique SDF typeID and shader logic for 'null_texture_sample'.
+                    // TODO: Create unique SDF typeID and shader logic for 'pixelated_tear'.
                 }
             }
 
@@ -491,6 +497,9 @@ export class WebGPURenderer {
             }
             if (typeID === 26) {
                 p1 = (e as any).flashParam || 0;
+            }
+            if (typeID === 28) {
+                p1 = (e as any).extensionParam || 0;
             }
 
             const offset = chunk.instanceCount * 9;

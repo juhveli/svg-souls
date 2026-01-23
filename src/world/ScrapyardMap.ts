@@ -2,6 +2,7 @@ import { SVGAssets } from './SVGAssets';
 import { GameMap } from './GameMap';
 import { Game } from '../engine/Game';
 import { TrashCompactor } from '../entities/enemies/TrashCompactor';
+import { Mannequin } from '../entities/enemies/Mannequin';
 
 export class ScrapyardMap extends GameMap {
     el: SVGGElement;
@@ -72,6 +73,18 @@ export class ScrapyardMap extends GameMap {
         if (game && game.entityManager) {
             // Spawn Trash Compactor near the end
             game.entityManager.add(new TrashCompactor(1400, 500));
+
+            // Mannequin Graves (approx x=700 to 1000)
+            // Visual pile of glass bodies (static debris)
+            // TODO: Add procedural generation for junk piles to avoid hardcoded coordinates
+            this.el.innerHTML += `
+                <path d="${SVGAssets.junkPile(700, 480, 300, 50, 555)}" fill="#1a2a2a" stroke="#2a3a3a" opacity="0.8" />
+            `;
+
+            // Spawn Mannequins
+            game.entityManager.add(new Mannequin(750, 500));
+            game.entityManager.add(new Mannequin(850, 520));
+            game.entityManager.add(new Mannequin(950, 480));
         }
     }
 

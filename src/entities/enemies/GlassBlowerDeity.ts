@@ -82,6 +82,7 @@ export class GlassBlowerDeity extends Enemy {
         } else if (this.state === 'BLOWING') {
             this.state = 'IDLE';
             // Spawn Projectile logic would go here, for now direct hit if in line
+            // TODO: Implement projectile spawning logic for 'BLOWING' state.
             // Or simple distance check for heat wave
             if (dist < 200) {
                 this.target.takeDamage(15);

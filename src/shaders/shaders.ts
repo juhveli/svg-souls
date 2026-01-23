@@ -721,7 +721,59 @@ fn main(
     if (flash > 0.01) {
        color = mix(color, vec3<f32>(1.0, 1.0, 1.0), flash);
     }
-  } else if (typeID > 26.5) {
+
+  } else if (abs(typeID - 27.0) < 0.1) {
+    // MANNEQUIN (W1 Enemy)
+    // Glass humanoid
+    let t = global.time;
+
+    // Body
+    let torso = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.1, 0.2));
+    let head = sdCircle(uv - vec2<f32>(0.5, 0.75), 0.08);
+
+    // Limbs
+    let armL = sdBox(uv - vec2<f32>(0.35, 0.5), vec2<f32>(0.03, 0.2));
+    let armR = sdBox(uv - vec2<f32>(0.65, 0.5), vec2<f32>(0.03, 0.2));
+    let legL = sdBox(uv - vec2<f32>(0.4, 0.2), vec2<f32>(0.04, 0.2));
+    let legR = sdBox(uv - vec2<f32>(0.6, 0.2), vec2<f32>(0.04, 0.2));
+
+    dist = min(torso, head);
+    dist = min(dist, armL);
+    dist = min(dist, armR);
+    dist = min(dist, legL);
+    dist = min(dist, legR);
+
+    // Crack (random-ish looking)
+    let crack = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.2, 0.01));
+    dist = max(dist, -crack);
+
+    color = vec3<f32>(0.8, 0.9, 1.0); // Glass
+
+  } else if (abs(typeID - 28.0) < 0.1) {
+    // PISTON DRONE (W3 Enemy)
+    // Brass Piston
+    let extension = params.x; // 0..1
+
+    // Base
+    let base = sdBox(uv - vec2<f32>(0.5, 0.8), vec2<f32>(0.15, 0.05));
+
+    // Cylinder
+    let cyl = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.1, 0.25));
+
+    // Piston Head (Moves)
+    let headY = 0.5 - (extension * 0.3);
+    let head = sdBox(uv - vec2<f32>(0.5, headY), vec2<f32>(0.12, 0.05));
+
+    // Rod
+    let rod = sdBox(uv - vec2<f32>(0.5, 0.5), vec2<f32>(0.04, 0.3));
+
+    dist = min(base, cyl);
+    dist = min(dist, head);
+    dist = min(dist, rod);
+
+    color = vec3<f32>(0.7, 0.6, 0.2); // Brass
+
+  } else if (typeID > 28.5) {
      // Safety discard for undefined future IDs
      discard;
   } else {
