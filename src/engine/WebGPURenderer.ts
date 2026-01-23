@@ -459,13 +459,12 @@ export class WebGPURenderer {
                 else if (name === 'Gatekeeper') typeID = 26;
                 else if (name === 'Mannequin') typeID = 27;
                 else if (name === 'PistonDrone') typeID = 28;
+                else if (name === 'CrystalShard') typeID = 31;
+                else if (name === 'BookMimic') typeID = 32;
                 else if (name === 'WorldItem') {
+                    // Fallback for WorldItems if typeID wasn't set in constructor
                     const item = e as any;
                     if (item.itemId === 'vial_liquid_seconds') typeID = 20;
-
-                    // TODO: Create unique SDF typeID and shader logic for 'wireframe_apple'.
-                    // TODO: Create unique SDF typeID and shader logic for 'null_texture_sample'.
-                    // TODO: Create unique SDF typeID and shader logic for 'pixelated_tear'.
                 }
             }
 

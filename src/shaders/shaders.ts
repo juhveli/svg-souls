@@ -831,7 +831,63 @@ fn main(
     dist = shape;
     color = vec3<f32>(0.2, 0.4, 1.0); // Blue
 
-  } else if (typeID > 30.5) {
+  } else if (abs(typeID - 31.0) < 0.1) {
+    // CRYSTAL SHARD (W5 Enemy)
+    let t = global.time;
+    // Rotate constantly
+    let p = rotate(uv - vec2<f32>(0.5, 0.5), t * 1.5);
+
+    // Main shard shape: intersection of rotated boxes or similar
+    // Simple diamond/shard
+    let main = sdBox(p, vec2<f32>(0.08, 0.25));
+
+    // Cutouts to make it jagged
+    let cut1 = sdBox(p - vec2<f32>(0.1, 0.1), vec2<f32>(0.1, 0.1));
+    let cut2 = sdBox(p - vec2<f32>(-0.1, -0.2), vec2<f32>(0.05, 0.1));
+
+    // Smaller floating bits
+    let bit1 = sdBox(rotate(uv - vec2<f32>(0.3, 0.3), t*2.0), vec2<f32>(0.03, 0.05));
+
+    dist = max(main, -cut1);
+    dist = max(dist, -cut2);
+    dist = min(dist, bit1);
+
+    color = vec3<f32>(0.7, 0.9, 1.0); // Pale Ice/Crystal
+    if (sin(t * 10.0) > 0.8) {
+       color = vec3<f32>(1.0, 1.0, 1.0); // Sparkle
+    }
+
+  } else if (abs(typeID - 32.0) < 0.1) {
+    // BOOK MIMIC (W4 Enemy)
+    let t = global.time;
+    let isAggro = params.x > 0.5; // Not passed yet, but could be p1 if we want visual change
+
+    // Pile of books
+    // Bottom book
+    let b1 = sdBox(uv - vec2<f32>(0.5, 0.8), vec2<f32>(0.2, 0.05));
+    // Middle book (skewed)
+    let b2 = sdBox(uv - vec2<f32>(0.52, 0.7), vec2<f32>(0.18, 0.04));
+    // Top book
+    let b3 = sdBox(uv - vec2<f32>(0.48, 0.6), vec2<f32>(0.15, 0.04));
+
+    dist = min(min(b1, b2), b3);
+
+    // Mouth/Teeth (Hidden in pile)
+    let mouth = sdBox(uv - vec2<f32>(0.5, 0.7), vec2<f32>(0.1, 0.05));
+
+    // If animating/attacking, reveal teeth
+    let bite = sin(t * 15.0) * 0.05;
+    if (length(uv - vec2<f32>(0.5, 0.5)) < 0.3) {
+        // Just wiggle the top book
+    }
+
+    // Color: Leather Brown/Red
+    color = vec3<f32>(0.4, 0.2, 0.1);
+
+    if (b3 < 0.001) color = vec3<f32>(0.5, 0.1, 0.1); // Red book
+    if (b2 < 0.001) color = vec3<f32>(0.1, 0.1, 0.3); // Blue book
+
+  } else if (typeID > 32.5) {
      // Safety discard for undefined future IDs
      discard;
   } else {
@@ -988,6 +1044,7 @@ fn getNearestGloomColor(col: vec3<f32>) -> vec3<f32> {
 
 @fragment
 fn main(@builtin(position) coord : vec4<f32>, @location(0) uv : vec2<f32>) -> @location(0) vec4<f32> {
+    // TODO: Add visual glitch effect (Chromatic Aberration) in PostProcess shader when near Paradox entities.
     // Sample texture with nearest sampler (passed in bind group)
     let color = textureSample(lightingTex, samp, uv).rgb;
 
