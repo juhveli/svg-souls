@@ -19,7 +19,6 @@ export class CrystalBelfryMap extends GameMap {
         // Add to World
         const world = document.getElementById('world-layer');
         if (world) {
-            // Insert before entities so they walk on top
             world.insertBefore(this.el, world.firstChild);
         }
     }
@@ -77,20 +76,20 @@ export class CrystalBelfryMap extends GameMap {
         // Walls
         this.addRect(0, 0, 20, 600, '#00000088');
         this.addRect(this.width - 20, 0, 20, 600, '#00000088');
+    }
 
-        // Spawn Enemies
-        const game = Game.getInstance();
-        if (game && game.entityManager) {
-            // Sub-Boss
-            game.entityManager.add(new Gatekeeper(1000, 300));
+    spawnEntities(game: Game) {
+        // Sub-Boss
+        if (!game.bossesDefeated.has('gatekeeper')) {
+            game.entityManager.add(new Gatekeeper(1400, 300));
+        }
 
-            // Standard Enemies (Crystal Shards)
-            for (let i = 0; i < 8; i++) {
-                // Random position above floor
-                const rx = 200 + Math.random() * 1200;
-                const ry = 100 + Math.random() * 300;
-                game.entityManager.add(new CrystalShard(rx, ry));
-            }
+        // Standard Enemies (Crystal Shards)
+        for (let i = 0; i < 8; i++) {
+            // Random position above floor
+            const rx = 200 + Math.random() * 1200;
+            const ry = 100 + Math.random() * 300;
+            game.entityManager.add(new CrystalShard(rx, ry));
         }
     }
 

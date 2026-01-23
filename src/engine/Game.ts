@@ -5,21 +5,13 @@ import { UIManager } from '../ui/UIManager';
 import { AudioController } from './AudioController';
 import { ScrapyardMap } from '../world/ScrapyardMap';
 import { GlassGardensMap } from '../world/GlassGardensMap';
-import { SerumBot } from '../entities/enemies/SerumBot';
 import { Golgotha } from '../entities/enemies/Golgotha';
-import { TrashCompactor } from '../entities/enemies/TrashCompactor';
-import { GlassBlowerDeity } from '../entities/enemies/GlassBlowerDeity';
-import { Vitria } from '../entities/enemies/Vitria';
-import { SteamMarshal } from '../entities/enemies/SteamMarshal';
-import { MetronomeGeneral } from '../entities/enemies/MetronomeGeneral';
-import { GearKeeper } from '../entities/enemies/GearKeeper';
 import { ParticleSystem } from './ParticleSystem';
 import { LoreFXSystem } from '../systems/LoreFXSystem';
 import { EventManager } from './EventManager';
 import { BarkSystem } from '../systems/BarkSystem';
 import { ZoneSystem } from '../systems/ZoneSystem';
 import { GameMap } from '../world/GameMap';
-import { NarrativeItem } from '../entities/NarrativeItem';
 import { ProgressionSystem } from '../systems/ProgressionSystem';
 import { LootSystem } from '../systems/LootSystem';
 import { ClockworkArteriesMap } from '../world/ClockworkArteriesMap';
@@ -28,8 +20,6 @@ import { CrystalBelfryMap } from '../world/CrystalBelfryMap';
 import { ReflectionSystem } from '../systems/ReflectionSystem';
 import { ItemDatabase } from '../systems/ItemDatabase';
 import { NPCDatabase } from '../systems/NPCDatabase';
-import { NPCEntity } from '../entities/NPCEntity';
-import { WorldItem } from '../entities/WorldItem';
 import { PersistenceManager } from './PersistenceManager';
 import { Camera } from './Camera';
 import { WebGPURenderer } from './WebGPURenderer';
@@ -151,22 +141,6 @@ export class Game {
         return div;
     }
 
-    spawnScrapyardNarrative() {
-        const db = ItemDatabase.getInstance();
-
-        const mirrorItem = db.get('cracked_mirror');
-        const mirrorDesc = mirrorItem ? mirrorItem.description : "The glass reflects the smog... [DATA MISSING]";
-        const mirrorName = mirrorItem ? mirrorItem.name : "Cracked Mirror";
-
-        this.entityManager.add(new NarrativeItem(300, 450, mirrorName, mirrorDesc, this.player));
-
-        const ledgerItem = db.get('foremans_ledger');
-        const ledgerDesc = ledgerItem ? ledgerItem.description : "Entries for 'Soft Units'... [DATA MISSING]";
-        const ledgerName = ledgerItem ? ledgerItem.name : "Foreman's Ledger";
-
-        this.entityManager.add(new NarrativeItem(600, 520, ledgerName, ledgerDesc, this.player));
-    }
-
     startGame() {
         this.state = 'PLAY';
         this.screens.start.classList.add('hidden');
@@ -177,18 +151,10 @@ export class Game {
         this.player.state = 'ASLEEP';
         this.entityManager.add(this.player);
 
-        this.spawnScrapyardNarrative();
-
-        // Test NPC
-        const tickTock = new NPCEntity(250, 400, 'tick_tock', this.player);
-        this.entityManager.add(tickTock);
-
-        const bot = new SerumBot(650, 300, this.player);
-        this.entityManager.add(bot);
-
-        // Cinder's Contribution: The Vial of Liquid Seconds
-        const vial = new WorldItem(200, 400, 'vial_liquid_seconds');
-        this.entityManager.add(vial);
+        // Re-create the map (clearing any menu-time visual state) and spawn entities
+        if (this.map) this.map.destroy();
+        this.map = new ScrapyardMap();
+        this.map.spawnEntities(this);
 
         this.camera.follow(this.player);
         if (this.map) {
@@ -216,8 +182,10 @@ export class Game {
             this.map = new CrystalBelfryMap();
         } else {
             this.map = new ScrapyardMap();
-            this.spawnScrapyardNarrative();
         }
+
+        // Spawn entities for the new map
+        this.map.spawnEntities(this);
 
         this.camera.setBounds(this.map.width, this.map.height);
 
@@ -226,71 +194,6 @@ export class Game {
         } else {
             this.player.x = this.map.width - 50;
         }
-    }
-
-    checkWorld1Spawns() {
-        const enemies = this.entityManager.enemies.filter(e => e instanceof SerumBot);
-        const boss = this.entityManager.enemies.find(e => e instanceof Golgotha);
-        const subBoss = this.entityManager.enemies.find(e => e instanceof TrashCompactor);
-
-        if (enemies.length === 0 && !boss) {
-            const ex = 100 + Math.random() * 600;
-            const ey = 100 + Math.random() * 400;
-            const bot = new SerumBot(ex, ey, this.player);
-            this.entityManager.add(bot);
-            this.ui.showBark(ex, ey, "Another rises...");
-        }
-
-        if (this.player.x > 300 && !subBoss && !this.bossesDefeated.has('trash_compactor')) {
-             const compactor = new TrashCompactor(500, 200);
-             this.entityManager.add(compactor);
-             this.ui.showBark(compactor.x, compactor.y, "SYSTEM ONLINE.");
-        }
-
-        if (this.player.x > 600 && !boss && !this.bossesDefeated.has('golgotha')) {
-            const golgotha = new Golgotha(400, 300, this.player);
-            this.entityManager.add(golgotha);
-            this.ui.showBark(golgotha.x, golgotha.y, "I AM THE ACCUMULATION.");
-        }
-    }
-
-    checkWorld2Spawns() {
-        const boss = this.entityManager.enemies.find(e => e instanceof Vitria);
-        const subBoss = this.entityManager.enemies.find(e => e instanceof GlassBlowerDeity);
-
-        if (this.player.x > 250 && !subBoss && !this.bossesDefeated.has('glass_blower')) {
-            const blower = new GlassBlowerDeity(400, 100);
-            this.entityManager.add(blower);
-            this.ui.showBark(blower.x, blower.y, "Careful...");
-        }
-
-        if (this.player.x > 600 && !boss && !this.bossesDefeated.has('vitria')) {
-            const vitria = new Vitria(500, 300);
-            this.entityManager.add(vitria);
-            this.ui.showBark(vitria.x, vitria.y, "PERFECTION.");
-        }
-    }
-
-    checkWorld3Spawns() {
-         const boss = this.entityManager.enemies.find(e => e instanceof MetronomeGeneral);
-         const subBoss = this.entityManager.enemies.find(e => e instanceof SteamMarshal);
-         const keepers = this.entityManager.enemies.filter(e => e instanceof GearKeeper);
-
-         if (keepers.length < 2 && !boss) {
-             const k = new GearKeeper(600, 300 + (Math.random()-0.5)*200);
-             this.entityManager.add(k);
-         }
-
-         if (this.player.x > 300 && !subBoss && !this.bossesDefeated.has('steam_marshal')) {
-             const marshal = new SteamMarshal(500, 300, this.player);
-             this.entityManager.add(marshal);
-         }
-
-         if (this.player.x > 650 && !boss && !this.bossesDefeated.has('metronome_general')) {
-             const general = new MetronomeGeneral(600, 300);
-             this.entityManager.add(general);
-             this.ui.showBark(general.x, general.y, "TICK. TOCK.");
-         }
     }
 
     loop(time: number) {
@@ -313,6 +216,7 @@ export class Game {
         this.entityManager.update(physicsDt);
         this.particles.update(physicsDt);
         if (this.player) this.loreFX.update(physicsDt, this.player);
+        if (this.map) this.map.update(physicsDt, this);
 
         if (this.player) {
             ZoneSystem.getInstance().checkTransition(this.player.x, this.player.y);
@@ -321,22 +225,13 @@ export class Game {
         // --- GRAPHICS UPDATE ---
         this.camera.update();
 
-        WebGPURenderer.getInstance().render(this.entityManager.entities, this.camera, this.player);
-
-        // WAVE LOGIC
-        const zoneIndex = ZoneSystem.getInstance().currentZoneIndex;
-
-        if (zoneIndex === 0) {
-            this.checkWorld1Spawns();
-        } else if (zoneIndex === 1) {
-            this.checkWorld2Spawns();
-        } else if (zoneIndex === 2) {
-            this.checkWorld3Spawns();
-        } else if (zoneIndex === 3) {
-            // TODO: Implement Wave Logic for World 4 (Hushed Halls) - Missing Spawning Logic
-        } else if (zoneIndex === 4) {
-             // TODO: Implement Wave Logic for World 5 (Crystal Belfry) - Missing Spawning Logic
+        // SCROLLING: Update World Layer (SVG) Position
+        const worldLayer = document.getElementById('world-layer');
+        if (worldLayer) {
+            worldLayer.setAttribute('transform', this.camera.getTransform());
         }
+
+        WebGPURenderer.getInstance().render(this.entityManager.entities, this.camera, this.player);
 
         const bossInstance = this.entityManager.enemies.find(e => e instanceof Golgotha) as Golgotha;
         if (bossInstance) {

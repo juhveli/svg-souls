@@ -3,6 +3,12 @@ import { GameMap } from './GameMap';
 import { Game } from '../engine/Game';
 import { TrashCompactor } from '../entities/enemies/TrashCompactor';
 import { Mannequin } from '../entities/enemies/Mannequin';
+import { ItemDatabase } from '../systems/ItemDatabase';
+import { NarrativeItem } from '../entities/NarrativeItem';
+import { NPCEntity } from '../entities/NPCEntity';
+import { SerumBot } from '../entities/enemies/SerumBot';
+import { WorldItem } from '../entities/WorldItem';
+import { Golgotha } from '../entities/enemies/Golgotha';
 
 export class ScrapyardMap extends GameMap {
     el: SVGGElement;
@@ -25,8 +31,10 @@ export class ScrapyardMap extends GameMap {
     }
 
     private generateGeometry() {
+        // 0. Background (Global Darkness)
+        this.addRect(0, 0, this.width, this.height, '#0a0505');
+
         // 1. Base Floor (The Junk Pile)
-        // Expanded to 1600 width
         const junkPath = SVGAssets.junkPile(0, 500, 1600, 100, 123);
         const floor = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         floor.setAttribute('d', junkPath);
@@ -50,12 +58,11 @@ export class ScrapyardMap extends GameMap {
         `;
 
         // 4. Glass Shards (The Shatter)
-        for (let i = 0; i < 30; i++) { // Doubled shards
+        for (let i = 0; i < 30; i++) {
             const x = Math.random() * 1600;
-            const y = 450 + Math.random() * 150; // Only on floor
+            const y = 450 + Math.random() * 150;
             const rot = Math.random() * 360;
             const size = 5 + Math.random() * 10;
-            // Use glass filter
             this.el.innerHTML += `
                 <path d="M${x},${y} l${size},${size * 2} l${-size * 2},${size} z" 
                       fill="#aff" opacity="0.4" 
@@ -68,23 +75,49 @@ export class ScrapyardMap extends GameMap {
         this.addRect(0, 0, 20, 600, '#00000088');
         this.addRect(1580, 0, 20, 600, '#00000088');
 
-        // 5. Entities (Sub-Boss)
-        const game = Game.getInstance();
-        if (game && game.entityManager) {
-            // Spawn Trash Compactor near the end
+        // Mannequin Graves (Visuals)
+        this.el.innerHTML += `
+            <path d="${SVGAssets.junkPile(700, 480, 300, 50, 555)}" fill="#1a2a2a" stroke="#2a3a3a" opacity="0.8" />
+        `;
+    }
+
+    spawnEntities(game: Game) {
+        // Narrative Items
+        const db = ItemDatabase.getInstance();
+        const mirrorItem = db.get('cracked_mirror');
+        const mirrorDesc = mirrorItem ? mirrorItem.description : "The glass reflects the smog... [DATA MISSING]";
+        const mirrorName = mirrorItem ? mirrorItem.name : "Cracked Mirror";
+        game.entityManager.add(new NarrativeItem(300, 450, mirrorName, mirrorDesc, game.player));
+
+        const ledgerItem = db.get('foremans_ledger');
+        const ledgerDesc = ledgerItem ? ledgerItem.description : "Entries for 'Soft Units'... [DATA MISSING]";
+        const ledgerName = ledgerItem ? ledgerItem.name : "Foreman's Ledger";
+        game.entityManager.add(new NarrativeItem(600, 520, ledgerName, ledgerDesc, game.player));
+
+        // NPC
+        game.entityManager.add(new NPCEntity(250, 400, 'tick_tock', game.player));
+
+        // World Item: Vial
+        game.entityManager.add(new WorldItem(200, 400, 'vial_liquid_seconds'));
+
+        // Enemies
+        game.entityManager.add(new SerumBot(650, 300, game.player));
+
+        // Spawn Mannequins
+        game.entityManager.add(new Mannequin(750, 500));
+        game.entityManager.add(new Mannequin(850, 520));
+        game.entityManager.add(new Mannequin(950, 480));
+
+        // Spawn Trash Compactor (Sub-Boss)
+        if (!game.bossesDefeated.has('trash_compactor')) {
             game.entityManager.add(new TrashCompactor(1400, 500));
+        }
 
-            // Mannequin Graves (approx x=700 to 1000)
-            // Visual pile of glass bodies (static debris)
-            // TODO: Add procedural generation for junk piles to avoid hardcoded coordinates
-            this.el.innerHTML += `
-                <path d="${SVGAssets.junkPile(700, 480, 300, 50, 555)}" fill="#1a2a2a" stroke="#2a3a3a" opacity="0.8" />
-            `;
-
-            // Spawn Mannequins
-            game.entityManager.add(new Mannequin(750, 500));
-            game.entityManager.add(new Mannequin(850, 520));
-            game.entityManager.add(new Mannequin(950, 480));
+        // Spawn Golgotha (Boss) - Was in checkWorld1Spawns
+        if (!game.bossesDefeated.has('golgotha')) {
+             // Maybe spawn strictly when player reaches the end?
+             // Or just spawn him at the end (1500, 300).
+             game.entityManager.add(new Golgotha(1500, 300, game.player));
         }
     }
 
