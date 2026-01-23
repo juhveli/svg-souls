@@ -281,5 +281,29 @@
             "spell": "silence_glyph"
         },
         "icon": "book_spine"
+    },
+    "wireframe_apple": {
+        "name": "Wireframe Apple",
+        "description": "An apple that tastes of ozone and math. It has no texture, only geometry. \"It fell from a tree that hasn't been coded yet.\"",
+        "category": "consumable",
+        "effect": {
+            "type": "heal",
+            "value": 15
+        },
+        "icon": "apple"
+    },
+    "null_texture_sample": {
+        "name": "Null Texture Sample",
+        "description": "A swatch of fabric that displays the checkerboard pattern of missing data. Looking at it for too long makes your eyes water.",
+        "category": "narrative",
+        "effect": null,
+        "icon": "cloth"
+    },
+    "pixelated_tear": {
+        "name": "Pixelated Tear",
+        "description": "A teardrop that falls in blocky chunks. It is heavy and sharp. \"Sorrow at low resolution is just jagged edges.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "tear"
     }
 }
