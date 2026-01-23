@@ -324,6 +324,8 @@ export class WebGPURenderer {
         this.createBindGroups();
     }
 
+    // TODO: Implement "glitch" post-process effect (chromatic aberration/shift) when near World 5 anomalies.
+
     render(entities: any[], camera: any, playerRef?: any) {
         if (!this.device || !this.context) return;
 
