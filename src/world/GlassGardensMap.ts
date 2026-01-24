@@ -7,7 +7,7 @@ import { GlassBlowerDeity } from '../entities/enemies/GlassBlowerDeity';
 
 export class GlassGardensMap extends GameMap {
     el: SVGGElement;
-    width: number = 800;
+    width: number = 1600;
     height: number = 600;
 
     constructor() {
@@ -29,20 +29,15 @@ export class GlassGardensMap extends GameMap {
         const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         rect.setAttribute('x', '0');
         rect.setAttribute('y', '0');
-        rect.setAttribute('width', '800');
+        rect.setAttribute('width', '1600');
         rect.setAttribute('height', '600');
         rect.setAttribute('fill', '#0a1a1f');
         this.el.appendChild(rect);
 
-        // 2. Crystal Flora (Procedural Entities)
-        const game = Game.getInstance();
-        for (let i = 0; i < 20; i++) {
-            const x = 50 + Math.random() * 700;
+        // Visuals only here (Puddles)
+        for (let i = 0; i < 40; i++) { // Doubled for larger map
+            const x = 50 + Math.random() * 1500;
             const y = 50 + Math.random() * 500;
-
-            if (game && game.entityManager) {
-                game.entityManager.add(new CrystalFlora(x, y));
-            }
 
             // Reflection Pool puddles (Visual only)
             if (i % 4 === 0) {
@@ -56,20 +51,31 @@ export class GlassGardensMap extends GameMap {
                 this.el.appendChild(ellipse);
             }
         }
+    }
+
+    spawnEntities(game: Game) {
+         // 2. Crystal Flora (Procedural Entities)
+        for (let i = 0; i < 40; i++) {
+            const x = 50 + Math.random() * 1500;
+            const y = 50 + Math.random() * 500;
+            // Avoid puddles? Nah, flora grows near water.
+            game.entityManager.add(new CrystalFlora(x, y));
+        }
 
         // 3. Porcelain Dancers (Enemies)
-        if (game && game.entityManager) {
-            for (let i = 0; i < 4; i++) {
-                const x = 150 + Math.random() * 500;
-                const y = 100 + Math.random() * 400;
-                game.entityManager.add(new PorcelainDancer(x, y, game.player));
-            }
+        for (let i = 0; i < 8; i++) { // More enemies for larger map
+            const x = 150 + Math.random() * 1300;
+            const y = 100 + Math.random() * 400;
+            game.entityManager.add(new PorcelainDancer(x, y, game.player));
+        }
 
-            // 4. NPC: Tick-Tock the Broken Bard
-            game.entityManager.add(new NPCEntity(400, 500, "tick_tock", game.player));
+        // 4. NPC: Tick-Tock the Broken Bard
+        // Move him somewhere in the middle
+        game.entityManager.add(new NPCEntity(800, 500, "tick_tock", game.player));
 
-            // 5. Sub-Boss: The Glass-Blower Deity
-            game.entityManager.add(new GlassBlowerDeity(650, 400));
+        // 5. Sub-Boss: The Glass-Blower Deity
+        if (!game.bossesDefeated.has('glass_blower')) {
+            game.entityManager.add(new GlassBlowerDeity(1400, 400));
         }
     }
 

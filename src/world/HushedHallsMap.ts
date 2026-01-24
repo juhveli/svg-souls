@@ -3,6 +3,7 @@ import { GameMap } from './GameMap';
 import { Game } from '../engine/Game';
 import { SilenceGuard } from '../entities/enemies/SilenceGuard';
 import { BookMimic } from '../entities/enemies/BookMimic';
+import { Librarian } from '../entities/enemies/Librarian';
 
 export class HushedHallsMap extends GameMap {
     el: SVGGElement;
@@ -15,7 +16,6 @@ export class HushedHallsMap extends GameMap {
         this.el.id = 'map-layer';
 
         this.generateGeometry();
-        this.spawnEntities();
 
         // Add to World
         const world = document.getElementById('world-layer');
@@ -68,11 +68,7 @@ export class HushedHallsMap extends GameMap {
         this.addRect(this.width - 20, 0, 20, 600, '#00000088');
     }
 
-    private spawnEntities() {
-        // TODO: Implement 'Book Swarm' hazard in Hushed Halls (flying books that attack in groups).
-        const game = Game.getInstance();
-        if (!game || !game.entityManager) return;
-
+    spawnEntities(game: Game) {
         // Spawn Silence Guards
         game.entityManager.add(new SilenceGuard(400, 500));
         game.entityManager.add(new SilenceGuard(800, 500));
@@ -84,6 +80,11 @@ export class HushedHallsMap extends GameMap {
         game.entityManager.add(new BookMimic(600, 480));
         game.entityManager.add(new BookMimic(1000, 480));
         game.entityManager.add(new BookMimic(1350, 480));
+
+        // Sub-Boss: Librarian
+        if (!game.bossesDefeated.has('librarian')) {
+            game.entityManager.add(new Librarian(1300, 480, game.player));
+        }
     }
 
     private addRect(x: number, y: number, w: number, h: number, color: string) {
