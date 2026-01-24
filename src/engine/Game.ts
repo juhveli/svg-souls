@@ -154,7 +154,17 @@ export class Game {
         // Re-create the map (clearing any menu-time visual state) and spawn entities
         if (this.map) this.map.destroy();
         this.map = new ScrapyardMap();
-        this.map.spawnEntities(this);
+
+        // Reliability: Ensure map is fully initialized before spawning
+        try {
+            this.map.spawnEntities(this);
+        } catch (e) {
+            console.error("Game: Failed to spawn map entities:", e);
+            // Fallback: Ensure critical entities like player exist
+            if (!this.entityManager.entities.includes(this.player)) {
+                this.entityManager.add(this.player);
+            }
+        }
 
         this.camera.follow(this.player);
         if (this.map) {
