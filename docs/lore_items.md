@@ -185,20 +185,20 @@
 ### Wireframe Apple
 *   **Source:** Crystal Belfry (Singularity Point).
 *   **Description:**
-    > *An apple that has no texture. It is a mesh of neon green lines in the shape of fruit.*
-    > *"It has no taste, no weight, and no scent. It is the idea of an apple, waiting for a reality to exist in. Eating it makes you feel full, but your stomach remains empty."*
+    > *A fruit composed of nothing but edges, humming with the faint sound of a tuning fork. It casts no shadow and has no scent.*
+    > *"It fell from the Blueprint Tree, before the Creator sang the flesh onto the bone. It is the ghost of a meal that never was."*
 
 ### Null_Texture_Sample
 *   **Source:** Crystal Belfry (The Spiral Stair).
 *   **Description:**
-    > *A square of fabric consisting of a purple and black checkerboard pattern.*
-    > *"The universe ran out of memory here. This is the default setting for existence when the Conductor forgets to write the code."*
+    > *A scrap of cloth that possesses no color, only a maddening pattern of absence.*
+    > *"The weavers claim this is not a fabric, but a hole in the tapestry where the thread ran out. To look at it is to see the nothingness that lies behind the song."*
 
 ### Pixelated Tear
 *   **Source:** Crystal Belfry (The Bell-Foundry).
 *   **Description:**
-    > *A teardrop made of large, blocky crystals. It looks low-resolution.*
-    > *"A tear shed by a being from a lower bandwidth. It suggests that suffering is constant, regardless of the resolution."*
+    > *A teardrop hardened into crude, square crystals. It cuts the hand that holds it.*
+    > *"When the world unravels, even sadness loses its curve. This is grief stripped of its grace, left as raw, jagged form."*
 
 ### Industrial Gear
 *   **Source:** Clockwork Arteries (Environmental).

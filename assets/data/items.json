@@ -284,7 +284,7 @@
     },
     "wireframe_apple": {
         "name": "Wireframe Apple",
-        "description": "An apple that tastes of ozone and math. It has no texture, only geometry. \"It fell from a tree that hasn't been coded yet.\"",
+        "description": "A fruit composed of nothing but edges, humming with the faint sound of a tuning fork. It casts no shadow and has no scent. \"It fell from the Blueprint Tree, before the Creator sang the flesh onto the bone. It is the ghost of a meal that never was.\"",
         "category": "consumable",
         "effect": {
             "type": "heal",
@@ -294,14 +294,14 @@
     },
     "null_texture_sample": {
         "name": "Null Texture Sample",
-        "description": "A swatch of fabric that displays the checkerboard pattern of missing data. Looking at it for too long makes your eyes water.",
+        "description": "A scrap of cloth that possesses no color, only a maddening pattern of absence. \"The weavers claim this is not a fabric, but a hole in the tapestry where the thread ran out. To look at it is to see the nothingness that lies behind the song.\"",
         "category": "narrative",
         "effect": null,
         "icon": "cloth"
     },
     "pixelated_tear": {
         "name": "Pixelated Tear",
-        "description": "A teardrop that falls in blocky chunks. It is heavy and sharp. \"Sorrow at low resolution is just jagged edges.\"",
+        "description": "A teardrop hardened into crude, square crystals. It cuts the hand that holds it. \"When the world unravels, even sadness loses its curve. This is grief stripped of its grace, left as raw, jagged form.\"",
         "category": "narrative",
         "effect": null,
         "icon": "tear"
