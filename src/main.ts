@@ -20,7 +20,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 const renderer = WebGPURenderer.getInstance();
 renderer.init().then(() => {
     console.log("Starting Game...");
-    new Game();
+    const game = new Game();
+    (window as any).GameInstance = game; // Expose for verification/debugging
 }).catch(e => {
     console.error("Failed to start WebGPU:", e);
     document.body.innerHTML = "<h1>WebGPU Not Supported</h1><p>" + e + "</p>";
