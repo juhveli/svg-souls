@@ -208,7 +208,7 @@
             "type": "unlock_ability",
             "ability": "flashbang"
         },
-        "icon": "lens"
+        "icon": "gatekeeper_lens"
     },
     "industrial_gear": {
         "name": "Industrial Gear",
@@ -280,7 +280,7 @@
             "type": "unlock_spell",
             "spell": "silence_glyph"
         },
-        "icon": "book_spine"
+        "icon": "quill_archivist"
     },
     "wireframe_apple": {
         "name": "Wireframe Apple",
