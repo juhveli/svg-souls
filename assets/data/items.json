@@ -232,15 +232,15 @@
         "icon": "chain"
     },
     "hollow_book_spine": {
-        "name": "Hollow Book-Spine",
-        "description": "The spine of a leather-bound tome, the pages long since turned to dust. The title is illegible, scratched out by a frantic hand. In the Hushed Halls, knowledge is not lost to time, but to fear.",
+        "name": "Spine of a Living Book",
+        "description": "The leather binding of a tome that bites back. It is warm, pulsing with a slow, rhythmic heartbeat. \"Archivist Pellinore did not trust locks to guard the forbidden section. She bred these monstrosities to digest the curious. In the Hushed Halls, reading is not just forbidden; it is part of the food chain.\"",
         "category": "narrative",
         "effect": null,
         "icon": "book_spine"
     },
     "crystal_shard_spire": {
-        "name": "Crystal Shard-Spire",
-        "description": "A jagged splinter of the Crystal Belfry. It hums with a faint, static charge. Looking through it distorts reality, showing a world where the sky is not white static, but a terrifying, endless blue.",
+        "name": "Shard of a Broken Second",
+        "description": "A fragment of a Crystal Shard, vibrating with the memory of a second that never finished ticking. \"The Belfry is not built of stone, but of solidified time. These creatures are not alive; they are merely moments that refused to pass, violently defending their right to exist.\"",
         "category": "narrative",
         "effect": null,
         "icon": "crystal_spire"
