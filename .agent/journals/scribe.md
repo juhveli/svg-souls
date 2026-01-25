@@ -39,3 +39,32 @@ Rewrote the descriptions for `wireframe_apple`, `pixelated_tear`, and `null_text
         "icon": "tear"
     }
 ```
+
+## 📜 Scribe: Biological Horror & Time Fractures - Lore Refinement
+
+**The Connection:**
+Identified that the `BookMimic` (World 4) and `CrystalShard` (World 5) enemies lacked specific narrative drops, relying on generic "flavor" items.
+
+**The Fix:**
+Refined the existing flavor items `hollow_book_spine` and `crystal_shard_spire` to serve as specific "Monster Parts" with deep lore implications.
+- **Hollow Book-Spine** -> **Spine of a Living Book**: Connected to Archivist Pellinore's experiments. The Library doesn't just store books; it feeds them.
+- **Crystal Shard-Spire** -> **Shard of a Broken Second**: Connected to the metaphysics of the Belfry. Enemies are not biological; they are "time that refused to pass."
+
+**New Entry:**
+
+```json
+    "hollow_book_spine": {
+        "name": "Spine of a Living Book",
+        "description": "The leather binding of a tome that bites back. It is warm, pulsing with a slow, rhythmic heartbeat. \"Archivist Pellinore did not trust locks to guard the forbidden section. She bred these monstrosities to digest the curious. In the Hushed Halls, reading is not just forbidden; it is part of the food chain.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "book_spine"
+    },
+    "crystal_shard_spire": {
+        "name": "Shard of a Broken Second",
+        "description": "A fragment of a Crystal Shard, vibrating with the memory of a second that never finished ticking. \"The Belfry is not built of stone, but of solidified time. These creatures are not alive; they are merely moments that refused to pass, violently defending their right to exist.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "crystal_spire"
+    }
+```

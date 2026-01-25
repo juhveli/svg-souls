@@ -218,17 +218,17 @@
     > *A single link of a chain thick enough to anchor a ship.*
     > *"The metal is cold and smells of dried blood. It once held something massive in place, something that did not want to be held."*
 
-### Hollow Book-Spine
-*   **Source:** Hushed Halls (Environmental).
+### Spine of a Living Book
+*   **Source:** Hushed Halls (Book Mimic Drop).
 *   **Description:**
-    > *The spine of a leather-bound tome, the pages long since turned to dust.*
-    > *"The title is illegible, scratched out by a frantic hand. In the Hushed Halls, knowledge is not lost to time, but to fear."*
+    > *The leather binding of a tome that bites back. It is warm, pulsing with a slow, rhythmic heartbeat.*
+    > *"Archivist Pellinore did not trust locks to guard the forbidden section. She bred these monstrosities to digest the curious. In the Hushed Halls, reading is not just forbidden; it is part of the food chain."*
 
-### Crystal Shard-Spire
-*   **Source:** Crystal Belfry (Environmental).
+### Shard of a Broken Second
+*   **Source:** Crystal Belfry (Crystal Shard Drop).
 *   **Description:**
-    > *A jagged splinter of the Crystal Belfry. It hums with a faint, static charge.*
-    > *"Looking through it distorts reality, showing a world where the sky is not white static, but a terrifying, endless blue."*
+    > *A fragment of a Crystal Shard, vibrating with the memory of a second that never finished ticking.*
+    > *"The Belfry is not built of stone, but of solidified time. These creatures are not alive; they are merely moments that refused to pass, violently defending their right to exist."*
 
 ### Marble Fragment
 *   **Source:** Hushed Halls (Environmental).
