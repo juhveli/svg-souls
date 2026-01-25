@@ -260,7 +260,7 @@
             "type": "unlock_ability",
             "ability": "heavy_slam"
         },
-        "icon": "junk"
+        "icon": "cube_regret"
     },
     "valve_of_marshal": {
         "name": "Valve of the Marshal",
