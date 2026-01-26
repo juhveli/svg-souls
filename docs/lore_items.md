@@ -122,6 +122,12 @@
     > *A square of spun glass, impossibly thin and flexible.*
     > *"The nobility used these to wipe away tears. However, glass does not absorb moisture; it only smears it across the face. A cruel design for a people who were forbidden to be unhappy."*
 
+### Glass Shard
+*   **Source:** Glass Gardens (Environmental / Drops).
+*   **Description:**
+    > *A splinter of the Matriarch's domain. Unlike normal glass, it does not shatter when dropped; it screams.*
+    > *"Vitria taught the sand to feel pain, so that her windows would never leave her."*
+
 ### Opaque Mirror
 *   **Source:** Glass Gardens (Hidden Chest).
 *   **Description:**
