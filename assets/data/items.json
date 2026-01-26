@@ -270,7 +270,7 @@
             "type": "unlock_ability",
             "ability": "steam_vent"
         },
-        "icon": "gear"
+        "icon": "valve_marshal"
     },
     "quill_of_archivist": {
         "name": "Quill of the Archivist",
