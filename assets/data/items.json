@@ -1,8 +1,8 @@
 {
     "glass_shard": {
         "name": "Glass Shard",
-        "description": "A fragment of crystallized time. Cuts that which moves out of rhythm.",
-        "category": "material",
+        "description": "A splinter of the Matriarch's domain. Unlike normal glass, it does not shatter when dropped; it screams. \"Vitria taught the sand to feel pain, so that her windows would never leave her.\"",
+        "category": "narrative",
         "effect": null,
         "icon": "polygon"
     },
