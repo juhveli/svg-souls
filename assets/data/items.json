@@ -151,6 +151,13 @@
         "effect": null,
         "icon": "cloth"
     },
+    "porcelain_mask": {
+        "name": "Shattered Porcelain Mask",
+        "description": "A fragment of a white ceramic face, still smiling. The paint is chipped, revealing the hollow darkness underneath. \"The Nobility were not allowed to frown. If a face showed displeasure, it was replaced. This dancer smiled for so long that the expression became structural, holding the porcelain together even after the soul had fled.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "mask"
+    },
     "generals_log": {
         "name": "General's Log: Entry 404",
         "description": "\"We locked the door not to keep them out, but to keep Him in. The Conductor's song... it doesn't end. It just gets louder.\"",
