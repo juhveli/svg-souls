@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright
 import time
+import sys
 
 def verify_item_data():
     with sync_playwright() as p:
@@ -7,44 +8,52 @@ def verify_item_data():
         page = browser.new_page()
 
         print("Navigating to game...")
-        page.goto("http://localhost:5173")
+        try:
+            page.goto("http://localhost:5173")
+        except Exception as e:
+            print(f"Failed to connect to game: {e}")
+            sys.exit(1)
 
         # Wait for ItemDatabase to be available
         print("Waiting for ItemDatabase...")
-        page.wait_for_function("window.ItemDatabase !== undefined")
+        try:
+            page.wait_for_function("window.ItemDatabase !== undefined", timeout=10000)
+        except Exception:
+             print("ItemDatabase not found on window.")
+             sys.exit(1)
 
-        # Wait for ItemDatabase to load (it has a 'loaded' property)
-        # But 'loaded' is private in the class I read earlier?
-        # Let's check the code again.
-        # "private loaded: boolean = false;"
-        # But maybe I can check if 'get' returns something.
-
-        # Actually, let's just wait a bit and try to get the item.
         time.sleep(2)
 
-        print("Checking item description...")
-        # Evaluate JS to get the description
-        description = page.evaluate("""() => {
-            const db = window.ItemDatabase;
-            if (!db) return "Database not found";
-            return db.getDescription('tuning_fork_spear');
-        }""")
+        print("Checking items...")
 
-        name = page.evaluate("""() => {
-            const db = window.ItemDatabase;
-            if (!db) return "Database not found";
-            return db.getName('tuning_fork_spear');
-        }""")
+        # Check Tuning Fork Spear
+        tfs_desc = page.evaluate("window.ItemDatabase.getDescription('tuning_fork_spear')")
+        print(f"Tuning Fork Spear Desc: {tfs_desc}")
 
-        print(f"Item Name: {name}")
-        print(f"Item Description: {description}")
+        # Check Metronome Oil
+        mo_desc = page.evaluate("window.ItemDatabase.getDescription('metronome_oil')")
+        print(f"Metronome Oil Desc: {mo_desc}")
 
-        if "Tuning Fork Spear" in name and "headache-inducing frequency" in description:
-            print("SUCCESS: Item data verified.")
+        failures = 0
+
+        if "pulverized into silence" in tfs_desc:
+            print("✅ Tuning Fork Spear verified.")
         else:
-            print("FAILURE: Item data mismatch.")
+            print("❌ Tuning Fork Spear mismatch.")
+            failures += 1
 
-        page.screenshot(path="verification.png")
+        if "scorched resin" in mo_desc:
+            print("✅ Metronome Oil verified.")
+        else:
+            print("❌ Metronome Oil mismatch.")
+            failures += 1
+
+        if failures == 0:
+            print("SUCCESS: All lore verified.")
+        else:
+            print(f"FAILURE: {failures} lore checks failed.")
+            sys.exit(1)
+
         browser.close()
 
 if __name__ == "__main__":

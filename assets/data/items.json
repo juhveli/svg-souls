@@ -73,7 +73,28 @@
             "damage": 40,
             "resonance_gain": 5
         },
-        "icon": "sword"
+        "icon": "tuning_fork_spear"
+    },
+    "metronome_oil": {
+        "name": "Metronome Oil",
+        "description": "A flask of viscous, black ichor, smelling of scorched resin and ozone. The Gear-Keepers consume it to artificially accelerate their internal rhythms. To drink it is to feel time rushing through the veins, a desperate sprint against the inevitable winding-down of the world.",
+        "category": "narrative",
+        "effect": null,
+        "icon": "jar_dark"
+    },
+    "opaque_mirror": {
+        "name": "Opaque Mirror",
+        "description": "A hand mirror coated in heavy, matte-black lacquer. In the Glass Gardens, to be seen is to exist. This contraband artifact suggests a heresy: the desire for a face that the world cannot duplicate. It is the tool of a ghost who wished to be a shadow in a city of light.",
+        "category": "narrative",
+        "effect": null,
+        "icon": "mirror"
+    },
+    "velvet_ear_plugs": {
+        "name": "Velvet Ear-Plugs",
+        "description": "Plugs of compressed purple velvet, dense enough to drown out a scream. The Silence Guard initiates wear these to unlearn the habit of listening. One cannot serve the Quiet if they are distracted by the weeping of the world.",
+        "category": "narrative",
+        "effect": null,
+        "icon": "cloth"
     },
     "cracked_mirror": {
         "name": "A Cracked Mirror",
