@@ -49,8 +49,8 @@
 *   **Location:** World 2 (Glass Gardens) - Area 1.
 *   **Use:** Triggers *Narcissus* when dropped in the Reflection Pools.
 *   **Description:**
-    > *A geometric impossibility. A prism that reflects light that isn't there.*
-    > *"Vitria demanded perfection. When this prism was cut, it was so flawless that it became jealous of its own reflection. It yearns to be broken."*
+    > *A geometric impossibility: a prism that refracts darkness into colors that do not exist.*
+    > *"Vitria demanded a perfection so absolute it rejected the world around it. This prism was cut to be so flawless that it grew jealous of its own reflection. It does not reflect; it judges."*
 
 ### The Stopped Watch
 *   **Location:** World 3 (Clockwork Arteries) - The Piston Chamber.
@@ -74,8 +74,8 @@
 ### Scale of Decay (World 1)
 *   **Source:** Drop from *The Rust-Dragon*.
 *   **Description:**
-    > *A massive, flaking scale that smells of wet iron. It is warm to the touch.*
-    > *"Entropy is not a mistake; it is the universe breathing out. This scale proves that even the end can be beautiful."*
+    > *A massive, flaking scale that reeks of wet iron and old blood. It radiates a feverish heat.*
+    > *"Entropy is not a mistake; it is the universe exhaling. This scale is proof that even as the world rots, it blooms with a terrible, rusting beauty."*
 
 ### Shard of Narcissus (World 2)
 *   **Source:** Drop from *Narcissus, The Shattered Idol*.
@@ -203,8 +203,8 @@
 ### Industrial Gear
 *   **Source:** Clockwork Arteries (Environmental).
 *   **Description:**
-    > *A heavy iron gear, teeth worn smooth by centuries of grinding.*
-    > *"It was once part of the Great Clock's heartbeat. Now, it lies silent, a testament to a time when the world moved forward instead of in circles."*
+    > *A heavy iron gear, teeth worn smooth by the gnashing of centuries.*
+    > *"It was once a molar in the jaw of the Great Clock, grinding seconds into dust. Now it lies silent, a testament to a time when time itself moved forward, before it learned to crawl in circles."*
 
 ### Compacted Junk
 *   **Source:** Scrapyard (Environmental).
