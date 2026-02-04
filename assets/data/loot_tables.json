@@ -20,12 +20,8 @@
         },
         "items": [
             {
-                "id": "glass_shard",
+                "id": "porcelain_mask",
                 "chance": 0.15
-            },
-            {
-                "id": "vial_liquid_seconds",
-                "chance": 0.05
             }
         ]
     },
