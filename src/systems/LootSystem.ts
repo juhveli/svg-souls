@@ -12,26 +12,68 @@ const DROP_TABLES: Record<string, LootTableEntry> = {
         min: 5,
         max: 15,
         chance: 1.0,
-        items: ['Glass Shard']
+        items: ['glass_shard']
     },
-    'boss_glass_blower': {
+    'glass_blower': {
         min: 500,
         max: 1000,
         chance: 1.0,
-        items: ['Breath of the Creator']
+        items: ['breath_of_creator']
     },
     'golgotha': {
         min: 200,
         max: 500,
         chance: 1.0,
-        items: ['The Stopped Watch']
+        items: ['stopped_watch']
+    },
+    'porcelain_dancer': {
+        min: 25,
+        max: 50,
+        chance: 1.0,
+        items: ['porcelain_mask']
+    },
+    'librarian': {
+        min: 30,
+        max: 60,
+        chance: 1.0,
+        items: ['librarian_finger']
+    },
+    'book_mimic': {
+        min: 20,
+        max: 40,
+        chance: 1.0,
+        items: ['hollow_book_spine']
+    },
+    'crystal_shard': {
+        min: 10,
+        max: 30,
+        chance: 1.0,
+        items: ['crystal_shard_spire']
+    },
+    'trash_compactor': {
+        min: 100,
+        max: 200,
+        chance: 1.0,
+        items: ['cube_of_compacted_regret']
+    },
+    'steam_marshal': {
+        min: 100,
+        max: 200,
+        chance: 1.0,
+        items: ['valve_of_marshal']
+    },
+    'gatekeeper': {
+        min: 150,
+        max: 300,
+        chance: 1.0,
+        items: ['lens_of_gatekeeper']
     }
 };
 
 // Rare global drops
 const GLOBAL_DROPS = [
-    { item: 'Vial of Liquid Seconds', chance: 0.05 }, // 5% chance
-    { item: 'The Stopped Watch', chance: 0.001 } // 0.1% chance
+    { item: 'vial_liquid_seconds', chance: 0.05 }, // 5% chance
+    { item: 'stopped_watch', chance: 0.001 } // 0.1% chance
 ];
 
 export class LootSystem {
@@ -73,7 +115,14 @@ export class LootSystem {
         // Check special item drops
         if (table.items && table.items.length > 0) {
             const itemChance = 0.1; // 10% for normal enemies, bosses have higher
-            const effectiveChance = entityType.includes('boss') || entityType === 'golgotha' ? 1.0 : itemChance;
+            // Check known boss types for 100% drop chance
+            const isBoss = entityType === 'golgotha' ||
+                           entityType === 'glass_blower' ||
+                           entityType === 'trash_compactor' ||
+                           entityType === 'steam_marshal' ||
+                           entityType === 'gatekeeper';
+
+            const effectiveChance = isBoss ? 1.0 : itemChance;
             if (Math.random() < effectiveChance) {
                 const item = table.items[Math.floor(Math.random() * table.items.length)];
                 this.dropItem(item, x, y);
@@ -88,8 +137,8 @@ export class LootSystem {
         }
     }
 
-    private dropItem(itemName: string, x: number, y: number) {
-        EventManager.getInstance().emit('LOOT_GAINED', { type: 'item', id: itemName, x: x, y: y });
-        console.log(`[LootSystem] Dropped ITEM: ${itemName} at (${x}, ${y})`);
+    private dropItem(itemId: string, x: number, y: number) {
+        EventManager.getInstance().emit('LOOT_GAINED', { type: 'item', id: itemId, x: x, y: y });
+        console.log(`[LootSystem] Dropped ITEM: ${itemId} at (${x}, ${y})`);
     }
 }
