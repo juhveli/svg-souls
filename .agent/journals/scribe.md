@@ -68,3 +68,25 @@ Refined the existing flavor items `hollow_book_spine` and `crystal_shard_spire` 
         "icon": "crystal_spire"
     }
 ```
+
+## 📜 Scribe: Glass Shard Lore & Loot Fix
+
+**The Connection:**
+Refined the lore for `glass_shard` to align with the "Screaming Glass" / Matriarch Vitria narrative from World 2. Also identified a critical logic flaw where `LootSystem.ts` was using item *Names* instead of *Keys*.
+
+**The Fix:**
+- Updated `glass_shard` description to be more visceral and tragic.
+- Corrected `LootSystem.ts` to use `glass_shard`, `breath_of_creator`, etc.
+- Added `verification/verify_loot_integrity.ts` to prevent future drift.
+
+**New Entry:**
+
+```json
+    "glass_shard": {
+        "name": "Glass Shard",
+        "description": "A jagged fragment of crystallized time, sharp enough to sever a second from a minute. \"The Matriarch Vitria screamed when the silence took her children. This glass is that scream, frozen forever in a state of breaking.\"",
+        "category": "material",
+        "effect": null,
+        "icon": "polygon"
+    }
+```

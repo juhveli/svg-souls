@@ -26,12 +26,12 @@
     *   **Tick-Tock:** The Broken Bard. Obsessed with the rhythm of silence.
 
 ## Canonical Items
-*   **Glass Shard:** Fragment of crystallized time.
+*   **Glass Shard:** Fragment of crystallized time. A scream frozen in glass.
 *   **Vial of Liquid Seconds:** Consumable time used by the rich.
 *   **The Stopped Watch:** A heavy keepsake of the Architect, left behind when time became a burden.
 *   **The Rusty Key-Hand:** A severed automaton hand that refuses to let go of its key.
 *   **Breath of the Creator:** The remaining life-force of a god who gave everything to create beauty.
-*   **Tuning Fork Greatsword:** Weapon of the Silence Guard.
+*   **Tuning Fork Spear:** Weapon of the Silence Guard.
 
 ## Canonical Narrative Objects
 *   **A Cracked Mirror:** Reflects the world but not the player, suggesting they are a ghost in the machine.
