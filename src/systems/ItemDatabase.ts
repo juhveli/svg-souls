@@ -69,6 +69,7 @@ export class ItemDatabase {
 
         switch (item.effect.type) {
             case 'heal':
+                // TODO: Ensure ITEM_USED 'heal' event is fully integrated with Player currentResonance logic (Inventory system -> Player stats)
                 EventManager.getInstance().emit('ITEM_USED', {
                     type: 'heal',
                     value: item.effect.value || 0

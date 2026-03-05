@@ -76,6 +76,7 @@ const LORE_DB: Record<string, Partial<Record<BarkEvent, string[]>>> = {
 
 export class BarkSystem {
     private static instance: BarkSystem;
+    private lastBarkMap: Map<string, string> = new Map();
 
     private constructor() {
         (window as any).BarkSystem = this;
@@ -93,7 +94,22 @@ export class BarkSystem {
         const lines = LORE_DB[entityType]?.[event];
         if (!lines || lines.length === 0) return;
 
-        const text = lines[Math.floor(Math.random() * lines.length)];
+        let text = lines[Math.floor(Math.random() * lines.length)];
+
+        // Improvement: Prevent consecutive duplicate barks for the same entity type and event
+        if (lines.length > 1) {
+            const key = `${entityType}_${event}`;
+            const lastBark = this.lastBarkMap.get(key);
+
+            // Re-roll once if it's the exact same bark to increase variety
+            if (text === lastBark) {
+                const otherLines = lines.filter(l => l !== lastBark);
+                if (otherLines.length > 0) {
+                    text = otherLines[Math.floor(Math.random() * otherLines.length)];
+                }
+            }
+            this.lastBarkMap.set(key, text);
+        }
 
         // 2. Delegate to UI Manager
         // Note: UIManager.showBark(x, y, text) exists in the current codebase
