@@ -1,7 +1,10 @@
-# Visual Roadmap & Trajectory
+> **NOTICE:** The visual direction of the game is actively transitioning from a procedural SVG/WebGPU hybrid to a **2D Isometric Pixel-Art style**.
+> Refer to the [Isometric Transition Plan](ISOMETRIC_TRANSITION_PLAN.md) for detailed technical roadmap and implementation phases.
+
+# Visual Roadmap & Trajectory (Legacy Parallax Plan)
 
 ## Overview
-This document outlines the planned transition from the legacy "One-Screen SVG" background system to a modern, scrolling, multi-layer visual system suitable for a Zelda-like adventure with high-fidelity visuals.
+This document outlines the previous transition plan from the legacy "One-Screen SVG" background system to a multi-layer parallax system. While the ultimate goal is now **isometric pixel art**, the intermediate steps of migrating away from SVG DOM rendering towards pure WebGPU sprite/texture rendering remain conceptually valid.
 
 ## Current State (v0.1)
 - **Rendering:** Hybrid. Entities are rendered via WebGPU (SDFs/Shaders). Background is rendered via SVG DOM elements (`#world-layer`).
@@ -25,10 +28,10 @@ Replace the single `#world-layer` SVG group with three distinct groups/layers:
 2.  `#bg-mid` (Scroll speed 1.0x): The current playable floor, walls, and collision objects.
 3.  `#fg-close` (Scroll speed 1.2x): Foreground pipes, chains, and fog overlays that pass *in front* of the player.
 
-### Phase 2: Asset Pipeline Upgrade
-The current `SVGAssets.ts` generates simple paths. We need to:
-- **TODO:** Implement a "Sprite Batch" system for the background. Instead of 1000 separate SVG DOM nodes (slow), render static geometry to an `OffscreenCanvas` and draw that as a single texture in WebGPU.
-- **TODO:** Create a "Tile Editor" or import logic for `Tiled` (tm) maps to allow complex level design beyond procedural scattering.
+### Phase 2: Asset Pipeline Upgrade (Transitioning to Isometric)
+The current `SVGAssets.ts` generates simple vector paths. We are pivoting to:
+- **TODO:** Implement an Isometric Sprite Batch system. Load pixel-art tile atlases (PNGs) and render them via WebGPU to handle Z-indexing and depth sorting.
+- **TODO:** Implement map parsing for `Tiled` (tm) maps containing isometric grid layouts.
 
 ### Phase 3: Lighting Integration
 Currently, WebGPU entities are lit, but the SVG background is unlit.

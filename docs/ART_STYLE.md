@@ -5,12 +5,15 @@
 
 We are emulating the limitations and techniques of the SNES/GBA era (specifically *Link to the Past* and *Minish Cap*) but applying them to a *Dark Souls* / *Bloodborne* cosmology.
 
+> **NOTICE:** The visual direction of the game is actively transitioning from a procedural SVG/WebGPU hybrid to a **2D Isometric Pixel-Art style** (heavily inspired by `unnamed.jpg`).
+> Please refer to the [Isometric Transition Plan](ISOMETRIC_TRANSITION_PLAN.md) for detailed technical and pipeline instructions. The pillars below reflect the target aesthetic.
+
 ## The 4 Pillars
 
-### 1. Perspective & Projection
-*   **3/4 Top-Down:** Objects should show the "Front" and "Top" planes.
-*   **Grid Alignment:** All assets are drawn on a virtual 32x32 or 64x64 pixel grid.
-*   **No Rotation:** Sprites do not rotate freely. They flip on the X-axis or have distinct directional frames. *Note: For this project, we currently simulate direction via SVG transforms, but the base asset must look correct when static.*
+### 1. Perspective & Projection (Transitioning to Isometric)
+*   **Isometric Projection:** The world is viewed at an angle where the X and Y axes are tilted by roughly 30 degrees (a 2:1 pixel ratio). Objects show top, front, and side planes to create a 2.5D illusion.
+*   **Grid Alignment:** All assets must align to an isometric diamond grid (e.g., 64x32 pixels per tile).
+*   **No Free Rotation:** Sprites do not rotate freely. Entities must be drawn with distinct directional frames corresponding to the isometric axes.
 
 ### 2. The Palette of Decay
 We avoid primary colors. The world is oxidized.
@@ -24,10 +27,10 @@ We avoid primary colors. The world is oxidized.
 *   **Pixel Density:** Do not use large flat rectangles. Break up surfaces with "noise" pixels to imply texture (rust flakes, bolts, dents).
 *   **High Contrast:** Light sources are dim. Highlights should be sharp and small (specular), shadows deep and large.
 
-### 4. Implementation (SVG as Pixels)
-*   **Integer Coordinates Only:** `x="10.5"` is forbidden. `x="11"` is law.
-*   **The "Pixel" Path:** Instead of thousands of `<rect>` elements, combine adjacent pixels of the same color into a single `<path d="M..."/>`.
-*   **No Gradients:** Use "dithering" (checkerboard patterns) if a gradient is absolutely necessary.
+### 4. Implementation (Pixel Art & Sprite Batching)
+*   **True Pixels:** The game will use actual rasterized pixel art (PNGs) rather than simulated SVG pixels.
+*   **Strict Integer Coordinates:** When rendering sprites, floating-point coordinates must be rounded or floored to prevent sub-pixel blurring.
+*   **No Smooth Gradients:** Use hand-placed dithering (checkerboard or Bayer patterns) for shading to maintain the raw, degraded aesthetic.
 
 ## Example: The Serum Bot
 *   *Bad:* A grey circle with a red dot.
