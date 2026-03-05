@@ -5,6 +5,6 @@ export class GearKeeper extends Enemy {
         super(x, y);
         this.width = 48;
         this.height = 48;
-        this.typeID = 12;
+        this.textureId = 'enemy_gearkeeper'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 }

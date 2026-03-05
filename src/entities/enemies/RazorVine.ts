@@ -5,6 +5,6 @@ export class RazorVine extends Enemy {
         super(x, y);
         this.width = 32;
         this.height = 32;
-        this.typeID = 9;
+        this.textureId = 'enemy_vine'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 }

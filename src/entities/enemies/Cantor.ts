@@ -5,6 +5,6 @@ export class Cantor extends Enemy {
         super(x, y);
         this.width = 64;
         this.height = 100;
-        this.typeID = 16;
+        this.textureId = 'boss_cantor'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 }

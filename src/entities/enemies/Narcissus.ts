@@ -5,6 +5,6 @@ export class Narcissus extends Enemy {
         super(x, y);
         this.width = 48;
         this.height = 48;
-        this.typeID = 11;
+        this.textureId = 'enemy_mannequin'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 }

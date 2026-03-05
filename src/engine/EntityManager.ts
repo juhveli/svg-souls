@@ -10,6 +10,18 @@ export class EntityManager {
     narrativeItems: NarrativeItem[] = [];
 
     add(entity: Entity) {
+        // Assign UVs from atlas immediately if Game instance has loaded the JSON
+        const game = (window as any).Game?.getInstance();
+        if (game && game.atlasData && entity.textureId) {
+            const data = game.atlasData[entity.textureId];
+            if (data) {
+                entity.uvOffset = [data.u0, data.v0];
+                entity.uvScale = [data.u1 - data.u0, data.v1 - data.v0];
+            } else {
+                console.warn(`No atlas data found for textureId: ${entity.textureId}`);
+            }
+        }
+
         this.entities.push(entity);
 
         if (entity instanceof Player) {

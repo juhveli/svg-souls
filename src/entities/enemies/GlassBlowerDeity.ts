@@ -23,7 +23,7 @@ export class GlassBlowerDeity extends Enemy {
         super(x, y);
         this.width = 80;
         this.height = 120;
-        this.typeID = 25;
+        this.textureId = 'boss_glassblower'; // TODO: Replace with high-quality 16-bit PNG asset
         this.target = Game.getInstance().player;
         this.radius = 40;
 

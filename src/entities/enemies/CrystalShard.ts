@@ -18,7 +18,7 @@ export class CrystalShard extends Enemy {
         super(x, y);
         this.width = 40;
         this.height = 40;
-        this.typeID = 31;
+        this.textureId = 'enemy_crystal'; // TODO: Replace with high-quality 16-bit PNG asset
         this.target = Game.getInstance().player;
         this.radius = 20;
 

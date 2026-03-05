@@ -5,6 +5,6 @@ export class PrimeConductor extends Enemy {
         super(x, y);
         this.width = 100;
         this.height = 120;
-        this.typeID = 18;
+        this.textureId = 'boss_conductor'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 }

@@ -5,6 +5,6 @@ export class RustDragon extends Enemy {
         super(x, y);
         this.width = 128;
         this.height = 64;
-        this.typeID = 7;
+        this.textureId = 'enemy_dragon'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 }

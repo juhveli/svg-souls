@@ -22,7 +22,7 @@ export class SilenceGuard extends Enemy {
         super(x, y);
         this.width = 32;
         this.height = 64;
-        this.typeID = 15;
+        this.textureId = 'enemy_silenceguard'; // TODO: Replace with high-quality 16-bit PNG asset
         this.target = Game.getInstance().player;
         this.radius = 30;
 

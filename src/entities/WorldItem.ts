@@ -8,23 +8,23 @@ export class WorldItem extends Entity {
         this.itemId = itemId;
         this.width = 32;
         this.height = 32;
-        this.typeID = this.getTypeIDFromItem(itemId);
+        this.textureId = this.getTextureIdFromItem(itemId);
     }
 
-    private getTypeIDFromItem(itemId: string): number {
+    private getTextureIdFromItem(itemId: string): string {
+        // Default to a generic item texture or specific ones based on ID
         switch (itemId) {
             case 'vial_liquid_seconds':
-                return 20;
+                return 'item_vial';
             case 'wireframe_apple':
-                return 29;
+                return 'item_apple';
             case 'pixelated_tear':
-                return 30;
+                return 'item_tear';
             // TODO: Add particle effects (glitch sparks) for Glitch items when spawned.
             // TODO: Add more specific mappings for other items
             default:
-                // Fallback to generic Vial/Loot Bag if no specific ID exists
-                // 20 is Vial, which is a safe generic 'item' look for now
-                return 20;
+                // Fallback to generic item sprite
+                return 'item_generic';
         }
     }
 }

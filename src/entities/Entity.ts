@@ -13,7 +13,9 @@ export class Entity {
     vy: number = 0;
 
     // Rendering
-    typeID: number = 0;
+    textureId?: string;
+    uvOffset: [number, number] = [0, 0];
+    uvScale: [number, number] = [1, 1];
 
     // Lifecycle
     markedForDeletion: boolean = false;

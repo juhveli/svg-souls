@@ -37,6 +37,8 @@ export class Game {
     loreFX!: LoreFXSystem;
     camera!: Camera;
 
+    public atlasData: any = null;
+
     static instance: Game;
 
     state: 'MENU' | 'PLAY' | 'OVER' = 'MENU';
@@ -48,6 +50,7 @@ export class Game {
     constructor() {
         try {
             Game.instance = this;
+            (window as any).Game = Game; // Expose for global access, specifically for EntityManager UV lookup
 
             this.entityManager = new EntityManager();
             this.particles = new ParticleSystem(); // Kept for logic, renders nothing
@@ -66,6 +69,14 @@ export class Game {
 
             ItemDatabase.getInstance().init();
             NPCDatabase.getInstance().init();
+
+            fetch('/assets/sprite_atlas.json')
+                .then(res => res.json())
+                .then(data => {
+                    this.atlasData = data;
+                    console.log("Loaded atlas JSON data");
+                })
+                .catch(e => console.warn("Could not load atlas JSON", e));
 
             const persistence = PersistenceManager.getInstance();
             if (persistence.hasSave()) {

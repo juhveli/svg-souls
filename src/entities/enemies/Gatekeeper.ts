@@ -23,7 +23,7 @@ export class Gatekeeper extends Enemy {
         super(x, y);
         this.width = 80;
         this.height = 80;
-        this.typeID = 26;
+        this.textureId = 'boss_gatekeeper'; // TODO: Replace with high-quality 16-bit PNG asset
         this.target = Game.getInstance().player;
         this.radius = 35;
 

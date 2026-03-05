@@ -5,6 +5,6 @@ export class Vitria extends Enemy {
         super(x, y);
         this.width = 64;
         this.height = 80;
-        this.typeID = 10;
+        this.textureId = 'boss_vitria'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 }

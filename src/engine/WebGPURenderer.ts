@@ -1,4 +1,5 @@
 import { vertexShaderWGSL, fragmentShaderGBufferWGSL, fragmentShaderLightingWGSL, fragmentShaderPostProcessWGSL, vertexShaderFullscreenWGSL } from '../shaders/shaders';
+import { TextureManager } from './TextureManager';
 
 interface ChunkData {
     buffer: GPUBuffer;
@@ -57,6 +58,10 @@ export class WebGPURenderer {
 
     private static instance: WebGPURenderer;
 
+    // Texture Manager
+    textureManager!: TextureManager;
+    atlasBindGroup!: GPUBindGroup;
+
     // Resize Tracking
     private currentWidth: number = 0;
     private currentHeight: number = 0;
@@ -97,6 +102,8 @@ export class WebGPURenderer {
 
         this.device = await adapter.requestDevice();
 
+        this.textureManager = new TextureManager(this.device);
+
         this.context = this.canvas.getContext('webgpu') as GPUCanvasContext;
         this.format = navigator.gpu.getPreferredCanvasFormat();
 
@@ -113,6 +120,16 @@ export class WebGPURenderer {
         await this.createResources();
         this.createPipelines();
         this.createBindGroups();
+
+        // Load Atlas
+        const atlasTex = await this.textureManager.loadTexture('sprite_atlas', '/assets/sprite_atlas.png');
+        this.atlasBindGroup = this.device.createBindGroup({
+            layout: this.gBufferPipeline.getBindGroupLayout(1),
+            entries: [
+                { binding: 0, resource: atlasTex.createView() },
+                { binding: 1, resource: this.textureManager.getSampler() }
+            ]
+        });
 
         console.log("WebGPU Renderer Initialized.");
     }
@@ -201,7 +218,7 @@ export class WebGPURenderer {
             });
 
             this.gBufferPipeline = this.device.createRenderPipeline({
-                layout: 'auto',
+                layout: 'auto', // Will infer group(1) from shader bindings
                 vertex: {
                     module: gBufferModule,
                     entryPoint: 'main',
@@ -211,8 +228,9 @@ export class WebGPURenderer {
                         attributes: [
                             { shaderLocation: 0, offset: 0, format: 'float32x2' }, // center
                             { shaderLocation: 1, offset: 8, format: 'float32x2' }, // size
-                            { shaderLocation: 2, offset: 16, format: 'float32' },  // typeID
-                            { shaderLocation: 3, offset: 20, format: 'float32x4' } // params
+                            { shaderLocation: 2, offset: 16, format: 'float32x2' }, // uvOffset (u0, v0)
+                            { shaderLocation: 3, offset: 24, format: 'float32x2' }, // uvScale (dw, dh)
+                            { shaderLocation: 4, offset: 32, format: 'float32' }    // rotation
                         ]
                     }]
                 },
@@ -281,8 +299,7 @@ export class WebGPURenderer {
         this.gBufferBindGroup = this.device.createBindGroup({
             layout: this.gBufferPipeline.getBindGroupLayout(0),
             entries: [
-                { binding: 0, resource: { buffer: this.uniformBuffer, offset: 0, size: 16 } },
-                { binding: 1, resource: { buffer: this.uniformBuffer, offset: 256, size: 16 } } // Time
+                { binding: 0, resource: { buffer: this.uniformBuffer, offset: 0, size: 16 } }
             ]
         });
 
@@ -432,75 +449,16 @@ export class WebGPURenderer {
                 });
             }
 
-            // Type Mapping
-            let typeID = (e as any).typeID || 0; // Use entity ID if set
-            const name = e.constructor.name;
+            // Texture Data Extraction
+            // If the entity doesn't have UV data initialized, we assign a default fallback UV
+            let u0 = 0.0, v0 = 0.0, uScale = 1.0, vScale = 1.0;
+            let rot = e.rotation || 0;
 
-            if (typeID === 0) {
-                if (name === 'Player') typeID = 1;
-                else if (name === 'SerumBot') typeID = 2;
-                else if (name === 'ScavengerCrab') typeID = 3;
-                else if (name === 'Golgotha') typeID = 4;
-                else if (name === 'PorcelainDancer') typeID = 5;
-                else if (name === 'RustMite') typeID = 6;
-                else if (name === 'RustDragon') typeID = 7;
-                else if (name === 'VanityWraith') typeID = 8;
-                else if (name === 'RazorVine') typeID = 9;
-                else if (name === 'Vitria') typeID = 10;
-                else if (name === 'Narcissus') typeID = 11;
-                else if (name === 'GearKeeper') typeID = 12;
-                else if (name === 'MetronomeGeneral') typeID = 13;
-                else if (name === 'ChronoWraith') typeID = 14;
-                else if (name === 'SilenceGuard') typeID = 15;
-                else if (name === 'Cantor') typeID = 16;
-                else if (name === 'Banshee') typeID = 17;
-                else if (name === 'PrimeConductor') typeID = 18;
-                else if (name === 'Paradox') typeID = 19;
-                else if (name === 'Gatekeeper') typeID = 26;
-                else if (name === 'Mannequin') typeID = 27;
-                else if (name === 'PistonDrone') typeID = 28;
-                else if (name === 'CrystalShard') typeID = 31;
-                else if (name === 'BookMimic') typeID = 32;
-                else if (name === 'WorldItem') {
-                    // Fallback for WorldItems if typeID wasn't set in constructor
-                    const item = e as any;
-                    if (item.itemId === 'vial_liquid_seconds') typeID = 20;
-                }
-            }
-
-            // Params
-            let p1 = 0, p2 = 0, p3 = 0, p4 = 0;
-            if (typeID === 5) {
-                p1 = (e as any).isVisible ? 1.0 : 0.0;
-            }
-            if (typeID === 1) {
-                p1 = (e as any).weaponAngle || 0;
-                p2 = (e as any).moveAngle || 0;
-                p3 = (e as any).movementIntensity || 0;
-                p4 = (e as any).isAttacking ? 1.0 : 0.0;
-            }
-            if (typeID === 21) {
-                p1 = (e as any).isActive ? 1.0 : 0.0;
-            }
-            if (typeID === 22) {
-                p1 = (e as any).blastParam || 0;
-                p2 = (e as any).chargeParam || 0;
-            }
-            if (typeID === 23) {
-                p1 = (e as any).hoverParam || 0;
-                p2 = (e as any).attackParam || 0;
-            }
-            if (typeID === 24) {
-                p1 = (e as any).compressionParam || 0;
-            }
-            if (typeID === 25) {
-                p1 = (e as any).heatParam || 0;
-            }
-            if (typeID === 26) {
-                p1 = (e as any).flashParam || 0;
-            }
-            if (typeID === 28) {
-                p1 = (e as any).extensionParam || 0;
+            if ((e as any).textureId) {
+                u0 = (e as any).uvOffset?.[0] || 0.0;
+                v0 = (e as any).uvOffset?.[1] || 0.0;
+                uScale = (e as any).uvScale?.[0] || 1.0;
+                vScale = (e as any).uvScale?.[1] || 1.0;
             }
 
             const offset = chunk.instanceCount * 9;
@@ -508,11 +466,11 @@ export class WebGPURenderer {
             chunk.cpuData[offset + 1] = y;
             chunk.cpuData[offset + 2] = w;
             chunk.cpuData[offset + 3] = h;
-            chunk.cpuData[offset + 4] = typeID;
-            chunk.cpuData[offset + 5] = p1;
-            chunk.cpuData[offset + 6] = p2;
-            chunk.cpuData[offset + 7] = p3;
-            chunk.cpuData[offset + 8] = p4;
+            chunk.cpuData[offset + 4] = u0;
+            chunk.cpuData[offset + 5] = v0;
+            chunk.cpuData[offset + 6] = uScale;
+            chunk.cpuData[offset + 7] = vScale;
+            chunk.cpuData[offset + 8] = rot;
 
             chunk.instanceCount++;
         }
@@ -546,6 +504,9 @@ export class WebGPURenderer {
 
         passEncoder.setPipeline(this.gBufferPipeline);
         passEncoder.setBindGroup(0, this.gBufferBindGroup);
+        if (this.atlasBindGroup) {
+            passEncoder.setBindGroup(1, this.atlasBindGroup);
+        }
 
         for (const chunk of visibleChunks) {
             if (chunk.instanceCount > 0) {

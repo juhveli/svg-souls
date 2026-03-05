@@ -12,7 +12,7 @@ export class SteamVent extends Entity {
 
     constructor(x: number, y: number, target: Player) {
         super(x, y); // Removed SVG
-        this.typeID = 21;
+        this.textureId = 'hazard_steam'; // TODO: Replace with high-quality 16-bit PNG asset
         this.target = target;
         this.width = 32;
         this.height = 32;

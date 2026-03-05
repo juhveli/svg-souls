@@ -5,6 +5,6 @@ export class RustMite extends Enemy {
         super(x, y);
         this.width = 16;
         this.height = 16;
-        this.typeID = 6;
+        this.textureId = 'enemy_mite'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 }
