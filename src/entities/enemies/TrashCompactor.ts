@@ -23,7 +23,7 @@ export class TrashCompactor extends Enemy {
         super(x, y);
         this.width = 120;
         this.height = 100;
-        this.typeID = 24;
+        this.textureId = 'boss_compactor'; // TODO: Replace with high-quality 16-bit PNG asset
         this.target = Game.getInstance().player;
         this.radius = 50;
 

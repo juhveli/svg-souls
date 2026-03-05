@@ -20,7 +20,7 @@ export class BookMimic extends Enemy {
         super(x, y);
         this.width = 40;
         this.height = 40;
-        this.typeID = 32;
+        this.textureId = 'enemy_bookmimic'; // TODO: Replace with high-quality 16-bit PNG asset
         this.target = Game.getInstance().player;
         this.radius = 25;
 

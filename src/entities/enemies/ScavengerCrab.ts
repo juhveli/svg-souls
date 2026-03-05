@@ -20,7 +20,7 @@ export class ScavengerCrab extends Enemy {
         this.width = 40; // Slightly wider
         this.height = 32;
         this.target = target;
-        this.typeID = 3;
+        this.textureId = 'enemy_crab'; // TODO: Replace with high-quality 16-bit PNG asset
 
         this.beatListener = () => this.onBeat();
         AudioController.getInstance().subscribeToBeat(this.beatListener);

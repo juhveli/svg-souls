@@ -5,6 +5,6 @@ export class MetronomeGeneral extends Enemy {
         super(x, y);
         this.width = 80;
         this.height = 80;
-        this.typeID = 13;
+        this.textureId = 'boss_metronome'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 }

@@ -30,12 +30,12 @@ export class NPCEntity extends Entity {
         if (data) {
             this.name = data.name;
             this.dialogueLines = data.dialogue;
-            this.typeID = data.typeID;
+            this.textureId = 'player'; // Fallback
             this.dataLoaded = true;
         } else {
             this.name = "Unknown";
             this.dialogueLines = ["..."];
-            this.typeID = 0;
+            this.textureId = 'player';
             this.dataLoaded = false;
         }
     }

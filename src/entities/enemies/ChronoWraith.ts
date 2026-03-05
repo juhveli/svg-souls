@@ -5,6 +5,6 @@ export class ChronoWraith extends Enemy {
         super(x, y);
         this.width = 64;
         this.height = 64;
-        this.typeID = 14;
+        this.textureId = 'enemy_wraith'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 }

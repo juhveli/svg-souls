@@ -21,7 +21,7 @@ export class Golgotha extends Enemy {
         this.height = 100;
         this.target = target;
         this.radius = 40;
-        this.typeID = 4;
+        this.textureId = 'boss_compactor'; // TODO: Replace with high-quality 16-bit PNG asset
 
         this.beatListener = () => this.onBeat();
         AudioController.getInstance().subscribeToBeat(this.beatListener);

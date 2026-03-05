@@ -24,7 +24,7 @@ export class Librarian extends Enemy {
         super(x, y);
         this.width = 50;
         this.height = 70;
-        this.typeID = 23;
+        this.textureId = 'boss_librarian'; // TODO: Replace with high-quality 16-bit PNG asset
         this.target = target;
 
         this.beatListener = () => this.onBeat();

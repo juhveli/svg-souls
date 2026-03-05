@@ -26,7 +26,7 @@ export class SteamMarshal extends Enemy {
         super(x, y);
         this.width = 64;
         this.height = 80;
-        this.typeID = 22;
+        this.textureId = 'boss_marshal'; // TODO: Replace with high-quality 16-bit PNG asset
         this.target = target;
 
         this.beatListener = () => this.onBeat();

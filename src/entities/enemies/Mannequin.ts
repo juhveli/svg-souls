@@ -19,7 +19,7 @@ export class Mannequin extends Enemy {
         super(x, y);
         this.width = 40;
         this.height = 80;
-        this.typeID = 27; // Mannequin ID
+        this.textureId = 'enemy_mannequin'; // TODO: Replace with high-quality 16-bit PNG asset // Mannequin ID
         this.target = Game.getInstance().player;
         this.radius = 20;
 

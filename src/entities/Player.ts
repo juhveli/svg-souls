@@ -49,7 +49,7 @@ export class Player extends Entity {
         super(x, y);
         this.width = 64;
         this.height = 64;
-        this.typeID = 1;
+        this.textureId = 'player'; // TODO: Replace with high-quality 16-bit PNG asset
     }
 
     update(dt: number) {
