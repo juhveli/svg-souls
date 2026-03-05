@@ -249,7 +249,21 @@ export class Game {
         // SCROLLING: Update World Layer (SVG) Position
         const worldLayer = document.getElementById('world-layer');
         if (worldLayer) {
-            worldLayer.setAttribute('transform', this.camera.getTransform());
+            // "The Breathing World" Prototype: The world expands/contracts slightly on the beat
+            // Using time to simulate a 60bpm "heartbeat"
+            const beatTime = (time / 1000) * (60 / 60); // 1 beat per second
+            // A sharp pulse that decays: e^-x * sin(x) style or just power of sin
+            let pulse = Math.pow(Math.sin(beatTime * Math.PI), 8);
+            let scaleAmount = 1.0 + (pulse * 0.015); // 1.5% scale increase on beat
+
+            // Apply base camera transform plus the breathing scale, originating from center
+            const cx = this.camera.x + this.camera.width / 2;
+            const cy = this.camera.y + this.camera.height / 2;
+
+            // Translate to center, scale, translate back, then apply camera transform
+            const breathingTransform = `${this.camera.getTransform()} translate(${cx}, ${cy}) scale(${scaleAmount}) translate(${-cx}, ${-cy})`;
+
+            worldLayer.setAttribute('transform', breathingTransform);
         }
 
         WebGPURenderer.getInstance().render(this.entityManager.entities, this.camera, this.player);

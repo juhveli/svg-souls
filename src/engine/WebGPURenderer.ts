@@ -342,6 +342,7 @@ export class WebGPURenderer {
     }
 
     // TODO: Implement "glitch" post-process effect (chromatic aberration/shift) when near World 5 anomalies.
+    // TODO: Implement Chladni Shaders (Cymatics) for ground impacts - map ground texture to react to heavy impacts (Metronome Sentry) with geometric standing wave patterns
 
     render(entities: any[], camera: any, playerRef?: any) {
         if (!this.device || !this.context) return;

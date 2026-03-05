@@ -4,7 +4,8 @@ import { EventManager } from '../engine/EventManager';
 export interface Zone {
     name: string;
     description: string;
-    trigger: (x: number, y: number) => boolean;
+    // Returns the index of the zone to transition to, or -1 if no transition
+    trigger: (x: number, y: number) => number;
     onData: {
         background: string;
     };
@@ -22,18 +23,19 @@ export class ZoneSystem {
             description: "A rust-choked graveyard of failed prototypes.",
             trigger: (x, _y) => {
                 const game = (window as any).Game?.getInstance();
-                if (x > 1580) { // Updated for 1600px width
+                // East Exit -> Glass Gardens (Index 1)
+                if (x > 1580) {
                     if (game && game.bossesDefeated.has('golgotha') && game.narrativesRead.size >= 2) {
-                        return true;
+                        return 1;
                     } else {
                         // Feedback: Why can't I leave?
                         if (Math.random() < 0.01) { // Don't spam
                             UIManager.getInstance().showBark(x, _y, "The exit is barred by lingering echoes. Settle the past.");
                         }
-                        return false;
+                        return -1;
                     }
                 }
-                return false;
+                return -1;
             },
             onData: { background: '#2a1a1a' },
             getTimeDilation: (x, _y) => {
@@ -47,28 +49,44 @@ export class ZoneSystem {
         {
             name: "Glass Gardens",
             description: "Fragile flora blooming from the silica sands.",
-            trigger: (x, _y) => x > 1580,
+            trigger: (x, _y) => {
+                if (x > 1580) return 2; // East -> Clockwork Arteries
+                if (x < 20) return 0;   // West -> The Scrapyard
+                return -1;
+            },
             onData: { background: '#1a2a2a' },
             getTimeDilation: (_x, _y) => 1.0
         },
         {
             name: "The Clockwork Arteries",
             description: "A mechanical labyrinth of steam and rhythm.",
-            trigger: (x, _y) => x > 1580,
+            trigger: (x, _y) => {
+                if (x > 1580) return 3; // East -> Hushed Halls
+                if (x < 20) return 1;   // West -> Glass Gardens
+                return -1;
+            },
             onData: { background: '#151515' },
             getTimeDilation: (_x, _y) => 1.0
         },
         {
             name: "The Hushed Halls",
             description: "A sanctuary of velvet and silence.",
-            trigger: (x, _y) => x > 1580,
+            trigger: (x, _y) => {
+                if (x > 1580) return 4; // East -> Crystal Belfry
+                if (x < 20) return 2;   // West -> Clockwork Arteries
+                return -1;
+            },
             onData: { background: '#100510' }, // Dark purple
             getTimeDilation: (_x, _y) => 1.0
         },
         {
             name: "The Crystal Belfry",
             description: "The apex where the song is sung.",
-            trigger: (x, _y) => x > 1580,
+            trigger: (x, _y) => {
+                if (x < 20) return 3;   // West -> Hushed Halls
+                // No East exit from the apex
+                return -1;
+            },
             onData: { background: '#f0f0f0' }, // White/Grey
             getTimeDilation: (_x, _y) => 1.0
         }
@@ -88,8 +106,9 @@ export class ZoneSystem {
     checkTransition(playerX: number, playerY: number) {
         const current = this.zones[this.currentZoneIndex];
 
-        if (current.trigger(playerX, playerY)) {
-            this.transitionToNext();
+        const targetZoneIndex = current.trigger(playerX, playerY);
+        if (targetZoneIndex !== -1 && targetZoneIndex >= 0 && targetZoneIndex < this.zones.length) {
+            this.transitionToNext(targetZoneIndex);
         }
     }
 
@@ -98,9 +117,8 @@ export class ZoneSystem {
         return current.getTimeDilation ? current.getTimeDilation(x, y) : 1.0;
     }
 
-    private transitionToNext() {
-        // Toggle Zone (Simple 2-zone loop for prototype)
-        this.currentZoneIndex = (this.currentZoneIndex + 1) % this.zones.length;
+    private transitionToNext(targetZoneIndex: number) {
+        this.currentZoneIndex = targetZoneIndex;
         const newZone = this.zones[this.currentZoneIndex];
 
         console.log(`[ZoneSystem] Entering: ${newZone.name}`);

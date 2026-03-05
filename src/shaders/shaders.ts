@@ -92,8 +92,11 @@ struct Uniforms {
   screenSize : vec2<f32>,
   cameraPos : vec2<f32>,
   lightPos : vec2<f32>,
+  padding : vec2<f32>,
   lightColor : vec3<f32>,
+  lightColorPad : f32,
   ambientColor : vec3<f32>,
+  ambientColorPad : f32,
 };
 
 @group(0) @binding(0) var<uniform> uniforms : Uniforms;
@@ -139,7 +142,20 @@ fn main(@builtin(position) coord : vec4<f32>) -> @location(0) vec4<f32> {
 
   let attenuation = 1.0 / (1.0 + 0.005 * dist + 0.0001 * dist * dist);
 
-  let lighting = uniforms.ambientColor + (uniforms.lightColor * diffuse * attenuation);
+  // Dynamic Caustics Prototype: Refracted light pool
+  // Calculate a "caustic" multiplier based on distance and normal to simulate light refracting.
+  let caustic = max(0.0, sin(dist * 0.1) * cos(worldPos.x * 0.05 + worldPos.y * 0.05));
+  let isCausticZone = step(50.0, dist) * step(dist, 150.0); // Ring around the light
+
+  // Player absorbs light (darker center shadow), others cast jagged/rainbow caustics
+  let causticEffect = caustic * isCausticZone * 0.5;
+
+  // Add the caustic effect to the diffuse lighting, tinted slightly
+  let causticColor = vec3<f32>(0.2, 0.4, 0.6) * causticEffect;
+
+  let finalLightColor = uniforms.lightColor + causticColor;
+
+  let lighting = uniforms.ambientColor + (finalLightColor * diffuse * attenuation);
 
   return vec4<f32>(albedo.rgb * lighting, 1.0);
 }

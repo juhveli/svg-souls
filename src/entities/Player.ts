@@ -13,6 +13,7 @@ export class Player extends Entity {
     baseSpeed: number = 200;
     attackMoveSpeed: number = 50;
     moveAngle: number = 0;
+    // TODO: Implement "Echo Trails" for Movement - Leave 3 static frames of the player lingering for 0.5s instead of motion blur
     aimAngle: number = 0;
     weaponAngle: number = 0;
     movementIntensity: number = 0;
