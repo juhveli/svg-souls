@@ -44,6 +44,8 @@ export class SerumBot extends Enemy {
         this.fsm.addState(new SerumBotIdleState(this));
         this.fsm.addState(new SerumBotChaseState(this));
         this.fsm.addState(new SerumBotAttackState(this));
+        this.textureId = 'character_placeholder'; // TODO: Use assets from https://opengameart.org/content/isometric-rpg for further development for the real assets.
+
         this.fsm.changeState('IDLE');
 
         this.fsm.onStateChanged = (oldState, newState) => {

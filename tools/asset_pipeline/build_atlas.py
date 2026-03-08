@@ -75,7 +75,7 @@ def build_atlas(in_dirs, out_image, out_json):
 if __name__ == "__main__":
     os.makedirs("public/assets", exist_ok=True)
     build_atlas(
-        ["assets/sprites/items", "assets/sprites/entities"],
+        ["assets/sprites/items", "assets/sprites/entities", "assets/sprites/isometric"],
         "public/assets/sprite_atlas.png",
         "public/assets/sprite_atlas.json"
     )

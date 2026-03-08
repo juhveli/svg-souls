@@ -41,10 +41,16 @@ fn main(
 
   let worldPos = center + (rotPos * size);
 
-  let ndcX = (worldPos.x - uniforms.cameraPos.x) / (uniforms.screenSize.x * 0.5);
-  let ndcY = (worldPos.y - uniforms.cameraPos.y) / (uniforms.screenSize.y * 0.5);
+  // When using an Isometric projection system, worldPos is actually the pre-calculated screen X/Y coordinates
+  // representing the sprite's position on a flat 2D plane.
+  // We simply need to shift it by the camera's screen-space offset and normalize it to NDC.
+  let ndcX = ((worldPos.x - uniforms.cameraPos.x) / uniforms.screenSize.x) * 2.0;
+  // Z-axis goes UP in our logic, so Y decreases as we go up.
+  // Standard NDC maps bottom to -1, top to 1. WebGPU's top-left is (-1, 1).
+  let ndcY = ((worldPos.y - uniforms.cameraPos.y) / uniforms.screenSize.y) * 2.0;
 
   var output : VertexOutput;
+  // Negate Y to map screen space Y (down is positive) to NDC Y (down is negative in WebGPU clip space)
   output.position = vec4<f32>(ndcX, -ndcY, 0.0, 1.0);
 
   // Base UV mapping (0->1)
