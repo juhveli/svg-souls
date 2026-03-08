@@ -22,7 +22,7 @@ export class SilenceGuard extends Enemy {
         super(x, y);
         this.width = 32;
         this.height = 64;
-        this.textureId = 'enemy_silenceguard'; // TODO: Replace with high-quality 16-bit PNG asset
+        this.textureId = 'character_placeholder'; // TODO: Use assets from https://opengameart.org/content/isometric-rpg for further development for the real assets.
         this.target = Game.getInstance().player;
         this.radius = 30;
 

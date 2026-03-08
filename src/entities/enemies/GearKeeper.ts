@@ -5,6 +5,6 @@ export class GearKeeper extends Enemy {
         super(x, y);
         this.width = 48;
         this.height = 48;
-        this.textureId = 'enemy_gearkeeper'; // TODO: Replace with high-quality 16-bit PNG asset
+        this.textureId = 'character_placeholder'; // TODO: Use assets from https://opengameart.org/content/isometric-rpg for further development for the real assets.
     }
 }

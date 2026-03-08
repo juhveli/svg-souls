@@ -20,7 +20,7 @@ export class PistonDrone extends Enemy {
         super(x, y);
         this.width = 40;
         this.height = 60;
-        this.textureId = 'enemy_drone'; // TODO: Replace with high-quality 16-bit PNG asset // PistonDrone ID
+        this.textureId = 'character_placeholder'; // TODO: Use assets from https://opengameart.org/content/isometric-rpg for further development for the real assets. // PistonDrone ID
         this.target = Game.getInstance().player;
         this.radius = 20;
 

@@ -1,12 +1,6 @@
 import { vertexShaderWGSL, fragmentShaderGBufferWGSL, fragmentShaderLightingWGSL, fragmentShaderPostProcessWGSL, vertexShaderFullscreenWGSL } from '../shaders/shaders';
 import { TextureManager } from './TextureManager';
-
-interface ChunkData {
-    buffer: GPUBuffer;
-    capacity: number; // in instances
-    instanceCount: number;
-    cpuData: Float32Array;
-}
+import { IsometricMath } from './IsometricMath';
 
 export class WebGPURenderer {
     canvas: HTMLCanvasElement;
@@ -46,10 +40,10 @@ export class WebGPURenderer {
     // 9 floats * 4 bytes = 36 bytes.
     INSTANCE_SIZE = 9 * 4;
 
-    // Chunking System
-    private chunks: Map<string, ChunkData> = new Map();
-    private readonly CHUNK_SIZE = 512;
-    private readonly INITIAL_CHUNK_CAPACITY = 64;
+    // Rendering instance buffer
+    private instanceBuffer!: GPUBuffer;
+    private instanceCapacity: number = 0;
+    private readonly INITIAL_INSTANCE_CAPACITY = 2048;
 
     // CPU-side Buffers (Optimization: Reuse to avoid GC)
     private uniformDataA!: Float32Array;
@@ -344,7 +338,7 @@ export class WebGPURenderer {
     // TODO: Implement "glitch" post-process effect (chromatic aberration/shift) when near World 5 anomalies.
     // TODO: Implement Chladni Shaders (Cymatics) for ground impacts - map ground texture to react to heavy impacts (Metronome Sentry) with geometric standing wave patterns
 
-    render(entities: any[], camera: any, playerRef?: any) {
+    render(map: any, entities: any[], camera: any, playerRef?: any) {
         if (!this.device || !this.context) return;
 
         // Check for resize
@@ -355,11 +349,24 @@ export class WebGPURenderer {
         const time = performance.now() / 1000;
 
         // 1. Update Global Uniforms
+        // Convert the Cartesian camera position to Isometric screen coordinates
+        // because all entities are projected to Isometric screen coordinates before being passed to the shader.
+        // We also want to shift the camera so 0,0 is at the center of the screen, or at least respect the original camera offset.
+        // The camera object in Game typically tracks the center of the viewport in Cartesian space implicitly,
+        // actually `camera.x/y` is usually top-left. Let's project the center of the camera.
+        const isoCameraCenter = IsometricMath.worldToScreen(camera.x + camera.width / 2, camera.y + camera.height / 2, 0);
+
+        // Adjust back to top-left of the ISOMETRIC screen view for the shader
+        const isoCameraUniform = {
+            x: isoCameraCenter.x - this.canvas.width / 2,
+            y: isoCameraCenter.y - this.canvas.height / 2
+        };
+
         // Block A: Screen(2), Camera(2)
         this.uniformDataA[0] = this.canvas.width;
         this.uniformDataA[1] = this.canvas.height;
-        this.uniformDataA[2] = camera.x;
-        this.uniformDataA[3] = camera.y;
+        this.uniformDataA[2] = isoCameraUniform.x;
+        this.uniformDataA[3] = isoCameraUniform.y;
         this.device.queue.writeBuffer(this.uniformBuffer, 0, this.uniformDataA);
 
         // Block B: Time(1) at offset 256
@@ -372,14 +379,15 @@ export class WebGPURenderer {
         let playerX = 0, playerY = 0;
         const player = playerRef || entities.find(e => e.constructor.name === 'Player');
         if (player) {
-            playerX = player.x;
-            playerY = player.y;
+            const isoPlayer = IsometricMath.worldToScreen(player.x, player.y, (player as any).z || 0);
+            playerX = isoPlayer.x;
+            playerY = isoPlayer.y;
         }
 
         this.lightingData[0] = this.canvas.width;
         this.lightingData[1] = this.canvas.height;
-        this.lightingData[2] = camera.x;
-        this.lightingData[3] = camera.y;
+        this.lightingData[2] = isoCameraUniform.x;
+        this.lightingData[3] = isoCameraUniform.y;
         this.lightingData[4] = playerX;
         this.lightingData[5] = playerY;
         this.lightingData[6] = 0;
@@ -394,86 +402,111 @@ export class WebGPURenderer {
         this.lightingData[15] = 0.0;
         this.device.queue.writeBuffer(this.lightingUniformBuffer, 0, this.lightingData);
 
-        // 3. Chunking & Culling
-        const visibleChunks = new Set<ChunkData>();
-
+        // 3. Single Instance Buffer Sorting & Culling
         // Culling Bounds (Camera + Padding)
-        const pad = 100;
-        const camLeft = camera.x - pad;
-        const camTop = camera.y - pad;
-        const camRight = camera.x + camera.width + pad;
-        const camBottom = camera.y + camera.height + pad;
+        // We evaluate against the isometric camera's top-left corner
+        const pad = 300;
+        const camLeft = isoCameraUniform.x - pad;
+        const camTop = isoCameraUniform.y - pad;
+        const camRight = isoCameraUniform.x + this.canvas.width + pad;
+        const camBottom = isoCameraUniform.y + this.canvas.height + pad;
+
+        // Build a render list combining map tiles and entities
+        const renderList: any[] = [];
+
+        if (map && map.tiles) {
+            for (const t of map.tiles) {
+                renderList.push({
+                    isTile: true,
+                    x: t.x,
+                    y: t.y,
+                    z: t.z || 0,
+                    width: IsometricMath.TILE_WIDTH,
+                    height: IsometricMath.TILE_WIDTH, // use square for projection logic
+                    textureId: t.textureId || 'floor_tile_placeholder'
+                });
+            }
+        }
 
         for (const e of entities) {
-            const x = e.x || 0;
-            const y = e.y || 0;
-            const w = e.width || 64;
-            const h = e.height || 64;
+            renderList.push(e);
+        }
+
+        // Sort render list based on isometric depth
+        // We draw back to front. Larger depth means further away (or lower), so draw it first.
+        // Let's verify Isometric depth: smaller Y means higher on screen. But sorting order should be smallest depth first if depth is Z-index.
+        // Typically, sort by depth ascending.
+        renderList.sort((a, b) => {
+            const depthA = IsometricMath.calculateDepth(a.x || 0, a.y || 0, a.z || 0);
+            const depthB = IsometricMath.calculateDepth(b.x || 0, b.y || 0, b.z || 0);
+            return depthA - depthB;
+        });
+
+        // Prepare CPU buffer for instances
+        if (renderList.length > this.instanceCapacity) {
+            this.instanceCapacity = Math.max(this.INITIAL_INSTANCE_CAPACITY, renderList.length * 2);
+            if (this.instanceBuffer) {
+                this.instanceBuffer.destroy();
+            }
+            this.instanceBuffer = this.device.createBuffer({
+                size: this.instanceCapacity * this.INSTANCE_SIZE,
+                usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
+            });
+        }
+
+        const cpuData = new Float32Array(renderList.length * 9);
+        let instanceCount = 0;
+
+        for (const e of renderList) {
+            // Apply isometric projection
+            const isoPos = IsometricMath.worldToScreen(e.x || 0, e.y || 0, e.z || 0);
+            const screenX = isoPos.x;
+            const screenY = isoPos.y;
+
+            // For tiles, visual size is the tile size (64x32)
+            // For entities, use their width/height but remember it's 2D space visually now
+            const w = e.isTile ? IsometricMath.TILE_WIDTH : (e.width || 64);
+            const h = e.isTile ? IsometricMath.TILE_HEIGHT : (e.height || 64);
 
             // Check if entity is within camera bounds + padding
-            // We use chunk-based culling, but first let's bucket.
-
-            const chunkID = this.getChunkID(x, y);
-            const cx = Math.floor(x / this.CHUNK_SIZE);
-            const cy = Math.floor(y / this.CHUNK_SIZE);
-
-            const chunkLeft = cx * this.CHUNK_SIZE;
-            const chunkTop = cy * this.CHUNK_SIZE;
-            const chunkRight = chunkLeft + this.CHUNK_SIZE;
-            const chunkBottom = chunkTop + this.CHUNK_SIZE;
-
-            // AABB Test for Chunk
-            if (chunkRight < camLeft || chunkLeft > camRight || chunkBottom < camTop || chunkTop > camBottom) {
-                 continue; // Chunk not visible
-            }
-
-            const chunk = this.getOrCreateChunk(chunkID);
-
-            if (!visibleChunks.has(chunk)) {
-                chunk.instanceCount = 0;
-                visibleChunks.add(chunk);
-            }
-
-            // Resize if needed
-            if (chunk.instanceCount >= chunk.capacity) {
-                const newCapacity = chunk.capacity * 2;
-                const newCpuData = new Float32Array(newCapacity * 9);
-                newCpuData.set(chunk.cpuData);
-                chunk.cpuData = newCpuData;
-                chunk.capacity = newCapacity;
-
-                // Recreate GPU buffer
-                chunk.buffer.destroy();
-                chunk.buffer = this.device.createBuffer({
-                    size: newCapacity * this.INSTANCE_SIZE,
-                    usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
-                });
+            if (screenX + w/2 < camLeft || screenX - w/2 > camRight ||
+                screenY + h/2 < camTop || screenY - h/2 > camBottom) {
+                 continue; // Not visible
             }
 
             // Texture Data Extraction
-            // If the entity doesn't have UV data initialized, we assign a default fallback UV
             let u0 = 0.0, v0 = 0.0, uScale = 1.0, vScale = 1.0;
             let rot = e.rotation || 0;
 
-            if ((e as any).textureId) {
-                u0 = (e as any).uvOffset?.[0] || 0.0;
-                v0 = (e as any).uvOffset?.[1] || 0.0;
-                uScale = (e as any).uvScale?.[0] || 1.0;
-                vScale = (e as any).uvScale?.[1] || 1.0;
+            if (e.textureId) {
+                const game = (window as any).Game?.getInstance();
+                if (game && game.atlasData && game.atlasData[e.textureId]) {
+                    const data = game.atlasData[e.textureId];
+                    u0 = data.u0;
+                    v0 = data.v0;
+                    uScale = data.u1 - data.u0;
+                    vScale = data.v1 - data.v0;
+                } else if (e.uvOffset && e.uvScale) {
+                    u0 = e.uvOffset[0];
+                    v0 = e.uvOffset[1];
+                    uScale = e.uvScale[0];
+                    vScale = e.uvScale[1];
+                }
             }
 
-            const offset = chunk.instanceCount * 9;
-            chunk.cpuData[offset + 0] = x;
-            chunk.cpuData[offset + 1] = y;
-            chunk.cpuData[offset + 2] = w;
-            chunk.cpuData[offset + 3] = h;
-            chunk.cpuData[offset + 4] = u0;
-            chunk.cpuData[offset + 5] = v0;
-            chunk.cpuData[offset + 6] = uScale;
-            chunk.cpuData[offset + 7] = vScale;
-            chunk.cpuData[offset + 8] = rot;
+            const offset = instanceCount * 9;
+            // Write screen position to buffer
+            cpuData[offset + 0] = screenX;
+            cpuData[offset + 1] = screenY;
+            cpuData[offset + 2] = w;
+            cpuData[offset + 3] = h;
+            cpuData[offset + 4] = u0;
+            cpuData[offset + 5] = v0;
+            cpuData[offset + 6] = uScale;
+            cpuData[offset + 7] = vScale;
+            cpuData[offset + 8] = rot;
 
-            chunk.instanceCount++;
+            instanceCount++;
         }
 
         // 4. Render Passes
@@ -509,15 +542,13 @@ export class WebGPURenderer {
             passEncoder.setBindGroup(1, this.atlasBindGroup);
         }
 
-        for (const chunk of visibleChunks) {
-            if (chunk.instanceCount > 0) {
-                 // Write Buffer
-                 this.device.queue.writeBuffer(chunk.buffer, 0, chunk.cpuData, 0, chunk.instanceCount * 9);
+        if (instanceCount > 0 && this.instanceBuffer) {
+             // Write Buffer
+             this.device.queue.writeBuffer(this.instanceBuffer, 0, cpuData, 0, instanceCount * 9);
 
-                 // Draw
-                 passEncoder.setVertexBuffer(0, chunk.buffer);
-                 passEncoder.draw(6, chunk.instanceCount, 0, 0);
-            }
+             // Draw
+             passEncoder.setVertexBuffer(0, this.instanceBuffer);
+             passEncoder.draw(6, instanceCount, 0, 0);
         }
 
         passEncoder.end();
@@ -555,25 +586,4 @@ export class WebGPURenderer {
         this.device.queue.submit([commandEncoder.finish()]);
     }
 
-    private getChunkID(x: number, y: number): string {
-        const cx = Math.floor(x / this.CHUNK_SIZE);
-        const cy = Math.floor(y / this.CHUNK_SIZE);
-        return `${cx},${cy}`;
-    }
-
-    private getOrCreateChunk(id: string): ChunkData {
-        if (!this.chunks.has(id)) {
-            const buffer = this.device.createBuffer({
-                size: this.INITIAL_CHUNK_CAPACITY * this.INSTANCE_SIZE,
-                usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
-            });
-            this.chunks.set(id, {
-                buffer,
-                capacity: this.INITIAL_CHUNK_CAPACITY,
-                instanceCount: 0,
-                cpuData: new Float32Array(this.INITIAL_CHUNK_CAPACITY * 9)
-            });
-        }
-        return this.chunks.get(id)!;
-    }
 }

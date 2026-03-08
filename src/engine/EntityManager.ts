@@ -2,6 +2,7 @@ import { Entity } from '../entities/Entity';
 import { Player } from '../entities/Player';
 import { Enemy } from '../entities/enemies/Enemy';
 import { NarrativeItem } from '../entities/NarrativeItem';
+import { IsometricMath } from './IsometricMath';
 
 export class EntityManager {
     entities: Entity[] = [];
@@ -53,7 +54,12 @@ export class EntityManager {
         this.cleanArray(this.enemies);
         this.cleanArray(this.narrativeItems);
 
-        this.entities.sort((a, b) => a.y - b.y);
+        // Isometric Depth Sorting
+        this.entities.sort((a, b) => {
+            const depthA = IsometricMath.calculateDepth(a.x, a.y, (a as any).z || 0);
+            const depthB = IsometricMath.calculateDepth(b.x, b.y, (b as any).z || 0);
+            return depthA - depthB;
+        });
 
         for (const entity of this.entities) {
             entity.update(dt);

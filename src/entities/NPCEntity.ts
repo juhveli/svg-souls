@@ -30,12 +30,12 @@ export class NPCEntity extends Entity {
         if (data) {
             this.name = data.name;
             this.dialogueLines = data.dialogue;
-            this.textureId = 'player'; // Fallback
+            this.textureId = 'character_placeholder'; // TODO: Use assets from https://opengameart.org/content/isometric-rpg for further development for the real assets.
             this.dataLoaded = true;
         } else {
             this.name = "Unknown";
             this.dialogueLines = ["..."];
-            this.textureId = 'player';
+            this.textureId = 'character_placeholder'; // TODO: Use assets from https://opengameart.org/content/isometric-rpg for further development for the real assets.
             this.dataLoaded = false;
         }
     }

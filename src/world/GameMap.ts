@@ -1,16 +1,23 @@
 import { Game } from '../engine/Game';
 
+export interface TileData {
+    x: number;
+    y: number;
+    z: number;
+    textureId: string;
+}
+
 /**
  * Base Interface for Game Maps
  * Using an abstract class ensures a runtime presence to avoid ESM export errors
  */
 export abstract class GameMap {
-    // TODO: Phase 1 - Parallax Layers. Split 'el' into bgFar, bgMid, fgClose for depth.
-    // TODO: Phase 2 - Move away from SVG DOM entirely to WebGPU Texture/Tile rendering for performance and lighting.
-    abstract el: SVGGElement;
-
     abstract width: number;
     abstract height: number;
+
+    // Isometric Tile Map Data
+    public tiles: TileData[] = [];
+
     abstract destroy(): void;
 
     /**

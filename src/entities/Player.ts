@@ -50,7 +50,7 @@ export class Player extends Entity {
         super(x, y);
         this.width = 64;
         this.height = 64;
-        this.textureId = 'player'; // TODO: Replace with high-quality 16-bit PNG asset
+        this.textureId = 'character_placeholder'; // TODO: Use assets from https://opengameart.org/content/isometric-rpg for further development for the real assets.
     }
 
     update(dt: number) {

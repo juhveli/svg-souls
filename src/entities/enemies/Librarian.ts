@@ -24,7 +24,7 @@ export class Librarian extends Enemy {
         super(x, y);
         this.width = 50;
         this.height = 70;
-        this.textureId = 'boss_librarian'; // TODO: Replace with high-quality 16-bit PNG asset
+        this.textureId = 'character_placeholder'; // TODO: Use assets from https://opengameart.org/content/isometric-rpg for further development for the real assets.
         this.target = target;
 
         this.beatListener = () => this.onBeat();

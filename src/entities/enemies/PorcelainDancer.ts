@@ -15,7 +15,7 @@ export class PorcelainDancer extends Enemy {
 
     constructor(x: number, y: number, target: Player) {
         super(x, y); // No SVG, handled by WebGPU TypeID 5
-        this.textureId = 'enemy_dancer'; // TODO: Replace with high-quality 16-bit PNG asset
+        this.textureId = 'character_placeholder'; // TODO: Use assets from https://opengameart.org/content/isometric-rpg for further development for the real assets.
         this.target = target;
 
         this.beatListener = () => this.onBeat();
