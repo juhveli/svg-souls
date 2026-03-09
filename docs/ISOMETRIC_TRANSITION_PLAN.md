@@ -85,3 +85,6 @@ When adapting or creating assets, follow these canonical rules:
 *   **The Scrapyard (Zone 0):** Tiles should be cracked concrete, massive rusted gears serving as platforms, and deep pits of smog.
 *   **Glass Gardens (Zone 1):** Tiles should be sharp, translucent (if possible), or jagged crystalline structures erupting from ancient stone.
 *   **Items (e.g., Glass Shard, Stopped Watch):** Inventory icons should remain high-contrast pixel art, but the "dropped" world model should be a distinct, readable isometric sprite casting a small shadow.
+
+## PNG Asset Integration Process
+Refer to `docs/ASSET_PIPELINE_PNG.md` for full instructions on how to download, extract, and process CC0/CC-BY isometric pixel art using `tools/asset_pipeline/process_isometric_assets.py`. The tool enforces the dark Rust/Void aesthetic, grid compliance, and decay mapping.
