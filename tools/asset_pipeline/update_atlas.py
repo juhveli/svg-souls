@@ -23,8 +23,8 @@ def rebuild_atlas(atlas_json_path, atlas_img_path, sprite_dirs):
     if os.path.exists(atlas_img_path):
          old_img = Image.open(atlas_img_path).convert("RGBA")
 
-    # We'll just create a new larger atlas, say 1024x1024
-    ATLAS_SIZE = 1024
+    # We'll just create a new larger atlas, say 2048x2048
+    ATLAS_SIZE = 2048
     new_img = Image.new("RGBA", (ATLAS_SIZE, ATLAS_SIZE))
 
     new_data = {}
