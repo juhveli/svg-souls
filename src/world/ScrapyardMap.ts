@@ -23,16 +23,29 @@ export class ScrapyardMap extends GameMap {
         const cols = Math.ceil(this.width / 64);
         const rows = Math.ceil(this.height / 32);
 
+        // A simple procedural mix of the new decayed tiles for the Scrapyard
+        const tileOptions = [
+            'concrete368a_decayed',
+            'cretebrick970_decayed',
+            'stone_decayed',
+            'rock_decayed',
+            'dirt_decayed'
+        ];
+
         for (let y = 0; y < rows; y++) {
             for (let x = 0; x < cols; x++) {
                 // We map logical grid coords to world coords.
                 // Isometric grid usually treats 1 unit as a tile.
                 // Let's use world coordinates directly, and map them in the renderer.
+
+                // Pick a random tile to give that ruined/scavenged scrapyard floor look
+                const randomTile = tileOptions[Math.floor(Math.random() * tileOptions.length)];
+
                 this.tiles.push({
                     x: x * 64,
                     y: y * 64, // using 64x64 logical square grid that projects to 64x32 isometric
                     z: 0,
-                    textureId: 'floor_tile_placeholder'
+                    textureId: randomTile
                 });
             }
         }
