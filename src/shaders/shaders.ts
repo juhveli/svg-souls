@@ -2,6 +2,7 @@ export const vertexShaderWGSL = `
 struct VertexOutput {
   @builtin(position) position : vec4<f32>,
   @location(0) uv : vec2<f32>, // The sampled UV within the atlas
+  @location(1) alpha : f32,    // Instance alpha
 };
 
 struct Uniforms {
@@ -18,7 +19,8 @@ fn main(
   @location(1) size : vec2<f32>,
   @location(2) uvOffset : vec2<f32>, // Atlas u0, v0
   @location(3) uvScale : vec2<f32>,  // Atlas (u1-u0), (v1-v0)
-  @location(4) rotation : f32
+  @location(4) rotation : f32,
+  @location(5) alpha : f32
 ) -> VertexOutput {
   var pos = array<vec2<f32>, 6>(
     vec2<f32>(-0.5, -0.5),
@@ -61,6 +63,8 @@ fn main(
   // Apply Atlas offset and scale
   output.uv = uvOffset + (texUV * uvScale);
 
+  output.alpha = alpha;
+
   return output;
 }
 `;
@@ -76,8 +80,10 @@ struct FragmentOutput {
 @group(1) @binding(1) var spriteSampler: sampler;
 
 @fragment
-fn main(@location(0) uv : vec2<f32>) -> FragmentOutput {
-  let color = textureSample(spriteAtlas, spriteSampler, uv);
+fn main(@location(0) uv : vec2<f32>, @location(1) alpha : f32) -> FragmentOutput {
+  var color = textureSample(spriteAtlas, spriteSampler, uv);
+
+  color.a = color.a * alpha;
 
   if (color.a < 0.1) {
     discard;

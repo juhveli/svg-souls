@@ -37,8 +37,8 @@ export class WebGPURenderer {
     // Constants
     RETRO_SCALE = 4.0;
     MAX_INSTANCES = 1000; // Legacy constant, kept just in case
-    // 9 floats * 4 bytes = 36 bytes.
-    INSTANCE_SIZE = 9 * 4;
+    // 10 floats * 4 bytes = 40 bytes.
+    INSTANCE_SIZE = 10 * 4;
 
     // Rendering instance buffer
     private instanceBuffer!: GPUBuffer;
@@ -224,7 +224,8 @@ export class WebGPURenderer {
                             { shaderLocation: 1, offset: 8, format: 'float32x2' }, // size
                             { shaderLocation: 2, offset: 16, format: 'float32x2' }, // uvOffset (u0, v0)
                             { shaderLocation: 3, offset: 24, format: 'float32x2' }, // uvScale (dw, dh)
-                            { shaderLocation: 4, offset: 32, format: 'float32' }    // rotation
+                            { shaderLocation: 4, offset: 32, format: 'float32' },   // rotation
+                            { shaderLocation: 5, offset: 36, format: 'float32' }    // alpha
                         ]
                     }]
                 },
@@ -454,8 +455,14 @@ export class WebGPURenderer {
             });
         }
 
-        const cpuData = new Float32Array(renderList.length * 9);
+        const cpuData = new Float32Array(renderList.length * 10);
         let instanceCount = 0;
+
+        // Player coordinates for alpha fading check
+        let pWorldX = player?.x || 0;
+        let pWorldY = player?.y || 0;
+        let pScreenX = playerX;
+        let pScreenY = playerY;
 
         for (const e of renderList) {
             // Apply isometric projection
@@ -494,7 +501,26 @@ export class WebGPURenderer {
                 }
             }
 
-            const offset = instanceCount * 9;
+            let alpha = 1.0;
+
+            // Alpha fading for tall objects blocking the player
+            if (!e.isTile && e !== player && player) {
+                // If the entity is tall (high z or physically tall) and has a lower base sort depth
+                const eBaseDepth = (e.x || 0) + (e.y || 0);
+                const pBaseDepth = pWorldX + pWorldY;
+
+                // If player is behind the entity (larger base depth)
+                if (eBaseDepth > pBaseDepth) {
+                     // Check screen-space bounding box overlap roughly
+                     // If player screen pos is within the visual bounding box of this entity
+                     if (pScreenX > screenX - w/2 && pScreenX < screenX + w/2 &&
+                         pScreenY > screenY - h/2 && pScreenY < screenY + h/2) {
+                         alpha = 0.5; // Transparent
+                     }
+                }
+            }
+
+            const offset = instanceCount * 10;
             // Write screen position to buffer
             cpuData[offset + 0] = screenX;
             cpuData[offset + 1] = screenY;
@@ -505,6 +531,7 @@ export class WebGPURenderer {
             cpuData[offset + 6] = uScale;
             cpuData[offset + 7] = vScale;
             cpuData[offset + 8] = rot;
+            cpuData[offset + 9] = alpha;
 
             instanceCount++;
         }
@@ -544,7 +571,7 @@ export class WebGPURenderer {
 
         if (instanceCount > 0 && this.instanceBuffer) {
              // Write Buffer
-             this.device.queue.writeBuffer(this.instanceBuffer, 0, cpuData, 0, instanceCount * 9);
+             this.device.queue.writeBuffer(this.instanceBuffer, 0, cpuData, 0, instanceCount * 10);
 
              // Draw
              passEncoder.setVertexBuffer(0, this.instanceBuffer);
