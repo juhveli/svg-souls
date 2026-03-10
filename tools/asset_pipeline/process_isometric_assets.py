@@ -3,6 +3,10 @@ import random
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import math
 import argparse
+import sys
+
+# Import our QA tools
+from qa import run_qa_suite
 
 # Project specific palettes for the "cartridge left in the rain" 16-bit aesthetic
 PALETTES = {
@@ -129,12 +133,20 @@ def apply_blight_filter_png(image_path, output_path, base_palette='RUST', decay_
                     if is_edge:
                         final_pixels[x, y] = (10, 10, 10, 255) # Void Outline
 
+        # Run QA Suite before saving
+        qa_passed = run_qa_suite(final_img)
+
+        if not qa_passed:
+            print(f"WARNING: Asset {os.path.basename(image_path)} failed QA checks. Skipping save.")
+            return False
+
         out_dir = os.path.dirname(output_path)
         if not os.path.exists(out_dir):
             os.makedirs(out_dir)
 
         final_img.save(output_path)
         print(f"Processed: {os.path.basename(image_path)} -> {output_path}")
+        return True
 
     except Exception as e:
         print(f"Error processing {image_path}: {e}")

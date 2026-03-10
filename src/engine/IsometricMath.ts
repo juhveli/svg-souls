@@ -59,7 +59,9 @@ export class IsometricMath {
      * @returns A scalar value representing the depth order.
      */
     public static calculateDepth(worldX: number, worldY: number, worldZ: number): number {
-        // Standard isometric sorting: sum of axes
-        return worldX + worldY + worldZ;
+        // Sorting should primarily be based on the object's base (worldX + worldY).
+        // A tiny fraction of worldZ is added to break ties or ensure entities at the same X/Y
+        // but different heights sort correctly, without breaking base sorting.
+        return worldX + worldY + (worldZ * 0.001);
     }
 }
