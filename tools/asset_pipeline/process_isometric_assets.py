@@ -2,6 +2,7 @@ import os
 import random
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import math
+import argparse
 
 # Project specific palettes for the "cartridge left in the rain" 16-bit aesthetic
 PALETTES = {
@@ -21,23 +22,14 @@ def closest_color(rgb, palette_name):
         color_diffs.append((diff, (pr, pg, pb)))
     return min(color_diffs)[1]
 
-def apply_blight_filter_png(image_path, output_path, base_palette='RUST', decay_chance=0.08, resize_to=(64, 32)):
-    """
-    Applies the game's isometric decay/blight aesthetic to a raw PNG image.
-
-    1. Loads the PNG.
-    2. Resizes and maintains isometric aspect if required (64x32 or 64x64).
-    3. Quantizes/maps colors to the dark fantasy palette (Rust/Void).
-    4. Applies 'decay' noise (blight_filter pixel removal/darkening).
-    5. Saves the final 16-bit stylized image.
-    """
+def apply_blight_filter_png(image_path, output_path, base_palette='RUST', decay_chance=0.08, resize_to=None):
     try:
         # Load image
         img = Image.open(image_path).convert("RGBA")
 
-        # Resize to match our isometric grid (64x64 usually for a 64x32 projection if it's a cube, or 64x32 for flat floor)
-        # Assuming the starter pack tiles are 64x32 or similar flat isometric tiles. Let's just fit them to 64x32.
-        img = img.resize(resize_to, Image.Resampling.NEAREST)
+        # Optionally resize
+        if resize_to:
+            img = img.resize(resize_to, Image.Resampling.NEAREST)
 
         # We need a new image to draw on
         out_img = Image.new("RGBA", img.size)
@@ -45,6 +37,15 @@ def apply_blight_filter_png(image_path, output_path, base_palette='RUST', decay_
         out_pixels = out_img.load()
 
         width, height = img.size
+
+        # Pre-calculate 4x4 block chunks for Zone 5 (CORRUPTED_NEON)
+        # We will randomly select 4x4 chunks to remove (make transparent)
+        removed_blocks = set()
+        if base_palette == 'CORRUPTED_NEON':
+            for by in range(0, height, 4):
+                for bx in range(0, width, 4):
+                    if random.random() < decay_chance:
+                        removed_blocks.add((bx, by))
 
         for y in range(height):
             for x in range(width):
@@ -54,36 +55,51 @@ def apply_blight_filter_png(image_path, output_path, base_palette='RUST', decay_
                 if a == 0:
                     continue
 
-                # 1. Blight/Decay (Holes or Void spots)
-                # We don't remove pixels at the very center, mostly edges or random spots
-                if random.random() < decay_chance:
-                    # Either make it fully transparent (hole) or pure Void (black)
-                    if random.random() < 0.5:
-                        continue # hole
+                # Check if this pixel is inside a removed 4x4 block for Zone 5
+                bx, by = (x // 4) * 4, (y // 4) * 4
+                if (bx, by) in removed_blocks:
+                    continue # Removed by blocky chunk logic (hole)
+
+                # Masking logic for GLITCH space or certain effects
+                # Example: If very bright red, maybe neon
+                if r > 200 and g < 100 and b < 100 and base_palette == 'CORRUPTED_NEON':
+                    out_pixels[x, y] = (255, 0, 255, 255) # Force neon
+                    continue
+
+                # 1. Blight/Decay (for other zones/regular decay)
+                # Skip normal random decay if it's already handled blocky for CORRUPTED_NEON
+                if base_palette != 'CORRUPTED_NEON' and random.random() < decay_chance:
+                    if base_palette == 'VERDIGRIS':
+                        # Glass gardens prefers "cracking" rather than simple holes
+                        # If a decay hits, we don't necessarily make it a hole.
+                        # We turn the pixel into pure Void, or a very dark grey to simulate deep cracks
+                        if random.random() < 0.3:
+                             continue # Occasional actual hole
+                        else:
+                             out_pixels[x, y] = (10, 10, 10, 255) # Dark crack line instead of full hole
+                             continue
                     else:
-                        out_pixels[x, y] = (15, 15, 15, 255) # Void
-                        continue
+                        if random.random() < 0.5:
+                            continue # hole
+                        else:
+                            out_pixels[x, y] = (15, 15, 15, 255) # Void
+                            continue
 
                 # 2. Color Mapping
-                # Base pixel brightness to determine if it should be an accent or base
                 brightness = (r + g + b) / 3
 
-                new_r, new_g, new_b = r, g, b
-
-                # Heavily heavily darken everything (dark fantasy)
+                # Darken
                 dark_factor = 0.5
                 r = int(r * dark_factor)
                 g = int(g * dark_factor)
                 b = int(b * dark_factor)
 
-                # Map to our palettes based on the dominant tone or just force to a palette
-                # Let's map everything to Rust/Void primarily.
                 if brightness < 60:
                     new_r, new_g, new_b = closest_color((r,g,b), 'VOID')
                 else:
                     new_r, new_g, new_b = closest_color((r,g,b), base_palette)
 
-                # Add some grit (random tiny noise)
+                # Add some grit
                 if random.random() < 0.2:
                     noise = random.randint(-15, 15)
                     new_r = max(0, min(255, new_r + noise))
@@ -92,8 +108,7 @@ def apply_blight_filter_png(image_path, output_path, base_palette='RUST', decay_
 
                 out_pixels[x, y] = (new_r, new_g, new_b, a)
 
-        # 3. Outline (1px Void Outline) - required by the art style docs
-        # We will do a simple edge detect
+        # 3. Outline (1px Void Outline)
         final_img = Image.new("RGBA", out_img.size)
         final_pixels = final_img.load()
 
@@ -125,23 +140,28 @@ def apply_blight_filter_png(image_path, output_path, base_palette='RUST', decay_
         print(f"Error processing {image_path}: {e}")
 
 if __name__ == "__main__":
-    raw_dir = "assets/sprites/raw/iso_starter"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dir", help="Directory of raw assets", default="assets/sprites/raw/iso_starter")
+    parser.add_argument("--palette", help="Palette to use", default="RUST")
+    parser.add_argument("--decay", type=float, help="Decay chance", default=0.08)
+    parser.add_argument("--resize", help="Resize (e.g. 64x32 or 64x64 or 128x128)", default=None)
+    args = parser.parse_args()
+
+    raw_dir = args.dir
     out_dir = "assets/sprites/isometric"
+
+    resize_tuple = None
+    if args.resize:
+        w, h = args.resize.split('x')
+        resize_tuple = (int(w), int(h))
 
     if os.path.exists(raw_dir):
         for filename in os.listdir(raw_dir):
-            if filename.endswith(".png"):
+            if filename.endswith(".png") and not filename.startswith("Preview"):
                 raw_path = os.path.join(raw_dir, filename)
-                # Use base name without extension for the output
                 base_name = os.path.splitext(filename)[0]
-                out_path = os.path.join(out_dir, f"{base_name}_decayed.png")
+                out_path = os.path.join(out_dir, f"{os.path.basename(raw_dir)}_{base_name}_decayed.png")
 
-                # For stone/concrete, maybe use a more grey/void palette, but Rust is our theme.
-                palette = 'RUST' if 'dirt' in filename or 'brick' in filename else 'VOID'
-                if 'concrete' in filename or 'stone' in filename:
-                    palette = 'VOID'
-
-                # Most standard isometric floor tiles are 64x32
-                apply_blight_filter_png(raw_path, out_path, base_palette=palette, resize_to=(64, 32))
+                apply_blight_filter_png(raw_path, out_path, base_palette=args.palette, decay_chance=args.decay, resize_to=resize_tuple)
     else:
         print(f"Raw directory not found: {raw_dir}")

@@ -1,14 +1,22 @@
 import urllib.request
+import urllib.parse
 import urllib.error
 import zipfile
 import os
+import argparse
 
 def download_and_extract(url, extract_to):
     print(f"Downloading from {url}...")
     zip_path = "temp_assets.zip"
+
+    # URL encode path segment to handle spaces like in "Isometric - Dark Ruins.zip"
+    parsed_url = urllib.parse.urlparse(url)
+    encoded_path = urllib.parse.quote(parsed_url.path)
+    encoded_url = urllib.parse.urlunparse((parsed_url.scheme, parsed_url.netloc, encoded_path, parsed_url.params, parsed_url.query, parsed_url.fragment))
+
     try:
         req = urllib.request.Request(
-            url,
+            encoded_url,
             data=None,
             headers={'User-Agent': 'Mozilla/5.0'}
         )
@@ -31,9 +39,15 @@ def download_and_extract(url, extract_to):
             os.remove(zip_path)
 
 if __name__ == "__main__":
-    # Let's try downloading from opengameart again with a known good file for Isometric.
-    # The "Isometric Tile Starter Pack" by GameDeveloperStudio is a great one (CC0)
-    # File is isometric.zip
-    url = "https://opengameart.org/sites/default/files/isometric.zip"
-    extract_dir = "assets/sprites/raw/iso_starter"
-    download_and_extract(url, extract_dir)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--url", help="URL of the zip file to download")
+    parser.add_argument("--out", help="Directory to extract to")
+    args = parser.parse_args()
+
+    if args.url and args.out:
+        download_and_extract(args.url, args.out)
+    else:
+        # fallback
+        url = "https://opengameart.org/sites/default/files/isometric.zip"
+        extract_dir = "assets/sprites/raw/iso_starter"
+        download_and_extract(url, extract_dir)
