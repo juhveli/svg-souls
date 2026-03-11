@@ -305,5 +305,19 @@
         "category": "narrative",
         "effect": null,
         "icon": "tear"
+    },
+    "porcelain_mask": {
+        "name": "Shattered Porcelain Mask",
+        "description": "A fragment of a face that smiles forever. \"The dancers were not born; they were fired in the kiln. This mask hides the fact that there is no face beneath, only the hollow echo of the music. To wear it is to forget how to frown.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "mask"
+    },
+    "librarian_finger": {
+        "name": "Finger of the Librarian",
+        "description": "A long, bony finger stained with ink. \"The Librarian did not just guard the books; she became the index. This finger was used to trace the names of those forbidden to speak. It still twitches when it hears a lie.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "flesh"
     }
 }
