@@ -110,6 +110,12 @@
 ## V. Flavor Items & Narrative Fragments
 *Useless to the practical, priceless to the historian.*
 
+### Glass Shard
+*   **Source:** Glass Gardens (Material/Drop).
+*   **Description:**
+    > *A jagged piece of the Gardens that screams when the wind blows across its edge.*
+    > *"The Matriarch’s children are born of sand and breath, but they die as glass. This shard remembers the heat of the kiln."*
+
 ### Calcified Tuning Peg
 *   **Source:** Scrapyard (Random Loot).
 *   **Description:**
