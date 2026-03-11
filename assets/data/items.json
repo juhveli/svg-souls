@@ -305,5 +305,12 @@
         "category": "narrative",
         "effect": null,
         "icon": "tear"
+    },
+    "porcelain_mask": {
+        "name": "Shattered Porcelain Mask",
+        "description": "The lower half of a ceramic face, locked in an eternal, painted smile. \"The nobility of the Glass Gardens were not permitted to frown. To show sadness was to insult the Creator's perfection. So they wore these structural smiles, even as their world shattered around them.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "mask"
     }
 }
