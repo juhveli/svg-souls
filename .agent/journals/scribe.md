@@ -68,3 +68,24 @@ Refined the existing flavor items `hollow_book_spine` and `crystal_shard_spire` 
         "icon": "crystal_spire"
     }
 ```
+
+## 📜 Scribe: Censorship & The Hushed Halls - Lore Refinement
+
+**The Connection:**
+Identified that the `Librarian` (World 4) enemy had no specific narrative drop, and that existing lore drops for `BookMimic` and `CrystalShard` were not actually implemented in the `LootSystem`.
+
+**The Fix:**
+1.  **Created `librarian_finger` ("Finger of the Librarian")**: A new narrative item that emphasizes the "Body Horror" and "Censorship" themes of the Hushed Halls. The Librarians consume knowledge physically.
+2.  **Patched `LootSystem`**: Added drop tables for `librarian`, `book_mimic`, and `crystal_shard` to ensure these narrative items actually drop in-game.
+
+**New Entry:**
+
+```json
+    "librarian_finger": {
+        "name": "Finger of the Librarian",
+        "description": "A long, pale finger, bent permanently into a hook for turning pages. It has no prints, for the words wore them away long ago. \"The Librarians do not read with their eyes, but with their touch, absorbing the ink until their blood turns black.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "flesh"
+    }
+```

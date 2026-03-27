@@ -25,6 +25,24 @@ const DROP_TABLES: Record<string, LootTableEntry> = {
         max: 500,
         chance: 1.0,
         items: ['The Stopped Watch']
+    },
+    'book_mimic': {
+        min: 0,
+        max: 0,
+        chance: 1.0,
+        items: ['Spine of a Living Book']
+    },
+    'crystal_shard': {
+        min: 0,
+        max: 0,
+        chance: 1.0,
+        items: ['Shard of a Broken Second']
+    },
+    'librarian': {
+        min: 0,
+        max: 0,
+        chance: 1.0,
+        items: ['Finger of the Librarian']
     }
 };
 

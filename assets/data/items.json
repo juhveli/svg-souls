@@ -305,5 +305,12 @@
         "category": "narrative",
         "effect": null,
         "icon": "tear"
+    },
+    "librarian_finger": {
+        "name": "Finger of the Librarian",
+        "description": "A long, pale finger, bent permanently into a hook for turning pages. It has no prints, for the words wore them away long ago. \"The Librarians do not read with their eyes, but with their touch, absorbing the ink until their blood turns black.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "flesh"
     }
 }
