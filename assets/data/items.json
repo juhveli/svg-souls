@@ -52,7 +52,7 @@
             "type": "unlock",
             "target": "maintenance_doors"
         },
-        "icon": "key"
+        "icon": "rusty_key_hand"
     },
     "breath_of_creator": {
         "name": "Breath of the Creator",
