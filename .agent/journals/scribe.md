@@ -68,3 +68,23 @@ Refined the existing flavor items `hollow_book_spine` and `crystal_shard_spire` 
         "icon": "crystal_spire"
     }
 ```
+
+## 📜 Scribe: Refined 'Glass Shard' Lore - Consistency Fix
+
+**The Connection:**
+Detected "Lore Drift" in the `glass_shard` item. The original description referenced "Crystallized Time" (a World 5 mechanic) but the item belongs to World 2 (Glass Gardens).
+
+**The Fix:**
+Rewrote the description to align with World 2's themes of Vanity, Stagnation, and Biological Horror (Vitria's sentient glass).
+
+**New Entry:**
+
+```json
+    "glass_shard": {
+        "name": "Glass Shard",
+        "description": "A splinter of the Matriarch's domain. Unlike normal glass, it does not shatter when dropped; it screams. \"Vitria taught the sand to feel pain, so that her windows would never leave her.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "polygon"
+    }
+```
