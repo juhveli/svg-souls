@@ -27,19 +27,19 @@ def verify_item_data():
         description = page.evaluate("""() => {
             const db = window.ItemDatabase;
             if (!db) return "Database not found";
-            return db.getDescription('tuning_fork_spear');
+            return db.getDescription('glass_shard');
         }""")
 
         name = page.evaluate("""() => {
             const db = window.ItemDatabase;
             if (!db) return "Database not found";
-            return db.getName('tuning_fork_spear');
+            return db.getName('glass_shard');
         }""")
 
         print(f"Item Name: {name}")
         print(f"Item Description: {description}")
 
-        if "Tuning Fork Spear" in name and "headache-inducing frequency" in description:
+        if "Glass Shard" in name and "Matriarch Vitria screamed" in description:
             print("SUCCESS: Item data verified.")
         else:
             print("FAILURE: Item data mismatch.")

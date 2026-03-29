@@ -12,26 +12,26 @@ const DROP_TABLES: Record<string, LootTableEntry> = {
         min: 5,
         max: 15,
         chance: 1.0,
-        items: ['Glass Shard']
+        items: ['glass_shard']
     },
     'boss_glass_blower': {
         min: 500,
         max: 1000,
         chance: 1.0,
-        items: ['Breath of the Creator']
+        items: ['breath_of_creator']
     },
     'golgotha': {
         min: 200,
         max: 500,
         chance: 1.0,
-        items: ['The Stopped Watch']
+        items: ['stopped_watch']
     }
 };
 
 // Rare global drops
 const GLOBAL_DROPS = [
-    { item: 'Vial of Liquid Seconds', chance: 0.05 }, // 5% chance
-    { item: 'The Stopped Watch', chance: 0.001 } // 0.1% chance
+    { item: 'vial_liquid_seconds', chance: 0.05 }, // 5% chance
+    { item: 'stopped_watch', chance: 0.001 } // 0.1% chance
 ];
 
 export class LootSystem {
