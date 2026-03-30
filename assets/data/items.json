@@ -62,7 +62,7 @@
             "type": "unlock_spell",
             "spell": "glass_form"
         },
-        "icon": "breath"
+        "icon": "breath_of_creator"
     },
     "tuning_fork_spear": {
         "name": "Tuning Fork Spear",
