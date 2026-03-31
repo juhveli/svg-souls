@@ -39,7 +39,7 @@ def verify_item_data():
         print(f"Item Name: {name}")
         print(f"Item Description: {description}")
 
-        if "Tuning Fork Spear" in name and "headache-inducing frequency" in description:
+        if "Tuning Fork Spear" in name and "shatters the song within" in description:
             print("SUCCESS: Item data verified.")
         else:
             print("FAILURE: Item data mismatch.")

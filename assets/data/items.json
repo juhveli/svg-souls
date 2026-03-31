@@ -101,7 +101,7 @@
     },
     "scale_of_decay": {
         "name": "Scale of Decay",
-        "description": "A massive, flaking scale that smells of wet iron. It is warm to the touch. \"Entropy is not a mistake; it is the universe breathing out. This scale proves that even the end can be beautiful.\"",
+        "description": "A massive, flaking scale that reeks of wet iron and old blood. It radiates a feverish heat. \"Entropy is not a mistake; it is the universe exhaling. This scale is proof that even as the world rots, it blooms with a terrible, rusting beauty.\"",
         "category": "key",
         "effect": null,
         "icon": "scale"
@@ -115,7 +115,7 @@
     },
     "perfect_prism": {
         "name": "Perfect Prism",
-        "description": "A geometric impossibility. A prism that reflects light that isn't there. \"Vitria demanded perfection. When this prism was cut, it was so flawless that it became jealous of its own reflection. It yearns to be broken.\"",
+        "description": "A geometric impossibility: a prism that refracts darkness into colors that do not exist. \"Vitria demanded a perfection so absolute it rejected the world around it. This prism was cut to be so flawless that it grew jealous of its own reflection. It does not reflect; it judges.\"",
         "category": "key",
         "effect": {
             "type": "trigger_event",
@@ -212,7 +212,7 @@
     },
     "industrial_gear": {
         "name": "Industrial Gear",
-        "description": "A heavy iron gear, teeth worn smooth by centuries of grinding. It was once part of the Great Clock's heartbeat. Now, it lies silent, a testament to a time when the world moved forward instead of in circles.",
+        "description": "A heavy iron gear, teeth worn smooth by the gnashing of centuries. It was once a molar in the jaw of the Great Clock, grinding seconds into dust. Now it lies silent, a testament to a time when time itself moved forward, before it learned to crawl in circles.",
         "category": "narrative",
         "effect": null,
         "icon": "gear"
@@ -305,5 +305,26 @@
         "category": "narrative",
         "effect": null,
         "icon": "tear"
+    },
+    "metronome_oil": {
+        "name": "Metronome Oil",
+        "description": "A flask of thick, black lubricant that smells of burnt coffee. \"The Gear-Keepers drink this to stay awake. It keeps their internal pendulums swinging without friction. Warning: Highly addictive to anyone with a heartbeat.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "jar_dark"
+    },
+    "opaque_mirror": {
+        "name": "Opaque Mirror",
+        "description": "A hand mirror that has been painted over with matte black paint. \"A scandalous contraband item. To own a mirror that does not reflect is to deny one's existence. It was likely used by a Glazewright who wanted, just for a moment, to be unseen.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "mirror"
+    },
+    "velvet_ear_plugs": {
+        "name": "Velvet Ear-Plugs",
+        "description": "Two small cones of dense, purple foam. \"Standard issue for the initiates. Before they are ready to sew their mouths shut, they must first learn to stop listening to the world's lies. It blocks out everything but the sound of your own blood.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "cloth"
     }
 }
