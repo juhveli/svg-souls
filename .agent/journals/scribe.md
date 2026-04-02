@@ -68,3 +68,40 @@ Refined the existing flavor items `hollow_book_spine` and `crystal_shard_spire` 
         "icon": "crystal_spire"
     }
 ```
+
+## 📜 Scribe: Refined Narrative Items - Immersion Update
+
+**The Connection:**
+Identified that several lore items listed in `docs/lore_items.md` were missing from the actual game data (`assets/data/items.json`), creating a disconnect between the world documentation and gameplay. Additionally, some descriptions contained modern phrasing ("foam", "coffee", "matte black paint").
+
+**The Fix:**
+Implemented `metronome_oil`, `opaque_mirror`, and `velvet_ear_plugs` into `assets/data/items.json`, refining their descriptions to match the "Souls-like" archaic aesthetic.
+- "Burnt Coffee" -> "Burnt Chicory and Ozone" (Industrial/Ersatz vibe)
+- "Dense Foam" -> "Compressed Velvet and Wax" (Period-appropriate materials)
+- "Matte Black Paint" -> "Light-Drinking Lacquer" (Mystical/Alchemical tone)
+
+**New Entry:**
+
+```json
+    "metronome_oil": {
+        "name": "Metronome Oil",
+        "description": "A flask of thick, black lubricant that smells of burnt chicory and ozone. \"The Gear-Keepers drink this to stay awake. It keeps their internal pendulums swinging without friction. Warning: Highly addictive to anyone with a heartbeat.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "jar_dark"
+    },
+    "opaque_mirror": {
+        "name": "Opaque Mirror",
+        "description": "A hand mirror that has been coated in light-drinking lacquer. \"A scandalous contraband item. To own a mirror that does not reflect is to deny one's existence. It was likely used by a Glazewright who wanted, just for a moment, to be unseen.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "mirror"
+    },
+    "velvet_ear_plugs": {
+        "name": "Velvet Ear-Plugs",
+        "description": "Two small plugs of compressed velvet and wax. \"Standard issue for the initiates. Before they are ready to sew their mouths shut, they must first learn to stop listening to the world's lies. It blocks out everything but the sound of your own blood.\"",
+        "category": "narrative",
+        "effect": null,
+        "icon": "cloth"
+    }
+```
