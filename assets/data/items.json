@@ -212,21 +212,21 @@
     },
     "industrial_gear": {
         "name": "Industrial Gear",
-        "description": "A heavy iron gear, teeth worn smooth by centuries of grinding. It was once part of the Great Clock's heartbeat. Now, it lies silent, a testament to a time when the world moved forward instead of in circles.",
+        "description": "A heavy iron gear, teeth worn smooth by the Metronome General's rigorous standards. He demanded the world turn at exactly 120 beats per minute. When this gear fell out of sync by a microsecond, he ripped it from the Great Clock's heart himself. It still twitches on the beat.",
         "category": "narrative",
         "effect": null,
         "icon": "gear"
     },
     "compacted_junk": {
         "name": "Compacted Junk",
-        "description": "A dense cube of refuse, crushed into a solid mass. It contains everything from broken toys to discarded limbs. In the Scrapyard, nothing is ever truly lost; it is merely compressed until it fits.",
+        "description": "A dense cube of refuse, crushed into a solid mass by the Trash-Compactor's weeping hydraulics. It contains everything from broken toys to discarded limbs. The machine believes that if it presses the broken things hard enough, they will fuse back into something whole.",
         "category": "narrative",
         "effect": null,
         "icon": "junk"
     },
     "heavy_chain_link": {
         "name": "Heavy Chain-Link",
-        "description": "A single link of a chain thick enough to anchor a ship. The metal is cold and smells of dried blood. It once held something massive in place, something that did not want to be held.",
+        "description": "A single link of a chain thick enough to anchor a ship, coated in a layer of oxidized dragon-scale. It snapped when the Rust Dragon woke from its slumber beneath the Smog Vent. The metal is cold, but if you listen closely, you can hear the deep, tectonic growl of the beast it failed to contain.",
         "category": "narrative",
         "effect": null,
         "icon": "chain"
@@ -247,7 +247,7 @@
     },
     "marble_fragment": {
         "name": "Marble Fragment",
-        "description": "A chip of white marble from a grand pillar. It is cool to the touch. The Architects built their temples to last forever, forgetting that even stone must bow to the weight of entropy.",
+        "description": "A chip of white marble, strangely heavy. It absorbs the light around it. Before the Hushed Halls were draped in velvet, they were built of this stone. Archivist Pellinore ordered it covered because 'white echoes too loudly'. It is a relic of a noisier time.",
         "category": "narrative",
         "effect": null,
         "icon": "marble"
