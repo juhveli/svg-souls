@@ -14,6 +14,12 @@ const DROP_TABLES: Record<string, LootTableEntry> = {
         chance: 1.0,
         items: ['Glass Shard']
     },
+    'porcelain_dancer': {
+        min: 10,
+        max: 30,
+        chance: 1.0,
+        items: ['Shattered Porcelain Mask']
+    },
     'boss_glass_blower': {
         min: 500,
         max: 1000,

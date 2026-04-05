@@ -122,6 +122,12 @@
     > *A square of spun glass, impossibly thin and flexible.*
     > *"The nobility used these to wipe away tears. However, glass does not absorb moisture; it only smears it across the face. A cruel design for a people who were forbidden to be unhappy."*
 
+### Shattered Porcelain Mask
+*   **Source:** Drop from *Porcelain Dancer*.
+*   **Description:**
+    > *A fragment of a white ceramic face, still smiling. The paint is chipped, revealing the hollow darkness underneath.*
+    > *"The Nobility were not allowed to frown. If a face showed displeasure, it was replaced. This dancer smiled for so long that the expression became structural, holding the porcelain together even after the soul had fled."*
+
 ### Opaque Mirror
 *   **Source:** Glass Gardens (Hidden Chest).
 *   **Description:**
