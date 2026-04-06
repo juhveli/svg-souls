@@ -125,8 +125,8 @@
 ### Opaque Mirror
 *   **Source:** Glass Gardens (Hidden Chest).
 *   **Description:**
-    > *A hand mirror that has been painted over with matte black paint.*
-    > *"A scandalous contraband item. To own a mirror that does not reflect is to deny one's existence. It was likely used by a Glazewright who wanted, just for a moment, to be unseen."*
+    > *A hand mirror coated in heavy, matte-black lacquer. In the Glass Gardens, to be seen is to exist.*
+    > *"This contraband artifact suggests a heresy: the desire for a face that the world cannot duplicate. It is the tool of a ghost who wished to be a shadow in a city of light."*
 
 ### A Cracked Mirror
 *   **Source:** World 2 (Glass Gardens).
@@ -149,8 +149,8 @@
 ### Metronome Oil
 *   **Source:** Clockwork Arteries (Gear-Keeper Drop).
 *   **Description:**
-    > *A flask of thick, black lubricant that smells of burnt coffee.*
-    > *"The Gear-Keepers drink this to stay awake. It keeps their internal pendulums swinging without friction. Warning: Highly addictive to anyone with a heartbeat."*
+    > *A flask of viscous, black ichor, smelling of scorched resin and ozone.*
+    > *"The Gear-Keepers consume it to artificially accelerate their internal rhythms. To drink it is to feel time rushing through the veins, a desperate sprint against the inevitable winding-down of the world."*
 
 ### Jar of Stifled Laughter
 *   **Source:** Hushed Halls (Library Shelves).
@@ -161,8 +161,8 @@
 ### Velvet Ear-Plugs
 *   **Source:** Hushed Halls (Silent Monk Drop).
 *   **Description:**
-    > *Two small cones of dense, purple foam.*
-    > *"Standard issue for the initiates. Before they are ready to sew their mouths shut, they must first learn to stop listening to the world's lies. It blocks out everything but the sound of your own blood."*
+    > *Plugs of compressed purple velvet, dense enough to drown out a scream.*
+    > *"The Silence Guard initiates wear these to unlearn the habit of listening. One cannot serve the Quiet if they are distracted by the weeping of the world."*
 
 ### Sheet Music Fragment
 *   **Source:** Hushed Halls (Hidden).

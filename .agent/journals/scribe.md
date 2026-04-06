@@ -68,3 +68,35 @@ Refined the existing flavor items `hollow_book_spine` and `crystal_shard_spire` 
         "icon": "crystal_spire"
     }
 ```
+
+## 📜 Scribe: Missing Lore Integration - Fix
+
+**The Connection:**
+Audit revealed that `Metronome Oil`, `Opaque Mirror`, and `Velvet Ear-Plugs` were documented in `docs/lore_items.md` but missing from the actual game data (`assets/data/items.json`). This created a disconnect where lore items were "canonical" but not implemented.
+
+**The Fix:**
+Added the missing items to `assets/data/items.json` and refined their descriptions to align with the "Souls-like" atmospheric tone.
+- **Metronome Oil**: Shifted from "burnt coffee" to "scorched resin and ozone" to avoid modern associations.
+- **Opaque Mirror**: Emphasized the "heresy" of wanting to be unseen in a world of glass.
+- **Velvet Ear-Plugs**: Connected them to the initiation rites of the Silence Guard.
+
+Also updated `tuning_fork_spear` to use its specific icon `tuning_fork_spear` instead of generic `sword`.
+
+**New Entry:**
+
+```json
+    "metronome_oil": {
+        "name": "Metronome Oil",
+        "description": "A flask of viscous, black ichor, smelling of scorched resin and ozone. The Gear-Keepers consume it to artificially accelerate their internal rhythms. To drink it is to feel time rushing through the veins, a desperate sprint against the inevitable winding-down of the world.",
+        "category": "narrative",
+        "effect": null,
+        "icon": "jar_dark"
+    },
+    "opaque_mirror": {
+        "name": "Opaque Mirror",
+        "description": "A hand mirror coated in heavy, matte-black lacquer. In the Glass Gardens, to be seen is to exist. This contraband artifact suggests a heresy: the desire for a face that the world cannot duplicate. It is the tool of a ghost who wished to be a shadow in a city of light.",
+        "category": "narrative",
+        "effect": null,
+        "icon": "mirror"
+    }
+```
